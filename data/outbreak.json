@@ -1,0 +1,65 @@
+{
+  "as_of": "2026-08-06",
+  "data_current_through": "2026-08-05",
+  "headline": "Largest recorded U.S. cyclosporiasis season, with one multistate outbreak traced to iceberg lettuce",
+  "national_season": {
+    "window": "Domestically acquired illnesses with onset on or after May 1, 2026",
+    "lab_confirmed": 10468,
+    "probable_under_investigation": 12255,
+    "combined": 22723,
+    "hospitalizations": 517,
+    "deaths": 2,
+    "deaths_note": "Both deaths were reported in Michigan in people with significant underlying health conditions that may have been adversely affected by cyclosporiasis and dehydration.",
+    "states_with_cases": "Reported in roughly 45-47 states; secondary reporting indicates only New Mexico, Montana and Hawaii had reported zero cases since May 1.",
+    "as_of": "2026-08-05",
+    "sources": ["cdc-surveillance", "cdc-han", "today-map", "cnn-deaths", "axios-deaths"]
+  },
+  "implicated_outbreak": {
+    "vehicle": "Iceberg lettuce",
+    "supplier": "Taylor Farms de Mexico (Guanajuato, Mexico), lettuce sourced from central Mexico",
+    "first_announced": "2026-07-16",
+    "first_announced_detail": "FDA announced an investigation into a 5-state outbreak linked to certain shredded iceberg lettuce from Mexico served at Taco Bell locations in Indiana, Kentucky, Michigan, Ohio and West Virginia.",
+    "expansion_detail": "The cluster was subsequently described as a 9-state outbreak (adding Illinois, Kansas, Oklahoma and Pennsylvania), and FDA later published a 15-state investigation page.",
+    "onset_range": "Illness onsets reported from May 13 through July 20, 2026",
+    "evidence_basis": "Epidemiologic interviews plus product traceback. Traceback identified Taylor Farms de Mexico as the single supplier converging across the locations linked to illness.",
+    "sources": ["cdc-outbreak", "cdc-investigation", "fda-9state", "fda-15state", "cdc-newsroom", "nbc-source"]
+  },
+  "recall": {
+    "date": "2026-07-17",
+    "firm": "Taylor Farms de Mexico / Taylor Fresh Foods",
+    "scope": "All iceberg lettuce sourced from central Mexico, voluntarily withdrawn from U.S. retail and foodservice supply chains.",
+    "distribution": "Recalled shredded and chopped lettuce products were distributed to foodservice customers in more than two dozen states; secondary reporting cites 27 states. The recall notice also included Marketside-brand retail product sold at Walmart.",
+    "blends_note": "The recall covers blended salad mixes that contain iceberg lettuce from this supplier, not only single-ingredient iceberg.",
+    "sources": ["fda-recall", "abc-27states", "cnn-safe-food"]
+  },
+  "critical_caveats": [
+    {
+      "title": "No product sample has tested positive for Cyclospora",
+      "body": "The link between iceberg lettuce and this outbreak rests on epidemiologic and traceback evidence, not on a laboratory detection in food. A border sample initially flagged as positive was re-reviewed by FDA laboratory experts on July 19, 2026 and reclassified as a false positive - FDA concluded the finding did not represent true amplification. FDA stated this did not change the basis for the investigation or the recall, which rest on the epidemiologic data. Cyclospora is notoriously difficult to detect in food, so the absence of a positive sample is weak evidence of absence.",
+      "sources": ["usnews-falsepos", "fda-9state"]
+    },
+    {
+      "title": "There is more than one outbreak happening at once",
+      "body": "FDA has described four separate Cyclospora outbreak investigations in 2026. Some are tied to the large Midwest iceberg lettuce cluster, some involve single states, and many reported cases are not yet linked to any cluster. The iceberg lettuce recall therefore does not account for all illness this season.",
+      "sources": ["cr-consumers", "cnn-largest"]
+    },
+    {
+      "title": "Case counts in circulation are inconsistent",
+      "body": "Published counts differ depending on whether they describe the whole 2026 domestically acquired season or only the iceberg lettuce cluster, and on the date of the snapshot. Outbreak-cluster counts reported in July and August 2026 ranged from roughly 1,947 illnesses in 9 states (with 98 hospitalizations) to roughly 6,358 illnesses in 15 states (with 278 hospitalizations). Treat any single number as a dated snapshot, not a current total.",
+      "sources": ["cdc-outbreak", "fda-15state", "nbc-source"]
+    },
+    {
+      "title": "Other commodities are under active traceback",
+      "body": "As of late July 2026, traceback in some of the 2026 investigations was reported to be focused on cilantro, onions and cucumbers. Public health officials in North Carolina indicated fresh parsley and cilantro may be behind the rise in cases in that state. These are open lines of inquiry, not conclusions.",
+      "sources": ["cr-consumers", "cnn-safe-food"]
+    }
+  ],
+  "biology": {
+    "washing": "Cyclospora oocysts are highly resistant to chlorine and to routine chemical disinfection. Commercial produce washes, vinegar soaks and chlorine rinses are not reliably effective. The oocyst wall is tough and lodges in microscopic surface crevices, so it does not rinse off cleanly. CDC still recommends rinsing produce under running water, but describes disinfection as unlikely to fully eliminate Cyclospora.",
+    "cooking": "Cooking to an internal temperature of about 158 F (70 C) or higher inactivates Cyclospora. Thorough cooking is the single most reliable consumer-level control.",
+    "peeling": "Peeling physically removes the contaminated outer surface and is highly effective, provided the knife and hands do not transfer oocysts to the flesh.",
+    "person_to_person": "Cyclospora is not transmitted directly person-to-person in a meaningful way. Freshly passed oocysts are not infectious and require days to weeks in the environment to sporulate, so household spread from an ill person is not a significant route.",
+    "incubation": "Symptoms usually begin about one week after infection, with a range of roughly 2 days to 2 weeks or more. Untreated illness can last from a few days to a month or longer, and relapsing symptoms are common.",
+    "sources": ["cdc-outbreak", "canada-prevention", "abc-tips", "michigan"]
+  }
+}
