@@ -38,6 +38,10 @@ python3 -m http.server -d site 8000
 
 ## Automation
 
+> **These workflows are written but not yet active.** They sit in `ci/workflows/` rather
+> than `.github/workflows/`, because the credentials used to author them lack GitHub's
+> `workflow` OAuth scope. See [`ci/README.md`](ci/README.md) for the one-command install.
+
 | Workflow | Trigger | What it does |
 | --- | --- | --- |
 | `ci.yml` | push, PR | Builds, asserts committed `site/` matches `data/`, runs the validator. Also checks source links (advisory). |

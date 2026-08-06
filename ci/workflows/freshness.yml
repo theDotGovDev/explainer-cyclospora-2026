@@ -1,0 +1,92 @@
+name: Freshness check
+
+# An outbreak page that quietly goes stale is the main failure mode for this
+# project: the numbers still look authoritative, but they describe a situation
+# that has moved on. This opens a tracking issue when the data ages past the
+# limit, so staleness is visible instead of silent.
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'  # Mondays, 13:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  freshness:
+    name: Flag stale outbreak data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Measure data age
+        id: age
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime, json, pathlib
+          d = json.loads(pathlib.Path("data/outbreak.json").read_text())
+          as_of = datetime.date.fromisoformat(d["as_of"])
+          age = (datetime.date.today() - as_of).days
+          print(f"as_of={as_of}")
+          print(f"days={age}")
+          print(f"stale={'true' if age > 21 else 'false'}")
+          PY
+
+      - name: Open or update the staleness issue
+        if: steps.age.outputs.stale == 'true'
+        uses: actions/github-script@v7
+        env:
+          AS_OF: ${{ steps.age.outputs.as_of }}
+          DAYS: ${{ steps.age.outputs.days }}
+        with:
+          script: |
+            const { AS_OF, DAYS } = process.env;
+            const title = 'Outbreak data needs re-verification';
+            const body = [
+              `\`data/outbreak.json\` carries \`as_of: ${AS_OF}\`, which is **${DAYS} days old**.`,
+              '',
+              'The site presents case counts, recall scope and per-food risk estimates that',
+              'move as the outbreak evolves. Please re-verify against the primary sources and',
+              'either update the data or confirm it is still current.',
+              '',
+              '### Checklist',
+              '',
+              '- [ ] Re-check the [CDC outbreak page](https://www.cdc.gov/cyclosporiasis/outbreaks/07-26/index.html) and [CDC surveillance](https://www.cdc.gov/cyclosporiasis/php/surveillance/index.html)',
+              '- [ ] Re-check the [FDA investigation page](https://www.fda.gov/food/outbreaks-foodborne-illness/investigation-15-state-outbreak-cyclospora-illnesses-iceberg-lettuce-july-2026) and [FDA recalls](https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts)',
+              '- [ ] Update counts, hospitalizations, deaths and state list in `data/outbreak.json`',
+              '- [ ] If a new commodity was named, update its row and `status` in `data/foods.json`',
+              '- [ ] If the recall was expanded or closed, update the recall block',
+              '- [ ] Bump `as_of` and `data_current_through`',
+              '- [ ] Run `python3 build.py && python3 tools/validate.py`, commit `site/`',
+              '',
+              '_Opened automatically by the freshness workflow._',
+            ].join('\n');
+
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'stale-data',
+            });
+
+            if (existing.data.length) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.data[0].number, body,
+              });
+              core.notice(`Updated existing issue #${existing.data[0].number}`);
+            } else {
+              const created = await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ['stale-data'],
+              });
+              core.notice(`Opened issue #${created.data.number}`);
+            }
+
+      - name: Report
+        run: |
+          echo "as_of=${{ steps.age.outputs.as_of }} age=${{ steps.age.outputs.days }}d stale=${{ steps.age.outputs.stale }}" >> "$GITHUB_STEP_SUMMARY"
