@@ -6,32 +6,43 @@
 <title>Methodology - U.S. Cyclospora outbreak risk assessment</title>
 <meta name="description" content="How the per-serving risk estimates were calculated, what they assume, and where the method is weak.">
 <meta name="robots" content="index, follow">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" focusable="false"><symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4C10 4 4 9 4 16c0 2 .6 3.3 1.4 4.2C7 18 10 15.4 14 14c-3 2-5.6 4.6-7 8 1 .6 2.3 1 3.6 1C18 23 21 15 20 4Z"/></symbol><symbol id="i-herb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M12 13c0-3-2.2-5.5-5-6 0 3 2 5.6 5 6Z"/><path d="M12 13c0-3 2.2-5.5 5-6 0 3-2 5.6-5 6Z"/><path d="M12 8c0-2.5 1.5-4.5 3-5 0 2.5-1.2 4.4-3 5Z"/></symbol><symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8Z"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2"/></symbol><symbol id="i-cucumber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="9" width="17.6" height="6" rx="3"/><path d="M8 11.2v1.6M12 11v2M16 11.2v1.6"/></symbol><symbol id="i-onion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4 0-6.5-2.4-6.5-5.6C5.5 11.5 9 8 12 4c3 4 6.5 7.5 6.5 11.4C18.5 18.6 16 21 12 21Z"/><path d="M12 21V9"/></symbol><symbol id="i-berry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="14.5" r="3.2"/><circle cx="15" cy="14.5" r="3.2"/><circle cx="12" cy="9.5" r="3.2"/></symbol><symbol id="i-pod" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c2-7 8-11 16-11 0 8-5 15-12 15-2.6 0-4.4-1.6-4-4Z"/><circle cx="10" cy="12" r="1.1"/><circle cx="14" cy="9.5" r="1.1"/></symbol><symbol id="i-tomato" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"/><path d="M12 7V4"/><path d="M9 5.5 12 7l3-1.5"/></symbol><symbol id="i-fruit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7Z"/><path d="M12 7V3.5"/><path d="M12 4.5c1.6-1.4 3.4-1.6 4.5-1-.2 1.6-1.6 3-4.5 3"/></symbol><symbol id="i-cooked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z"/><path d="M20 12.5h1.5a1.5 1.5 0 0 1 0 3H20"/><path d="M9 7.5c0-1 1-1.5 1-2.5M12 7.5c0-1 1-1.5 1-2.5M15 7.5c0-1 1-1.5 1-2.5"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.4-4.4"/></symbol><symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c3.9 0 6.5-2.4 6.5-6 0-4.5-4.5-6.5-4-11-3 1.5-5 4.5-5 7.5 0 1-.7 1.5-1.3 1-.7-.6-.9-1.6-.9-2.5-1.3 1.5-2.3 3.4-2.3 5.5 0 3.3 2.6 5.5 7 5.5Z"/></symbol><symbol id="i-peel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c6-1 11-6 12-13"/><path d="M17 6c-6 0-10 4-11 10 4-1 7-3 8-6"/></symbol><symbol id="i-ban" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="m6.2 6.2 11.6 11.6"/></symbol><symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3.5 4.2 5.5 7 5.5 9.7A5.5 5.5 0 0 1 6.5 13.2C6.5 10.5 8.5 7.7 12 3.5Z"/></symbol><symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5 21 20H3Z"/><path d="M12 10.5v4"/><path d="M12 17.2v.1"/></symbol><symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 11v5.5"/><path d="M12 7.8v.1"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.6 4.5L19 7.5"/></symbol><symbol id="i-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="i-stethoscope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5a4 4 0 0 0 8 0V3"/><path d="M6 3H4.5M14 3h1.5"/><path d="M10 12v2.5a5 5 0 0 0 5 5 4 4 0 0 0 4-4V14"/><circle cx="19" cy="12.2" r="2"/></symbol></svg>
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="alert-bar" role="region" aria-label="Medical disclaimer">
-  <strong>Not medical advice.</strong> This is an independent, best-effort explainer.
-  If you are ill, contact a clinician. In an emergency, call 911.
+  <svg class="icon alert-icon" aria-hidden="true" focusable="false"><use href="#i-stethoscope"></use></svg>
+  <span><strong>Not medical advice.</strong> Independent, best-effort explainer.
+  If you are ill, contact a clinician. In an emergency, call 911.</span>
 </div>
 
 <header class="site-header">
-  <div class="wrap">
-    <p class="eyebrow">Independent explainer &middot; unaffiliated with CDC, FDA or any company</p>
-    <h1>U.S. Cyclospora outbreak: practical risk assessment</h1>
-    <p class="lede">How the per-serving risk estimates were calculated, what they assume, and where the method is weak.</p>
-    <p class="asof">Information current through <time datetime="2026-08-06">2026-08-06</time>.
-       Outbreak data changes frequently &mdash; verify against the primary sources before acting.</p>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m21.2 21.2 6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M18.5 9.2c-6 0-9.6 3-9.6 7.2 0 1.2.4 2 .9 2.5 1-1.3 2.8-2.9 5.2-3.7-1.8 1.2-3.4 2.7-4.2 4.8.6.3 1.4.6 2.2.6 4.4 0 6.2-4.8 5.5-11.4Z" fill="currentColor"/></svg>
+      <span class="brand-text">
+        <span class="brand-name">Cyclospora Risk</span>
+        <span class="brand-sub">2026 U.S. outbreak &middot; independent explainer</span>
+      </span>
+    </a>
     <nav class="site-nav" aria-label="Primary">
-        <a href="index.html">Risk table</a>
+        <a href="index.html">Risk by food</a>
         <a href="methodology.html" class="active" aria-current="page">Methodology</a>
         <a href="sources.html">Sources</a>
     </nav>
   </div>
 </header>
 
-<main id="main" class="wrap">
+<main id="main">
+
+<div class="wrap page-body">
+<h1>Methodology</h1>
+<p class="page-lede">How the per-serving risk estimates were calculated, what they
+   assume, and where the method is weak.</p>
 
 <section aria-labelledby="m1">
   <h2 id="m1">What these numbers are</h2>
@@ -90,21 +101,20 @@
      A typical person eats on the order of 100&ndash;200 servings of raw produce in that
      window. That implies an <strong>average risk of about 1 in 40,000 to 1 in 700,000 per
      raw produce serving</strong>, across all produce.</p>
-  <p>Every per-food number on the risk table should sit sensibly around that anchor &mdash;
-     implicated foods above it, cooked and peeled foods well below it. They do. That
-     consistency check is the main reason to trust the <em>ordering</em> of the table even
-     though the absolute values are soft.</p>
+  <p>Every per-food number should sit sensibly around that anchor &mdash; implicated foods
+     above it, cooked and peeled foods well below it. They do. That consistency check is the
+     main reason to trust the <em>ordering</em> of the estimates even though the absolute
+     values are soft.</p>
 </section>
 
 <section aria-labelledby="m3">
   <h2 id="m3">How mitigation effects were estimated</h2>
   <ul class="method-list">
     <li><strong>Cooking (to ~158 F / 70 C):</strong> treated as near-complete elimination,
-        two to three orders of magnitude. This is the best-supported control and the reason
-        cooked vegetables sit at the bottom of the table.</li>
-    <li><strong>Peeling:</strong> treated as roughly one to two orders of magnitude, since
-        contamination is a surface phenomenon. Discounted slightly for knife
-        cross-contamination from rind to flesh.</li>
+        two to three orders of magnitude. This is the best-supported control.</li>
+    <li><strong>Peeling:</strong> roughly one to two orders of magnitude, since contamination
+        is a surface phenomenon. Discounted slightly for knife cross-contamination from rind
+        to flesh.</li>
     <li><strong>Avoiding recalled product:</strong> the dominant effect for iceberg, worth
         several orders of magnitude, because it removes the implicated supply entirely rather
         than reducing dose.</li>
@@ -115,10 +125,10 @@
     <li><strong>Choosing whole heads over precut or bagged:</strong> roughly a factor of two
         to five, reflecting less handling and fewer source fields pooled per package rather
         than any effect on contamination itself.</li>
-    <li><strong>Retailer recall programs:</strong> a modest effect, and one that acts on speed
-        of removal rather than probability of contamination. Loyalty-card-linked notification
-        shortens the window during which a household keeps eating a recalled product, but
-        cannot act before a recall is issued.</li>
+    <li><strong>Retailer recall programs:</strong> a modest effect, acting on speed of removal
+        rather than probability of contamination. Loyalty-card notification shortens the window
+        during which a household keeps eating a recalled product, but cannot act before a
+        recall is issued.</li>
   </ul>
 </section>
 
@@ -127,7 +137,7 @@
   <ol class="weaknesses">
     <li><strong>The underdiagnosis multiplier dominates everything.</strong> A range of
         100,000 to 900,000 true illnesses is a factor of nine, and it propagates into every
-        cell of the table.</li>
+        number on the site.</li>
     <li><strong>Per-capita availability is not consumption.</strong> USDA availability data
         does not subtract household and retail waste, which is substantial for leafy greens.
         This inflates the serving denominator and therefore understates per-serving risk,
@@ -138,14 +148,26 @@
     <li><strong>Attribution across four concurrent investigations is unresolved.</strong>
         Most 2026 cases are not tied to any cluster. Splitting illnesses between iceberg
         lettuce and other commodities involves judgment, and if cilantro or cucumbers are
-        later confirmed, their rows should move up and iceberg's should move down.</li>
+        later confirmed, their estimates should move up and iceberg's down.</li>
     <li><strong>No positive product sample exists.</strong> The iceberg attribution rests
         entirely on epidemiology and traceback. That is legitimate and often decisive
         evidence, but it means we cannot calibrate against a measured contamination rate.</li>
     <li><strong>Risk is not static.</strong> These estimates describe the current window.
-        Post-recall, iceberg risk falls; if a new commodity is named, that row is wrong until
-        updated.</li>
+        Post-recall, iceberg risk falls; if a new commodity is named, that estimate is wrong
+        until updated.</li>
   </ol>
+</section>
+
+<section aria-labelledby="mcolor">
+  <h2 id="mcolor">Why the risk scale is not red-amber-green</h2>
+  <p>The obvious colour scheme for a risk page is a traffic light. We measured it and
+     rejected it. Against the green used for low risk, the orange used for moderate risk
+     separates by only &Delta;E 5.6 under protanopia &mdash; far below the &Delta;E 8 floor
+     for distinguishable marks. A red-amber-green risk scale is close to unreadable for
+     exactly the people who most need to read a risk scale.</p>
+  <p>The chart therefore uses a single blue hue where <strong>lightness</strong> carries
+     magnitude, which survives all common forms of colour-vision deficiency. Every mark also
+     carries a text label, so colour is never the only channel.</p>
 </section>
 
 <section aria-labelledby="m5">
@@ -155,7 +177,7 @@
      were therefore obtained from <strong>search-indexed summaries of the agency pages and from
      reputable secondary reporting</strong> that cites them, rather than from a direct read of
      the primary documents.</p>
-  <p>We are stating this plainly because it matters for how much weight to give these numbers.
+  <p>We state this plainly because it matters for how much weight to give these numbers.
      The practical consequences:</p>
   <ul>
     <li>Exact figures may be off, or may reflect a snapshot older than the date on this page.</li>
@@ -164,6 +186,10 @@
     <li>Primary sources are linked throughout and on the <a href="sources.html">sources page</a>.
         Where they differ from anything here, <strong>they are correct and this page is not</strong>.</li>
   </ul>
+  <p>A related note on link checking: fda.gov returns HTTP 404 to automated requests for
+     every URL including its own homepage, where cdc.gov returns 403. Both are blocking
+     automation; only the status code differs. An automated checker that treats 404 as
+     "page missing" will wrongly report the FDA citations as dead.</p>
   <p>Anyone rebuilding this site from an unrestricted network should re-verify every figure in
      <code>data/outbreak.json</code> against the primary CDC and FDA pages first.</p>
 </section>
@@ -172,16 +198,17 @@
   <h2 id="m6">Reproducing and updating this</h2>
   <p>All content lives in <code>data/outbreak.json</code>, <code>data/foods.json</code> and
      <code>data/sources.json</code>. Editing those and running <code>python3 build.py</code>
-     regenerates the site. There are no dependencies and no build toolchain. Every figure is
-     meant to be traceable to a numbered entry on the sources page; if you find one that
-     is not, that is a bug worth filing.</p>
+     regenerates the site; <code>python3 tools/validate.py</code> checks it. There are no
+     dependencies and no build toolchain. Every figure should be traceable to a numbered entry
+     on the sources page; if you find one that is not, that is a bug worth filing.</p>
 </section>
+</div>
 
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <h2>Disclaimers and limitations</h2>
+    <h2><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg> Disclaimers and limitations</h2>
     <ol class="disclaimers">
       <li><strong>This is not medical advice.</strong> Nothing here diagnoses, treats or
           prevents disease, and it is not a substitute for a licensed clinician. Cyclosporiasis
@@ -217,9 +244,12 @@
           concentrated in the outbreak states.</li>
       <li><strong>Do not use this for clinical, regulatory, legal or commercial decisions.</strong>
           It is written for members of the public deciding what to eat.</li>
-      <li><strong>Companies are named only because official sources named them.</strong>
-          Naming a firm or product reflects the public record of this investigation and is not
-          an allegation of wrongdoing beyond what agencies have stated.</li>
+      <li><strong>No affiliation, and no agency branding.</strong> This site is not affiliated
+          with, endorsed by, or connected to CDC, FDA, any state health department or any
+          company. No agency logo appears here, deliberately: agency marks beside our own
+          estimates would imply an endorsement that does not exist. Companies are named only
+          because official sources named them, which is not an allegation of wrongdoing beyond
+          what agencies have stated.</li>
       <li><strong>Do not read this as a reason to avoid fruits and vegetables.</strong> The
           health benefits of produce substantially outweigh these risks for nearly everyone.
           <a href="https://www.consumerreports.org/health/food-safety/you-shouldnt-avoid-fruits-and-vegetables-due-to-cyclospora-a9570579349/" rel="noopener">Consumer
@@ -234,5 +264,6 @@
        Content current through 2026-08-06.</p>
   </div>
 </footer>
+
 </body>
 </html>

@@ -18,7 +18,17 @@
       "risk_residual": "Below 1 in 1,000,000",
       "residual_note": "The product has been off the market since mid-July and is long past shelf life, so present-day residual risk is driven by the recall having been effective, not by anything a consumer does now.",
       "confidence": "moderate",
-      "sources": ["fda-recall", "fda-9state", "cdc-outbreak", "nbc-source"]
+      "sources": [
+        "fda-recall",
+        "fda-9state",
+        "cdc-outbreak",
+        "nbc-source"
+      ],
+      "icon": "leaf",
+      "scale": {
+        "low": 200,
+        "high": 2000
+      }
     },
     {
       "name": "Restaurant / foodservice iceberg lettuce",
@@ -30,7 +40,16 @@
       "risk_residual": "~1 in 100,000 to 1 in 1,000,000",
       "residual_note": "Residual risk reflects that foodservice shredded lettuce involves heavy handling and pooled supply, so a future contaminated lot would again spread widely before detection.",
       "confidence": "low-moderate",
-      "sources": ["fda-9state", "cdc-outbreak", "cnn-safe-food"]
+      "sources": [
+        "fda-9state",
+        "cdc-outbreak",
+        "cnn-safe-food"
+      ],
+      "icon": "leaf",
+      "scale": {
+        "low": 20000,
+        "high": 200000
+      }
     },
     {
       "name": "Bagged / packaged salad mixes containing iceberg",
@@ -42,7 +61,16 @@
       "risk_residual": "~1 in 100,000 to 1 in 1,000,000",
       "residual_note": "Checking recall lists is effective but lags: a contaminated lot circulates before it is identified. That lag is why residual risk does not fall to the level of whole-head produce.",
       "confidence": "low-moderate",
-      "sources": ["cnn-safe-food", "fda-recall", "time-experts"]
+      "sources": [
+        "cnn-safe-food",
+        "fda-recall",
+        "time-experts"
+      ],
+      "icon": "bag",
+      "scale": {
+        "low": 10000,
+        "high": 100000
+      }
     },
     {
       "name": "Non-recalled iceberg lettuce (whole head, retail)",
@@ -54,7 +82,17 @@
       "risk_residual": "~1 in 200,000 to 1 in 2,000,000",
       "residual_note": "Note that washing contributes little here. The gain comes from avoiding the implicated supply chain and from less handling, not from the rinse.",
       "confidence": "low",
-      "sources": ["cnn-safe-food", "time-experts", "usda-lettuce", "usnews-falsepos"]
+      "sources": [
+        "cnn-safe-food",
+        "time-experts",
+        "usda-lettuce",
+        "usnews-falsepos"
+      ],
+      "icon": "leaf",
+      "scale": {
+        "low": 100000,
+        "high": 1000000
+      }
     },
     {
       "name": "Cilantro",
@@ -66,7 +104,15 @@
       "risk_residual": "Below 1 in 1,000,000 if cooked; ~1 in 50,000 to 1 in 500,000 if only rinsed",
       "residual_note": "The gap between those two numbers is the single largest mitigation effect on this table. Heat works; washing does not.",
       "confidence": "low",
-      "sources": ["cr-consumers", "cnn-safe-food"]
+      "sources": [
+        "cr-consumers",
+        "cnn-safe-food"
+      ],
+      "icon": "herb",
+      "scale": {
+        "low": 10000,
+        "high": 100000
+      }
     },
     {
       "name": "Fresh parsley",
@@ -77,7 +123,14 @@
       "mitigation": "Cook it into the dish rather than using it as a raw finish. Dried parsley carries no meaningful risk.",
       "risk_residual": "Below 1 in 1,000,000 if cooked or dried",
       "confidence": "low",
-      "sources": ["cnn-safe-food"]
+      "sources": [
+        "cnn-safe-food"
+      ],
+      "icon": "herb",
+      "scale": {
+        "low": 20000,
+        "high": 200000
+      }
     },
     {
       "name": "Cucumbers",
@@ -88,7 +141,14 @@
       "mitigation": "Peel. Peeling physically removes the contaminated surface and is far more effective than washing. Wash before peeling, and do not let the knife carry contamination onto the flesh.",
       "risk_residual": "Below 1 in 1,000,000 peeled",
       "confidence": "low",
-      "sources": ["cr-consumers"]
+      "sources": [
+        "cr-consumers"
+      ],
+      "icon": "cucumber",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      }
     },
     {
       "name": "Onions (raw)",
@@ -99,7 +159,14 @@
       "mitigation": "Cooking eliminates the risk. Removing outer layers before use also helps.",
       "risk_residual": "Below 1 in 2,000,000",
       "confidence": "low",
-      "sources": ["cr-consumers"]
+      "sources": [
+        "cr-consumers"
+      ],
+      "icon": "onion",
+      "scale": {
+        "low": 100000,
+        "high": 1000000
+      }
     },
     {
       "name": "Romaine lettuce",
@@ -110,7 +177,15 @@
       "mitigation": "Whole heads over bagged hearts, discard outer leaves, rinse under running water. A reasonable substitute for iceberg during this outbreak.",
       "risk_residual": "~1 in 500,000 to 1 in 5,000,000",
       "confidence": "low-moderate",
-      "sources": ["cnn-safe-food", "time-experts"]
+      "sources": [
+        "cnn-safe-food",
+        "time-experts"
+      ],
+      "icon": "leaf",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      }
     },
     {
       "name": "Spinach",
@@ -121,18 +196,33 @@
       "mitigation": "Standard washing. No outbreak-specific precaution is currently indicated. Cooking eliminates residual risk if you want to be conservative.",
       "risk_residual": "~1 in 1,000,000 to 1 in 10,000,000",
       "confidence": "moderate",
-      "sources": ["cnn-safe-food"]
+      "sources": [
+        "cnn-safe-food"
+      ],
+      "icon": "leaf",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      }
     },
     {
       "name": "Fresh basil",
       "detail": "Not implicated in 2026, but basil has a real U.S. outbreak history, including outbreaks traced to imported basil in 2019 and 2020.",
       "status": "historical",
-      "band": "low",
+      "band": "low-moderate",
       "risk_unmitigated": "~1 in 50,000 to 1 in 500,000",
       "mitigation": "Cook it into sauces rather than using raw. Raw pesto and raw garnish are the higher-exposure uses.",
       "risk_residual": "Below 1 in 1,000,000 cooked",
       "confidence": "low",
-      "sources": ["cnn-safe-food", "fda-cyclospora"]
+      "sources": [
+        "cnn-safe-food",
+        "fda-cyclospora"
+      ],
+      "icon": "herb",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      }
     },
     {
       "name": "Raspberries, blackberries and berry / fruit mixes",
@@ -143,7 +233,15 @@
       "mitigation": "Delicate berries cannot be scrubbed and washing is only partially effective. Frozen berries used in baking or heated preparations carry effectively no risk.",
       "risk_residual": "~1 in 200,000 to 1 in 2,000,000 raw; below 1 in 5,000,000 heated",
       "confidence": "low",
-      "sources": ["cnn-safe-food", "fda-cyclospora"]
+      "sources": [
+        "cnn-safe-food",
+        "fda-cyclospora"
+      ],
+      "icon": "berry",
+      "scale": {
+        "low": 100000,
+        "high": 1000000
+      }
     },
     {
       "name": "Snap peas",
@@ -154,7 +252,14 @@
       "mitigation": "Blanch or stir-fry. Cooking eliminates the risk.",
       "risk_residual": "Below 1 in 5,000,000 cooked",
       "confidence": "low",
-      "sources": ["cnn-safe-food"]
+      "sources": [
+        "cnn-safe-food"
+      ],
+      "icon": "pod",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      }
     },
     {
       "name": "Tomatoes",
@@ -165,7 +270,14 @@
       "mitigation": "Rinse and rub under running water. No outbreak-specific precaution indicated.",
       "risk_residual": "Below 1 in 5,000,000",
       "confidence": "moderate",
-      "sources": ["cnn-safe-food"]
+      "sources": [
+        "cnn-safe-food"
+      ],
+      "icon": "tomato",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      }
     },
     {
       "name": "Peeled fruit (banana, orange, melon, avocado)",
@@ -176,7 +288,15 @@
       "mitigation": "Scrub firm rinds such as melon before cutting, so the knife does not drag contamination from rind into flesh. This cross-contamination step is the only real risk pathway here.",
       "risk_residual": "Below 1 in 10,000,000",
       "confidence": "moderate",
-      "sources": ["abc-tips", "canada-prevention"]
+      "sources": [
+        "abc-tips",
+        "canada-prevention"
+      ],
+      "icon": "fruit",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      }
     },
     {
       "name": "Cooked vegetables",
@@ -187,7 +307,16 @@
       "mitigation": "Cooking is the definitive control for Cyclospora. The remaining risk is not the cooked food itself but cross-contamination from raw produce handled on the same board or with the same knife.",
       "risk_residual": "Negligible",
       "confidence": "high",
-      "sources": ["michigan", "canada-prevention", "abc-tips"]
+      "sources": [
+        "michigan",
+        "canada-prevention",
+        "abc-tips"
+      ],
+      "icon": "cooked",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      }
     }
   ]
 }

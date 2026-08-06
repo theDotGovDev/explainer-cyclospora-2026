@@ -16,6 +16,9 @@ import pathlib
 import re
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+from build import numeric_band  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 SITE = ROOT / "site"
@@ -65,6 +68,26 @@ def check_data(outbreak, foods, sources):
                 fail(f"food {f.get('name', '?')!r} missing {field}")
         if f.get("status") not in foods["status_legend"]:
             fail(f"food {f['name']!r} has unknown status {f.get('status')!r}")
+
+        # The displayed band is derived from `scale`. The authored `band` is
+        # kept as a statement of intent and must agree, so a mistyped range or
+        # a mislabelled food is caught here rather than showing up as two
+        # identically-placed bars in different colours on the chart.
+        sc = f.get("scale") or {}
+        if not sc.get("low") or not sc.get("high"):
+            fail(f"food {f['name']!r} is missing scale.low / scale.high")
+        elif sc["low"] > sc["high"]:
+            fail(f"food {f['name']!r} has scale.low > scale.high")
+        else:
+            coarse = {"high": "high", "moderate": "moderate",
+                      "low-moderate": "moderate", "low": "low",
+                      "very-low": "very-low"}.get(f.get("band"))
+            if coarse and coarse != numeric_band(sc):
+                fail(f"food {f['name']!r} is authored as band {f['band']!r} but "
+                     f"its range {sc['low']}-{sc['high']} computes to "
+                     f"{numeric_band(sc)!r}")
+        if not f.get("icon"):
+            fail(f"food {f['name']!r} has no icon")
         for sid in f.get("sources", []):
             if sid not in smap:
                 fail(f"food {f['name']!r} cites unknown source {sid!r}")
@@ -193,9 +216,8 @@ def check_provenance():
     for name in PAGES:
         text = (SITE / name).read_text(encoding="utf-8")
         cites = len(re.findall(r'<sup class="cite">', text))
-        marks = len(re.findall(r'<span class="prov prov-', text))
-        if name == "index.html":
-            marks -= 3  # the three legend swatches
+        # Legend/illustrative swatches carry data-sample and are not claims.
+        marks = len(re.findall(r'<span class="prov prov-[a-z-]+"(?! data-sample)', text))
         if cites and marks < cites:
             fail(f"{name}: {cites} citations but only {marks} sourcing markers")
 

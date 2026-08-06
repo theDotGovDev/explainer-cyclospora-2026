@@ -3,174 +3,833 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>U.S. Cyclospora outbreak: practical risk assessment by food</title>
+<title>Is it safe to eat? U.S. Cyclospora outbreak risk by food</title>
 <meta name="description" content="Actionable, source-cited risk assessment for the 2026 U.S. Cyclospora outbreak, with per-serving estimates and mitigations by food.">
 <meta name="robots" content="index, follow">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" focusable="false"><symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4C10 4 4 9 4 16c0 2 .6 3.3 1.4 4.2C7 18 10 15.4 14 14c-3 2-5.6 4.6-7 8 1 .6 2.3 1 3.6 1C18 23 21 15 20 4Z"/></symbol><symbol id="i-herb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M12 13c0-3-2.2-5.5-5-6 0 3 2 5.6 5 6Z"/><path d="M12 13c0-3 2.2-5.5 5-6 0 3-2 5.6-5 6Z"/><path d="M12 8c0-2.5 1.5-4.5 3-5 0 2.5-1.2 4.4-3 5Z"/></symbol><symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8Z"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2"/></symbol><symbol id="i-cucumber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="9" width="17.6" height="6" rx="3"/><path d="M8 11.2v1.6M12 11v2M16 11.2v1.6"/></symbol><symbol id="i-onion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4 0-6.5-2.4-6.5-5.6C5.5 11.5 9 8 12 4c3 4 6.5 7.5 6.5 11.4C18.5 18.6 16 21 12 21Z"/><path d="M12 21V9"/></symbol><symbol id="i-berry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="14.5" r="3.2"/><circle cx="15" cy="14.5" r="3.2"/><circle cx="12" cy="9.5" r="3.2"/></symbol><symbol id="i-pod" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c2-7 8-11 16-11 0 8-5 15-12 15-2.6 0-4.4-1.6-4-4Z"/><circle cx="10" cy="12" r="1.1"/><circle cx="14" cy="9.5" r="1.1"/></symbol><symbol id="i-tomato" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"/><path d="M12 7V4"/><path d="M9 5.5 12 7l3-1.5"/></symbol><symbol id="i-fruit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7Z"/><path d="M12 7V3.5"/><path d="M12 4.5c1.6-1.4 3.4-1.6 4.5-1-.2 1.6-1.6 3-4.5 3"/></symbol><symbol id="i-cooked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z"/><path d="M20 12.5h1.5a1.5 1.5 0 0 1 0 3H20"/><path d="M9 7.5c0-1 1-1.5 1-2.5M12 7.5c0-1 1-1.5 1-2.5M15 7.5c0-1 1-1.5 1-2.5"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.4-4.4"/></symbol><symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c3.9 0 6.5-2.4 6.5-6 0-4.5-4.5-6.5-4-11-3 1.5-5 4.5-5 7.5 0 1-.7 1.5-1.3 1-.7-.6-.9-1.6-.9-2.5-1.3 1.5-2.3 3.4-2.3 5.5 0 3.3 2.6 5.5 7 5.5Z"/></symbol><symbol id="i-peel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c6-1 11-6 12-13"/><path d="M17 6c-6 0-10 4-11 10 4-1 7-3 8-6"/></symbol><symbol id="i-ban" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="m6.2 6.2 11.6 11.6"/></symbol><symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3.5 4.2 5.5 7 5.5 9.7A5.5 5.5 0 0 1 6.5 13.2C6.5 10.5 8.5 7.7 12 3.5Z"/></symbol><symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5 21 20H3Z"/><path d="M12 10.5v4"/><path d="M12 17.2v.1"/></symbol><symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 11v5.5"/><path d="M12 7.8v.1"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.6 4.5L19 7.5"/></symbol><symbol id="i-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="i-stethoscope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5a4 4 0 0 0 8 0V3"/><path d="M6 3H4.5M14 3h1.5"/><path d="M10 12v2.5a5 5 0 0 0 5 5 4 4 0 0 0 4-4V14"/><circle cx="19" cy="12.2" r="2"/></symbol></svg>
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="alert-bar" role="region" aria-label="Medical disclaimer">
-  <strong>Not medical advice.</strong> This is an independent, best-effort explainer.
-  If you are ill, contact a clinician. In an emergency, call 911.
+  <svg class="icon alert-icon" aria-hidden="true" focusable="false"><use href="#i-stethoscope"></use></svg>
+  <span><strong>Not medical advice.</strong> Independent, best-effort explainer.
+  If you are ill, contact a clinician. In an emergency, call 911.</span>
 </div>
 
 <header class="site-header">
-  <div class="wrap">
-    <p class="eyebrow">Independent explainer &middot; unaffiliated with CDC, FDA or any company</p>
-    <h1>U.S. Cyclospora outbreak: practical risk assessment</h1>
-    <p class="lede">Actionable, source-cited risk assessment for the 2026 U.S. Cyclospora outbreak, with per-serving estimates and mitigations by food.</p>
-    <p class="asof">Information current through <time datetime="2026-08-06">2026-08-06</time>.
-       Outbreak data changes frequently &mdash; verify against the primary sources before acting.</p>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m21.2 21.2 6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M18.5 9.2c-6 0-9.6 3-9.6 7.2 0 1.2.4 2 .9 2.5 1-1.3 2.8-2.9 5.2-3.7-1.8 1.2-3.4 2.7-4.2 4.8.6.3 1.4.6 2.2.6 4.4 0 6.2-4.8 5.5-11.4Z" fill="currentColor"/></svg>
+      <span class="brand-text">
+        <span class="brand-name">Cyclospora Risk</span>
+        <span class="brand-sub">2026 U.S. outbreak &middot; independent explainer</span>
+      </span>
+    </a>
     <nav class="site-nav" aria-label="Primary">
-        <a href="index.html" class="active" aria-current="page">Risk table</a>
+        <a href="index.html" class="active" aria-current="page">Risk by food</a>
         <a href="methodology.html">Methodology</a>
         <a href="sources.html">Sources</a>
     </nav>
   </div>
+  <nav class="jump" aria-label="Sections on this page"><div class="wrap jump-inner"><span class="jump-label">On this page</span><a href="#check">Check a food</a><a href="#scale">Risk scale</a><a href="#works">What works</a><a href="#status">Outbreak</a><a href="#evidence">Evidence</a><a href="#care">Seek care</a></div></nav>
 </header>
 
-<main id="main" class="wrap">
+<main id="main">
 
-<section class="bottom-line" aria-labelledby="bl">
-  <h2 id="bl">The bottom line</h2>
-  <ul class="takeaways">
-    <li><strong>One product is doing most of the damage.</strong> Iceberg lettuce from
-        Taylor Farms de Mexico, sourced from central Mexico, was recalled on
-        2026-07-17. That product is off the market. If you are not eating recalled
-        product, your per-serving risk from any single food on this page is
-        well under 1 in 10,000.</li>
-    <li><strong>Washing is not a mitigation for this parasite.</strong> Cyclospora oocysts
-        resist chlorine and do not rinse off cleanly. Cooking to about 158&nbsp;F (70&nbsp;C)
-        and peeling are the only consumer controls that work reliably. Most
-        "wash your produce better" advice does not apply here.</li>
-    <li><strong>Substitute within produce, not away from it.</strong> Swapping iceberg for
-        romaine or spinach, and cooking herbs instead of using them raw, captures most of
-        the available risk reduction at essentially no nutritional cost.</li>
-    <li><strong>The season is bigger than the recall.</strong> FDA has described four
-        separate 2026 Cyclospora investigations, and most reported cases are not yet tied to
-        any cluster. Expect further named commodities.</li>
-  </ul>
-</section>
-
-<section class="prov-key" aria-labelledby="prov-h">
-  <h2 id="prov-h">How to read the sourcing markers</h2>
-  <p>Every figure and claim on this site is tagged with where it came from and, where it
-     is a moving number, the date it describes. Nothing here is presented as fact without
-     showing you what is behind it.</p>
-  <ul class="prov-legend">
-    <li><span class="prov prov-agency">agency</span> Backed by a government, public health
-        or peer-reviewed source.</li>
-    <li><span class="prov prov-agency-news">agency + news</span> Backed by a mix of agency
-        sources and news reporting.</li>
-    <li><span class="prov prov-news">news</span> Backed only by news or consumer reporting,
-        and not confirmed against a primary agency document. Treat these as the weakest
-        claims on the page.</li>
-    <li><span class="dated"><time datetime="2026-08-05">2026-08-05</time></span> The date
-        the figure describes &mdash; not the date you are reading it. Outbreak numbers move.</li>
-  </ul>
-  <p class="prov-caveat"><strong>Important:</strong> an <span class="prov prov-agency">agency</span>
-     marker means an agency is the origin of the claim, not that we read it off the agency's
-     own page. As explained in the <a href="methodology.html#m5">methodology</a>, cdc.gov and
-     fda.gov were unreachable from the build environment, so most agency figures here arrived
-     by way of sources that cite them.</p>
-</section>
-
-<section aria-labelledby="numbers">
-  <h2 id="numbers">Where the outbreak stands</h2>
-  <div class="stats">
-    <div class="stat">
-      <span class="stat-num">10,468</span>
-      <span class="stat-label">lab-confirmed cases since May&nbsp;1, 2026<sup class="cite">[<a href="sources.html#cdc-surveillance" title="Surveillance of Cyclosporiasis (CDC)">4</a>][<a href="sources.html#cdc-han" title="HAN 531: Domestically Acquired Cyclosporiasis Cases in Multiple U.S. States, 2026 (CDC Health Alert Network)">3</a>][<a href="sources.html#wadoh" title="2026 Cyclosporiasis Outbreak (Washington State Department of Health)">11</a>][<a href="sources.html#today-map" title="Cyclospora Outbreak 2026: Map, Foods to Avoid, States Most Impacted (TODAY)">27</a>][<a href="sources.html#cnn-deaths" title="First deaths reported in cyclosporiasis outbreak (CNN)">21</a>][<a href="sources.html#axios-deaths" title="Cyclospora outbreak causes first two deaths (Axios)">22</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-08-05">2026-08-05</time></span></span>
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap">
+    <p class="eyebrow"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg> Active outbreak &middot; updated 2026-08-06</p>
+    <h1 id="hero-h">Is it safe to eat?</h1>
+    <p class="hero-lede">Practical, source-cited risk estimates for the 2026 U.S.
+       <em>Cyclospora</em> outbreak &mdash; food by food, with what actually reduces
+       the risk and by how much.</p>
+    <div class="hero-answer">
+      <p><strong>The short version:</strong> one recalled product drove this outbreak
+         &mdash; iceberg lettuce from Taylor Farms de Mexico, pulled from the market on
+         2026-07-17. If you are not eating recalled product, your risk from any
+         single food below is well under 1 in 10,000. <strong>Washing does not work on
+         this parasite.</strong> Cooking and peeling do.</p>
     </div>
-    <div class="stat">
-      <span class="stat-num">12,255</span>
-      <span class="stat-label">additional probable cases under investigation<sup class="cite">[<a href="sources.html#cdc-surveillance" title="Surveillance of Cyclosporiasis (CDC)">4</a>][<a href="sources.html#cdc-han" title="HAN 531: Domestically Acquired Cyclosporiasis Cases in Multiple U.S. States, 2026 (CDC Health Alert Network)">3</a>][<a href="sources.html#wadoh" title="2026 Cyclosporiasis Outbreak (Washington State Department of Health)">11</a>][<a href="sources.html#today-map" title="Cyclospora Outbreak 2026: Map, Foods to Avoid, States Most Impacted (TODAY)">27</a>][<a href="sources.html#cnn-deaths" title="First deaths reported in cyclosporiasis outbreak (CNN)">21</a>][<a href="sources.html#axios-deaths" title="Cyclospora outbreak causes first two deaths (Axios)">22</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-08-05">2026-08-05</time></span></span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">517</span>
-      <span class="stat-label">hospitalizations<sup class="cite">[<a href="sources.html#cdc-surveillance" title="Surveillance of Cyclosporiasis (CDC)">4</a>][<a href="sources.html#cdc-han" title="HAN 531: Domestically Acquired Cyclosporiasis Cases in Multiple U.S. States, 2026 (CDC Health Alert Network)">3</a>][<a href="sources.html#wadoh" title="2026 Cyclosporiasis Outbreak (Washington State Department of Health)">11</a>][<a href="sources.html#today-map" title="Cyclospora Outbreak 2026: Map, Foods to Avoid, States Most Impacted (TODAY)">27</a>][<a href="sources.html#cnn-deaths" title="First deaths reported in cyclosporiasis outbreak (CNN)">21</a>][<a href="sources.html#axios-deaths" title="Cyclospora outbreak causes first two deaths (Axios)">22</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-08-05">2026-08-05</time></span></span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">2</span>
-      <span class="stat-label">deaths<sup class="cite">[<a href="sources.html#cnn-deaths" title="First deaths reported in cyclosporiasis outbreak (CNN)">21</a>][<a href="sources.html#axios-deaths" title="Cyclospora outbreak causes first two deaths (Axios)">22</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-08-03">2026-08-03</time></span></span>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#check"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Check a food</a>
+      <a class="btn" href="#works"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-flame"></use></svg> What actually works</a>
+      <a class="btn" href="#care"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stethoscope"></use></svg> When to seek care</a>
     </div>
   </div>
-  <p class="stat-foot">Domestically acquired illnesses with onset on or after May 1, 2026, as of 2026-08-05. Reported in roughly 45-47 states; secondary reporting indicates only New Mexico, Montana and Hawaii had reported zero cases since May 1.
-     Both deaths were reported in Michigan in people with significant underlying health conditions that may have been adversely affected by cyclosporiasis and dehydration.</p>
-
-  <h3>The implicated supply chain</h3>
-  <dl class="facts">
-    <dt>Vehicle</dt><dd>Iceberg lettuce<sup class="cite">[<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#cdc-investigation" title="Investigation Update: Cyclospora Outbreak, July 2026 (CDC)">2</a>][<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>][<a href="sources.html#fda-15state" title="Investigation of 15-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">7</a>][<a href="sources.html#cdc-newsroom" title="Cyclospora outbreak linked to iceberg lettuce expanded to four new states (CDC Newsroom)">5</a>][<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">23</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></dd>
-    <dt>Supplier</dt><dd>Taylor Farms de Mexico (Guanajuato, Mexico), lettuce sourced from central Mexico</dd>
-    <dt>How it surfaced</dt><dd>FDA announced an investigation into a 5-state outbreak linked to certain shredded iceberg lettuce from Mexico served at Taco Bell locations in Indiana, Kentucky, Michigan, Ohio and West Virginia. (2026-07-16)</dd>
-    <dt>Scope since</dt><dd>The cluster was subsequently described as a 9-state outbreak (adding Illinois, Kansas, Oklahoma and Pennsylvania), and FDA later published a 15-state investigation page.</dd>
-    <dt>Illness onsets</dt><dd>Illness onsets reported from May 13 through July 20, 2026</dd>
-    <dt>Evidence basis</dt><dd>Epidemiologic interviews plus product traceback. Traceback identified Taylor Farms de Mexico as the single supplier converging across the locations linked to illness.</dd>
-    <dt>Recall</dt><dd>All iceberg lettuce sourced from central Mexico, voluntarily withdrawn from U.S. retail and foodservice supply chains. Recalled shredded and chopped lettuce products were distributed to foodservice customers in more than two dozen states; secondary reporting cites 27 states. The recall notice also included Marketside-brand retail product sold at Walmart. The recall covers blended salad mixes that contain iceberg lettuce from this supplier, not only single-ingredient iceberg.<sup class="cite">[<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#abc-27states" title="Taylor Farms recalls lettuce in 27 states amid cyclosporiasis outbreak (ABC News)">24</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-07-17">2026-07-17</time></span></dd>
-    <dt>Recalled retail products</dt><dd>The Walmart retail portion was described as Marketside-brand &#x27;Iceberg Salad&#x27; in 12-oz and 24-oz sizes and &#x27;Shredded Lettuce&#x27; in 8-oz and 16-oz sizes, carrying Best if Used By dates from 7/18/2026 through 8/3/2026. Those use-by dates have now passed, so this detail matters mainly for identifying what was in circulation rather than what is still on a shelf.<sup class="cite">[<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-07-17">2026-07-17</time></span></dd>
-  </dl>
 </section>
 
-<section class="caveats" aria-labelledby="caveats-h">
-  <h2 id="caveats-h">What the evidence does and does not show</h2>
-  <p class="section-intro">Distinguishing confirmed findings from open questions and from
-     historical associations is the most decision-relevant part of this page.</p>
-    <div class="caveat">
-      <h3>No product sample has tested positive for Cyclospora<sup class="cite">[<a href="sources.html#usnews-falsepos" title="FDA: Iceberg Lettuce Recall Stands After False Positive For Cyclospora (U.S. News / HealthDay)">26</a>][<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></h3>
-      <p>The link between iceberg lettuce and this outbreak rests on epidemiologic and traceback evidence, not on a laboratory detection in food. A border sample initially flagged as positive was re-reviewed by FDA laboratory experts on July 19, 2026 and reclassified as a false positive - FDA concluded the finding did not represent true amplification. FDA stated this did not change the basis for the investigation or the recall, which rest on the epidemiologic data. Cyclospora is notoriously difficult to detect in food, so the absence of a positive sample is weak evidence of absence.</p>
-    </div>
-    <div class="caveat">
-      <h3>There is more than one outbreak happening at once<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>][<a href="sources.html#cnn-largest" title="Tracking the largest cyclosporiasis outbreak in the US (CNN)">20</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></h3>
-      <p>FDA has described four separate Cyclospora outbreak investigations in 2026. Some are tied to the large Midwest iceberg lettuce cluster, some involve single states, and many reported cases are not yet linked to any cluster. The iceberg lettuce recall therefore does not account for all illness this season.</p>
-    </div>
-    <div class="caveat">
-      <h3>Case counts in circulation are inconsistent<sup class="cite">[<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#fda-15state" title="Investigation of 15-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">7</a>][<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">23</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></h3>
-      <p>Published counts differ depending on whether they describe the whole 2026 domestically acquired season or only the iceberg lettuce cluster, and on the date of the snapshot. Outbreak-cluster counts reported in July and August 2026 ranged from roughly 1,947 illnesses in 9 states (with 98 hospitalizations) to roughly 6,358 illnesses in 15 states (with 278 hospitalizations). Treat any single number as a dated snapshot, not a current total.</p>
-    </div>
-    <div class="caveat">
-      <h3>Other commodities are under active traceback<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></h3>
-      <p>As of late July 2026, traceback in some of the 2026 investigations was reported to be focused on cilantro, onions and cucumbers. Public health officials in North Carolina indicated fresh parsley and cilantro may be behind the rise in cases in that state. These are open lines of inquiry, not conclusions.</p>
-    </div>
-</section>
+<section id="check" class="band-section" aria-labelledby="check-h">
+  <div class="wrap">
+    <h2 id="check-h"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Check a food</h2>
+    <p class="section-intro">Search or filter to find what you are about to eat.
+       Every card shows the estimated risk, the one thing worth doing about it, and
+       the risk remaining afterwards.</p>
 
-<section aria-labelledby="table-h">
-  <h2 id="table-h">Estimated risk by food</h2>
-  <p class="section-intro">Per single serving eaten in the United States during the current outbreak window. A serving is roughly 1 to 1.5 cups of raw greens (about 70-85 g), or a typical restaurant portion. All values are informed estimates produced by this project, not official statistics.
-     Read the columns together: a food can carry moderate unmitigated risk and still be a fine
-     choice if the mitigation is cheap and effective. See
-     <a href="methodology.html">how these were calculated</a>.</p>
+    <div class="filters">
+      <div class="search-wrap">
+        <svg class="icon search-icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+        <label class="vh" for="food-search">Search foods</label>
+        <input type="search" id="food-search" placeholder="Search: lettuce, cilantro, berries&hellip;"
+               autocomplete="off">
+      </div>
+      <div class="chips" role="group" aria-label="Filter by risk level">
+        <button type="button" class="chip is-on" data-filter="all">All 16</button>
+        <button type="button" class="chip chip-high" data-filter="high">Avoid</button>
+        <button type="button" class="chip chip-moderate" data-filter="moderate">Caution</button>
+        <button type="button" class="chip chip-low" data-filter="low">Low risk</button>
+        <button type="button" class="chip chip-very-low" data-filter="very-low">Very low</button>
+      </div>
+    </div>
+    <p class="filter-status" id="filter-status" role="status"></p>
 
-  <div class="est-warning" role="note">
-    <strong>These are informed estimates, not official statistics.</strong> No agency publishes
-    per-serving probabilities for these foods. The values below were derived by this project
-    from published case counts and consumption data, and are rounded to the nearest order of
-    magnitude. They are reliable for ranking foods against each other, and unreliable as
-    absolute probabilities.
+    <div class="cards" id="cards">
+      <article class="card card-high" data-name="recalled iceberg lettuce taylor farms de mexico product sourced from central mexico, as consumed before the july 17 recall took effect. mostly shredded/chopped foodservice packs, plus marketside retail product at walmart."
+               data-band="high">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg></span>
+          <h3>Recalled iceberg lettuce</h3>
+          <span class="band band-high">Avoid</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 200 to 1 in 2,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Do not eat. Discard, or return for refund. Washing does not work on this parasite. This is the one product where avoidance is the whole strategy.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 1,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-confirmed"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>Confirmed - implicated 2026</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Taylor Farms de Mexico product sourced from central Mexico, as consumed before the July 17 recall took effect. Mostly shredded/chopped foodservice packs, plus Marketside retail product at Walmart.<sup class="cite">[<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>][<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">23</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            <p class="residual-note">The product has been off the market since mid-July and is long past shelf life, so present-day residual risk is driven by the recall having been effective, not by anything a consumer does now.</p>
+            <p class="conf">Confidence in this estimate:
+               <strong>moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-moderate" data-name="restaurant / foodservice iceberg lettuce shredded iceberg on tacos, burgers, sandwiches and salad bars. this is the exposure route that drove the outbreak: the initial cluster was traced to shredded lettuce served at taco bell locations in five states."
+               data-band="moderate">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg></span>
+          <h3>Restaurant / foodservice iceberg lettuce</h3>
+          <span class="band band-moderate">Caution</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 20,000 to 1 in 200,000 now; roughly 1 in 2,000 to 1 in 20,000 at the June to mid-July peak in affected states</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>The recalled supply has been withdrawn, which does most of the work. Beyond that: ask whether the location sourced from the recalled supplier, order items without shredded lettuce, or choose cooked menu items. Risk is concentrated in the outbreak states, not nationwide.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">~1 in 100,000 to 1 in 1,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-confirmed"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>Confirmed - implicated 2026</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Shredded iceberg on tacos, burgers, sandwiches and salad bars. This is the exposure route that drove the outbreak: the initial cluster was traced to shredded lettuce served at Taco Bell locations in five states.<sup class="cite">[<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>][<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            <p class="residual-note">Residual risk reflects that foodservice shredded lettuce involves heavy handling and pooled supply, so a future contaminated lot would again spread widely before detection.</p>
+            <p class="conf">Confidence in this estimate:
+               <strong>low to moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-moderate" data-name="bagged / packaged salad mixes containing iceberg blended mixes are explicitly within the recall scope where they contain iceberg from the implicated supplier."
+               data-band="moderate">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bag"></use></svg></span>
+          <h3>Bagged / packaged salad mixes containing iceberg</h3>
+          <span class="band band-moderate">Caution</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 10,000 to 1 in 100,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Check the product against current FDA recall listings. Prefer blends with no iceberg, or buy whole heads and cut them yourself. Precut and bagged products undergo more handling and pool more source fields per bag than a single head.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">~1 in 100,000 to 1 in 1,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-linked-by-recall"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bag"></use></svg>In recall scope</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Blended mixes are explicitly within the recall scope where they contain iceberg from the implicated supplier.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#time-experts" title="What Food Safety Experts Are Eating During the Cyclospora Outbreak (TIME)">28</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            <p class="residual-note">Checking recall lists is effective but lags: a contaminated lot circulates before it is identified. That lag is why residual risk does not fall to the level of whole-head produce.</p>
+            <p class="conf">Confidence in this estimate:
+               <strong>low to moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-low" data-name="non-recalled iceberg lettuce (whole head, retail) whole heads, predominantly domestic summer supply from california&#x27;s salinas valley rather than central mexico. read this row carefully: iceberg lettuce is the implicated commodity in this outbreak, and what is implicated is one supplier&#x27;s product, not the crop. traceback identifies the supply chains it can see, so the possibility that the implicated supply extends beyond the recall cannot be excluded, particularly given that no product sample ever tested positive."
+               data-band="low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg></span>
+          <h3>Non-recalled iceberg lettuce (whole head, retail)</h3>
+          <span class="band band-low">Low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 100,000 to 1 in 1,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Confirm the product is not covered by the recall. Buy whole heads rather than precut. Discard the outer leaves and rinse the rest under running water. Prefer retailers with fast, well-publicized recall programs and loyalty-card recall notification.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">~1 in 200,000 to 1 in 2,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-not-implicated"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Not implicated</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Whole heads, predominantly domestic summer supply from California&#x27;s Salinas Valley rather than central Mexico. Read this row carefully: iceberg lettuce IS the implicated commodity in this outbreak, and what is implicated is one supplier&#x27;s product, not the crop. Traceback identifies the supply chains it can see, so the possibility that the implicated supply extends beyond the recall cannot be excluded, particularly given that no product sample ever tested positive.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#time-experts" title="What Food Safety Experts Are Eating During the Cyclospora Outbreak (TIME)">28</a>][<a href="sources.html#usda-lettuce" title="Romaine and leaf lettuces almost as popular as head lettuce (per capita availability) (USDA Economic Research Service)">13</a>][<a href="sources.html#usnews-falsepos" title="FDA: Iceberg Lettuce Recall Stands After False Positive For Cyclospora (U.S. News / HealthDay)">26</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            <p class="residual-note">Note that washing contributes little here. The gain comes from avoiding the implicated supply chain and from less handling, not from the rinse.</p>
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-moderate" data-name="cilantro reported to be a focus of traceback in at least one 2026 investigation. north carolina officials indicated cilantro and parsley may be behind that state&#x27;s rise in cases. also carries the strongest historical record of any herb, from the 2013-2015 outbreaks traced to puebla, mexico."
+               data-band="moderate">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg></span>
+          <h3>Cilantro</h3>
+          <span class="band band-moderate">Caution</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 10,000 to 1 in 100,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Add it to hot dishes during cooking rather than as a raw garnish, or omit it while investigations are open. Rinsing helps only marginally: cilantro&#x27;s crinkled leaf surface is close to a worst case for mechanical removal of oocysts.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 1,000,000 if cooked; ~1 in 50,000 to 1 in 500,000 if only rinsed</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-under-traceback"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Under traceback</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Reported to be a focus of traceback in at least one 2026 investigation. North Carolina officials indicated cilantro and parsley may be behind that state&#x27;s rise in cases. Also carries the strongest historical record of any herb, from the 2013-2015 outbreaks traced to Puebla, Mexico.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            <p class="residual-note">The gap between those two numbers is the single largest mitigation effect on this table. Heat works; washing does not.</p>
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-moderate" data-name="fresh parsley flagged alongside cilantro by north carolina officials. same leaf structure and similar supply chains."
+               data-band="moderate">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg></span>
+          <h3>Fresh parsley</h3>
+          <span class="band band-moderate">Caution</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 20,000 to 1 in 200,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Cook it into the dish rather than using it as a raw finish. Dried parsley carries no meaningful risk.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 1,000,000 if cooked or dried</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-under-traceback"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Under traceback</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Flagged alongside cilantro by North Carolina officials. Same leaf structure and similar supply chains.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-moderate" data-name="cucumbers reported among the commodities under traceback in a 2026 investigation. no confirmed link."
+               data-band="moderate">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cucumber"></use></svg></span>
+          <h3>Cucumbers</h3>
+          <span class="band band-moderate">Caution</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 50,000 to 1 in 500,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Peel. Peeling physically removes the contaminated surface and is far more effective than washing. Wash before peeling, and do not let the knife carry contamination onto the flesh.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 1,000,000 peeled</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-under-traceback"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Under traceback</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Reported among the commodities under traceback in a 2026 investigation. No confirmed link.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-low" data-name="onions (raw) reported among commodities under traceback in a 2026 investigation. onions are usually cooked or have outer layers removed, which limits exposure."
+               data-band="low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-onion"></use></svg></span>
+          <h3>Onions (raw)</h3>
+          <span class="band band-low">Low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 100,000 to 1 in 1,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Cooking eliminates the risk. Removing outer layers before use also helps.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 2,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-under-traceback"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Under traceback</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Reported among commodities under traceback in a 2026 investigation. Onions are usually cooked or have outer layers removed, which limits exposure.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-low" data-name="romaine lettuce not named in the 2026 investigation. lettuce generally has appeared in past cyclosporiasis outbreaks, so this is not a zero-history commodity."
+               data-band="low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg></span>
+          <h3>Romaine lettuce</h3>
+          <span class="band band-low">Low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 200,000 to 1 in 2,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Whole heads over bagged hearts, discard outer leaves, rinse under running water. A reasonable substitute for iceberg during this outbreak.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">~1 in 500,000 to 1 in 5,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-historical"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>Historical only</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Not named in the 2026 investigation. Lettuce generally has appeared in past cyclosporiasis outbreaks, so this is not a zero-history commodity.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#time-experts" title="What Food Safety Experts Are Eating During the Cyclospora Outbreak (TIME)">28</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low to moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-low" data-name="spinach explicitly not named in the current outbreak investigation. reporting indicates cdc considers it safe to eat with standard washing."
+               data-band="low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg></span>
+          <h3>Spinach</h3>
+          <span class="band band-low">Low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 500,000 to 1 in 5,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Standard washing. No outbreak-specific precaution is currently indicated. Cooking eliminates residual risk if you want to be conservative.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">~1 in 1,000,000 to 1 in 10,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-not-implicated"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Not implicated</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Explicitly not named in the current outbreak investigation. Reporting indicates CDC considers it safe to eat with standard washing.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-moderate" data-name="fresh basil not implicated in 2026, but basil has a real u.s. outbreak history, including outbreaks traced to imported basil in 2019 and 2020."
+               data-band="moderate">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg></span>
+          <h3>Fresh basil</h3>
+          <span class="band band-moderate">Caution</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 50,000 to 1 in 500,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Cook it into sauces rather than using raw. Raw pesto and raw garnish are the higher-exposure uses.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 1,000,000 cooked</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-historical"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>Historical only</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Not implicated in 2026, but basil has a real U.S. outbreak history, including outbreaks traced to imported basil in 2019 and 2020.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#fda-cyclospora" title="Cyclospora (foodborne pathogen overview) (FDA)">9</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-low" data-name="raspberries, blackberries and berry / fruit mixes not implicated in 2026. historically the most famous u.s. cyclosporiasis vehicle, from the 1996-1997 outbreaks traced to imported guatemalan raspberries."
+               data-band="low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-berry"></use></svg></span>
+          <h3>Raspberries, blackberries and berry / fruit mixes</h3>
+          <span class="band band-low">Low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 100,000 to 1 in 1,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Delicate berries cannot be scrubbed and washing is only partially effective. Frozen berries used in baking or heated preparations carry effectively no risk.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">~1 in 200,000 to 1 in 2,000,000 raw; below 1 in 5,000,000 heated</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-historical"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>Historical only</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Not implicated in 2026. Historically the most famous U.S. cyclosporiasis vehicle, from the 1996-1997 outbreaks traced to imported Guatemalan raspberries.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#fda-cyclospora" title="Cyclospora (foodborne pathogen overview) (FDA)">9</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-low" data-name="snap peas not implicated in 2026. associated with a 2009 u.s. outbreak traced to guatemala."
+               data-band="low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pod"></use></svg></span>
+          <h3>Snap peas</h3>
+          <span class="band band-low">Low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 200,000 to 1 in 2,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Blanch or stir-fry. Cooking eliminates the risk.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 5,000,000 cooked</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-historical"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>Historical only</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Not implicated in 2026. Associated with a 2009 U.S. outbreak traced to Guatemala.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>low</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-very-low" data-name="tomatoes no association with the 2026 outbreak and no significant cyclosporiasis outbreak history. smooth skin makes mechanical removal of surface contamination comparatively effective."
+               data-band="very-low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tomato"></use></svg></span>
+          <h3>Tomatoes</h3>
+          <span class="band band-very-low">Very low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 1,000,000 to 1 in 10,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Rinse and rub under running water. No outbreak-specific precaution indicated.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 5,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-not-implicated"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Not implicated</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>No association with the 2026 outbreak and no significant cyclosporiasis outbreak history. Smooth skin makes mechanical removal of surface contamination comparatively effective.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-very-low" data-name="peeled fruit (banana, orange, melon, avocado) peeling removes the surface where oocysts sit. contamination is a surface phenomenon; it does not penetrate intact flesh."
+               data-band="very-low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-fruit"></use></svg></span>
+          <h3>Peeled fruit (banana, orange, melon, avocado)</h3>
+          <span class="band band-very-low">Very low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">~1 in 1,000,000 to 1 in 10,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Scrub firm rinds such as melon before cutting, so the knife does not drag contamination from rind into flesh. This cross-contamination step is the only real risk pathway here.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Below 1 in 10,000,000</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-not-implicated"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Not implicated</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Peeling removes the surface where oocysts sit. Contamination is a surface phenomenon; it does not penetrate intact flesh.<sup class="cite">[<a href="sources.html#abc-tips" title="Food safety tips to help prevent cyclosporiasis at home (ABC News)">25</a>][<a href="sources.html#canada-prevention" title="Prevention of cyclosporiasis (Cyclospora) (Public Health Agency of Canada)">10</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>moderate</strong></p>
+          </details>
+        </footer>
+      </article>
+      <article class="card card-very-low" data-name="cooked vegetables any vegetable heated through to about 158 f (70 c) or above."
+               data-band="very-low">
+        <header class="card-head">
+          <span class="card-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cooked"></use></svg></span>
+          <h3>Cooked vegetables</h3>
+          <span class="band band-very-low">Very low risk</span>
+        </header>
+        <dl class="card-body">
+          <dt>Estimated risk per serving</dt>
+          <dd class="card-risk">Below 1 in 10,000,000</dd>
+          <dt><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> What to do</dt>
+          <dd>Cooking is the definitive control for Cyclospora. The remaining risk is not the cooked food itself but cross-contamination from raw produce handled on the same board or with the same knife.</dd>
+          <dt>Risk after doing that</dt>
+          <dd class="card-risk">Negligible</dd>
+        </dl>
+        <footer class="card-foot">
+          <span class="status status-not-implicated"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Not implicated</span>
+          <details class="card-more">
+            <summary>Why, and how sure we are</summary>
+            <p>Any vegetable heated through to about 158 F (70 C) or above.<sup class="cite">[<a href="sources.html#michigan" title="Infectious Disease Outbreaks (Michigan Department of Health and Human Services)">12</a>][<a href="sources.html#canada-prevention" title="Prevention of cyclosporiasis (Cyclospora) (Public Health Agency of Canada)">10</a>][<a href="sources.html#abc-tips" title="Food safety tips to help prevent cyclosporiasis at home (ABC News)">25</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+            
+            <p class="conf">Confidence in this estimate:
+               <strong>high</strong></p>
+          </details>
+        </footer>
+      </article>
+    </div>
+    <p class="no-results" id="no-results" hidden>No foods match that search.
+       <button type="button" class="linklike" data-filter="all">Show all 16</button></p>
   </div>
+</section>
 
-  <div class="table-scroll">
-  <table class="risk-table">
-    <caption>Estimated per-serving risk of Cyclospora infection, United States, current outbreak window</caption>
-    <thead>
-      <tr>
-        <th scope="col">Food</th>
-        <th scope="col">2026 status</th>
-        <th scope="col">Est. risk per serving<br><span class="th-sub">before mitigation</span></th>
-        <th scope="col">Primary mitigation</th>
-        <th scope="col">Est. residual risk<br><span class="th-sub">after mitigation</span></th>
-        <th scope="col">Confidence</th>
-      </tr>
-    </thead>
-    <tbody>
+<section id="scale" class="band-section alt" aria-labelledby="scale-h">
+  <div class="wrap">
+    <h2 id="scale-h">Everything on one scale</h2>
+    <p class="section-intro">The same estimates, ordered from most to least risky, so
+       you can see how far apart they actually are.</p>
+<figure class="chart">
+  <figcaption>
+    <strong>Estimated risk per serving, before mitigation.</strong>
+    Further right is safer. The scale is logarithmic &mdash; each gridline is
+    ten times less likely than the one to its left. Bars show the estimated
+    range, not a precise value.
+  </figcaption>
+  <div class="chart-legend"><span class="chart-key chart-high"><i></i>Avoid</span><span class="chart-key chart-moderate"><i></i>Caution</span><span class="chart-key chart-low"><i></i>Low risk</span><span class="chart-key chart-very-low"><i></i>Very low risk</span></div>
+  <div class="chart-plot">
+    <ol class="chart-rows">
+      <li class="chart-row chart-high">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg><span>Recalled iceberg lettuce</span></span>
+        <span class="chart-track" role="img" aria-label="Recalled iceberg lettuce: estimated ~1 in 200 to 1 in 2,000. Avoid.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:6.02%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 200 to 1 in 2,000</span>
+      </li>
+      <li class="chart-row chart-moderate">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-bag"></use></svg><span>Bagged / packaged salad mixes containing iceberg</span></span>
+        <span class="chart-track" role="img" aria-label="Bagged / packaged salad mixes containing iceberg: estimated ~1 in 10,000 to 1 in 100,000. Caution.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:40.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 10,000 to 1 in 100,000</span>
+      </li>
+      <li class="chart-row chart-moderate">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg><span>Cilantro</span></span>
+        <span class="chart-track" role="img" aria-label="Cilantro: estimated ~1 in 10,000 to 1 in 100,000. Caution.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:40.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 10,000 to 1 in 100,000</span>
+      </li>
+      <li class="chart-row chart-moderate">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg><span>Restaurant / foodservice iceberg lettuce</span></span>
+        <span class="chart-track" role="img" aria-label="Restaurant / foodservice iceberg lettuce: estimated ~1 in 20,000 to 1 in 200,000 now; roughly 1 in 2,000 to 1 in 20,000 at the June to mid-July peak in affected states. Caution.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:46.02%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 20,000 to 1 in 200,000 now</span>
+      </li>
+      <li class="chart-row chart-moderate">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg><span>Fresh parsley</span></span>
+        <span class="chart-track" role="img" aria-label="Fresh parsley: estimated ~1 in 20,000 to 1 in 200,000. Caution.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:46.02%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 20,000 to 1 in 200,000</span>
+      </li>
+      <li class="chart-row chart-moderate">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-cucumber"></use></svg><span>Cucumbers</span></span>
+        <span class="chart-track" role="img" aria-label="Cucumbers: estimated ~1 in 50,000 to 1 in 500,000. Caution.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:53.98%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 50,000 to 1 in 500,000</span>
+      </li>
+      <li class="chart-row chart-moderate">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg><span>Fresh basil</span></span>
+        <span class="chart-track" role="img" aria-label="Fresh basil: estimated ~1 in 50,000 to 1 in 500,000. Caution.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:53.98%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 50,000 to 1 in 500,000</span>
+      </li>
+      <li class="chart-row chart-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg><span>Non-recalled iceberg lettuce (whole head, retail)</span></span>
+        <span class="chart-track" role="img" aria-label="Non-recalled iceberg lettuce (whole head, retail): estimated ~1 in 100,000 to 1 in 1,000,000. Low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:60.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 100,000 to 1 in 1,000,000</span>
+      </li>
+      <li class="chart-row chart-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-onion"></use></svg><span>Onions (raw)</span></span>
+        <span class="chart-track" role="img" aria-label="Onions (raw): estimated ~1 in 100,000 to 1 in 1,000,000. Low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:60.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 100,000 to 1 in 1,000,000</span>
+      </li>
+      <li class="chart-row chart-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-berry"></use></svg><span>Raspberries, blackberries and berry / fruit mixes</span></span>
+        <span class="chart-track" role="img" aria-label="Raspberries, blackberries and berry / fruit mixes: estimated ~1 in 100,000 to 1 in 1,000,000. Low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:60.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 100,000 to 1 in 1,000,000</span>
+      </li>
+      <li class="chart-row chart-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg><span>Romaine lettuce</span></span>
+        <span class="chart-track" role="img" aria-label="Romaine lettuce: estimated ~1 in 200,000 to 1 in 2,000,000. Low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:66.02%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 200,000 to 1 in 2,000,000</span>
+      </li>
+      <li class="chart-row chart-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-pod"></use></svg><span>Snap peas</span></span>
+        <span class="chart-track" role="img" aria-label="Snap peas: estimated ~1 in 200,000 to 1 in 2,000,000. Low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:66.02%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 200,000 to 1 in 2,000,000</span>
+      </li>
+      <li class="chart-row chart-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg><span>Spinach</span></span>
+        <span class="chart-track" role="img" aria-label="Spinach: estimated ~1 in 500,000 to 1 in 5,000,000. Low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:73.98%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 500,000 to 1 in 5,000,000</span>
+      </li>
+      <li class="chart-row chart-very-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-tomato"></use></svg><span>Tomatoes</span></span>
+        <span class="chart-track" role="img" aria-label="Tomatoes: estimated ~1 in 1,000,000 to 1 in 10,000,000. Very low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:80.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 1,000,000 to 1 in 10,000,000</span>
+      </li>
+      <li class="chart-row chart-very-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-fruit"></use></svg><span>Peeled fruit (banana, orange, melon, avocado)</span></span>
+        <span class="chart-track" role="img" aria-label="Peeled fruit (banana, orange, melon, avocado): estimated ~1 in 1,000,000 to 1 in 10,000,000. Very low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar"
+                style="left:80.00%;width:20.00%"></span>
+        </span>
+        <span class="chart-value">~1 in 1,000,000 to 1 in 10,000,000</span>
+      </li>
+      <li class="chart-row chart-very-low">
+        <span class="chart-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-cooked"></use></svg><span>Cooked vegetables</span></span>
+        <span class="chart-track" role="img" aria-label="Cooked vegetables: estimated Below 1 in 10,000,000. Very low risk.">
+          <span class="grid-line" style="left:0.00%"></span><span class="grid-line" style="left:20.00%"></span><span class="grid-line" style="left:40.00%"></span><span class="grid-line" style="left:60.00%"></span><span class="grid-line" style="left:80.00%"></span><span class="grid-line" style="left:100.00%"></span>
+          <span class="chart-bar chart-capped"
+                style="left:94.00%;width:6.00%"></span>
+        </span>
+        <span class="chart-value">Below 1 in 10,000,000</span>
+      </li>
+    </ol>
+    <div class="chart-axis-row">
+      <span></span>
+      <div class="chart-axis"><span class="tick tick-first" style="left:0.00%"><span>1 in 100</span></span><span class="tick" style="left:20.00%"><span>1 in 1k</span></span><span class="tick" style="left:40.00%"><span>1 in 10k</span></span><span class="tick" style="left:60.00%"><span>1 in 100k</span></span><span class="tick" style="left:80.00%"><span>1 in 1M</span></span><span class="tick tick-last" style="left:100.00%"><span>1 in 10M</span></span></div>
+      <span></span>
+    </div>
+  </div>
+  <p class="chart-foot">These are informed estimates produced by this project, not
+     official statistics. They are reliable for ranking foods against each other and
+     unreliable as absolute probabilities.
+     <a href="methodology.html">See how they were calculated</a>.</p>
+</figure>
+  </div>
+</section>
+
+<section id="works" class="band-section" aria-labelledby="works-h">
+  <div class="wrap">
+    <h2 id="works-h"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-flame"></use></svg> What actually works</h2>
+    <p class="section-intro">Cyclospora does not behave like the bacteria most food-safety
+       advice is written for. Two things work well, one thing barely works at all.</p>
+    <div class="works-grid">
+      <div class="work work-yes">
+        <span class="work-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-flame"></use></svg></span>
+        <h3>Cooking <span class="work-verdict">Works</span></h3>
+        <p>Cooking to an internal temperature of about 158 F (70 C) or higher inactivates Cyclospora. Thorough cooking is the single most reliable consumer-level control.</p>
+      </div>
+      <div class="work work-yes">
+        <span class="work-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-peel"></use></svg></span>
+        <h3>Peeling <span class="work-verdict">Works</span></h3>
+        <p>Peeling physically removes the contaminated outer surface and is highly effective, provided the knife and hands do not transfer oocysts to the flesh.</p>
+      </div>
+      <div class="work work-yes">
+        <span class="work-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-ban"></use></svg></span>
+        <h3>Avoiding recalled product <span class="work-verdict">Works</span></h3>
+        <p>Removing the implicated supply is the single largest effect available, because
+           it removes exposure entirely rather than reducing the dose. Check products
+           against current FDA recall listings.</p>
+      </div>
+      <div class="work work-no">
+        <span class="work-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-droplet"></use></svg></span>
+        <h3>Washing <span class="work-verdict work-verdict-no">Barely helps</span></h3>
+        <p>Cyclospora oocysts are highly resistant to chlorine and to routine chemical disinfection. Commercial produce washes, vinegar soaks and chlorine rinses are not reliably effective. The oocyst wall is tough and lodges in microscopic surface crevices, so it does not rinse off cleanly. CDC still recommends rinsing produce under running water, but describes disinfection as unlikely to fully eliminate Cyclospora.</p>
+      </div>
+    </div>
+    <p class="works-foot"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg> Cyclospora also does not spread person-to-person in
+       any meaningful way. Cyclospora is not transmitted directly person-to-person in a meaningful way. Freshly passed oocysts are not infectious and require days to weeks in the environment to sporulate, so household spread from an ill person is not a significant route.<sup class="cite">[<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#canada-prevention" title="Prevention of cyclosporiasis (Cyclospora) (Public Health Agency of Canada)">10</a>][<a href="sources.html#abc-tips" title="Food safety tips to help prevent cyclosporiasis at home (ABC News)">25</a>][<a href="sources.html#michigan" title="Infectious Disease Outbreaks (Michigan Department of Health and Human Services)">12</a>][<a href="sources.html#jhu" title="Understanding the Cyclosporiasis Outbreak (Johns Hopkins Bloomberg School of Public Health)">16</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+  </div>
+</section>
+
+<section id="status" class="band-section alt" aria-labelledby="status-h">
+  <div class="wrap">
+    <h2 id="status-h">Where the outbreak stands</h2>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">10,468</span>
+        <span class="stat-label">lab-confirmed cases since May&nbsp;1, 2026</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">12,255</span>
+        <span class="stat-label">further probable cases under investigation</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">517</span>
+        <span class="stat-label">hospitalizations</span>
+      </div>
+      <div class="stat stat-grave">
+        <span class="stat-num">2</span>
+        <span class="stat-label">deaths</span>
+      </div>
+    </div>
+    <p class="stat-foot">Domestically acquired illnesses with onset on or after May 1, 2026, as of 2026-08-05. Reported in roughly 45-47 states; secondary reporting indicates only New Mexico, Montana and Hawaii had reported zero cases since May 1.
+       Both deaths were reported in Michigan in people with significant underlying health conditions that may have been adversely affected by cyclosporiasis and dehydration.<sup class="cite">[<a href="sources.html#cdc-surveillance" title="Surveillance of Cyclosporiasis (CDC)">4</a>][<a href="sources.html#cdc-han" title="HAN 531: Domestically Acquired Cyclosporiasis Cases in Multiple U.S. States, 2026 (CDC Health Alert Network)">3</a>][<a href="sources.html#wadoh" title="2026 Cyclosporiasis Outbreak (Washington State Department of Health)">11</a>][<a href="sources.html#today-map" title="Cyclospora Outbreak 2026: Map, Foods to Avoid, States Most Impacted (TODAY)">27</a>][<a href="sources.html#cnn-deaths" title="First deaths reported in cyclosporiasis outbreak (CNN)">21</a>][<a href="sources.html#axios-deaths" title="Cyclospora outbreak causes first two deaths (Axios)">22</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-08-05">2026-08-05</time></span></p>
+
+    <h3>The implicated supply chain</h3>
+    <dl class="facts">
+      <dt>Vehicle</dt><dd>Iceberg lettuce<sup class="cite">[<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#cdc-investigation" title="Investigation Update: Cyclospora Outbreak, July 2026 (CDC)">2</a>][<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>][<a href="sources.html#fda-15state" title="Investigation of 15-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">7</a>][<a href="sources.html#cdc-newsroom" title="Cyclospora outbreak linked to iceberg lettuce expanded to four new states (CDC Newsroom)">5</a>][<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">23</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></dd>
+      <dt>Supplier</dt><dd>Taylor Farms de Mexico (Guanajuato, Mexico), lettuce sourced from central Mexico</dd>
+      <dt>How it surfaced</dt><dd>FDA announced an investigation into a 5-state outbreak linked to certain shredded iceberg lettuce from Mexico served at Taco Bell locations in Indiana, Kentucky, Michigan, Ohio and West Virginia. (2026-07-16)</dd>
+      <dt>Scope since</dt><dd>The cluster was subsequently described as a 9-state outbreak (adding Illinois, Kansas, Oklahoma and Pennsylvania), and FDA later published a 15-state investigation page.</dd>
+      <dt>Illness onsets</dt><dd>Illness onsets reported from May 13 through July 20, 2026</dd>
+      <dt>Evidence basis</dt><dd>Epidemiologic interviews plus product traceback. Traceback identified Taylor Farms de Mexico as the single supplier converging across the locations linked to illness.</dd>
+      <dt>Recall</dt><dd>All iceberg lettuce sourced from central Mexico, voluntarily withdrawn from U.S. retail and foodservice supply chains. Recalled shredded and chopped lettuce products were distributed to foodservice customers in more than two dozen states; secondary reporting cites 27 states. The recall notice also included Marketside-brand retail product sold at Walmart. The recall covers blended salad mixes that contain iceberg lettuce from this supplier, not only single-ingredient iceberg.<sup class="cite">[<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#abc-27states" title="Taylor Farms recalls lettuce in 27 states amid cyclosporiasis outbreak (ABC News)">24</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-07-17">2026-07-17</time></span></dd>
+      <dt>Recalled retail products</dt><dd>The Walmart retail portion was described as Marketside-brand &#x27;Iceberg Salad&#x27; in 12-oz and 24-oz sizes and &#x27;Shredded Lettuce&#x27; in 8-oz and 16-oz sizes, carrying Best if Used By dates from 7/18/2026 through 8/3/2026. Those use-by dates have now passed, so this detail matters mainly for identifying what was in circulation rather than what is still on a shelf.<sup class="cite">[<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> <span class="dated" title="The date this figure describes"><span class="vh">as of </span><time datetime="2026-07-17">2026-07-17</time></span></dd>
+    </dl>
+  </div>
+</section>
+
+<section id="evidence" class="band-section" aria-labelledby="evidence-h">
+  <div class="wrap">
+    <h2 id="evidence-h">What the evidence does and does not show</h2>
+    <p class="section-intro">Separating confirmed findings from open questions and from
+       historical associations is the most decision-relevant part of this page. Expand any
+       item to read it in full.</p>
+    <details class="caveat">
+      <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>No product sample has tested positive for Cyclospora</summary>
+      <p>The link between iceberg lettuce and this outbreak rests on epidemiologic and traceback evidence, not on a laboratory detection in food. A border sample initially flagged as positive was re-reviewed by FDA laboratory experts on July 19, 2026 and reclassified as a false positive - FDA concluded the finding did not represent true amplification. FDA stated this did not change the basis for the investigation or the recall, which rest on the epidemiologic data. Cyclospora is notoriously difficult to detect in food, so the absence of a positive sample is weak evidence of absence.<sup class="cite">[<a href="sources.html#usnews-falsepos" title="FDA: Iceberg Lettuce Recall Stands After False Positive For Cyclospora (U.S. News / HealthDay)">26</a>][<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+    </details>
+    <details class="caveat">
+      <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>There is more than one outbreak happening at once</summary>
+      <p>FDA has described four separate Cyclospora outbreak investigations in 2026. Some are tied to the large Midwest iceberg lettuce cluster, some involve single states, and many reported cases are not yet linked to any cluster. The iceberg lettuce recall therefore does not account for all illness this season.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>][<a href="sources.html#cnn-largest" title="Tracking the largest cyclosporiasis outbreak in the US (CNN)">20</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+    </details>
+    <details class="caveat">
+      <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>Case counts in circulation are inconsistent</summary>
+      <p>Published counts differ depending on whether they describe the whole 2026 domestically acquired season or only the iceberg lettuce cluster, and on the date of the snapshot. Outbreak-cluster counts reported in July and August 2026 ranged from roughly 1,947 illnesses in 9 states (with 98 hospitalizations) to roughly 6,358 illnesses in 15 states (with 278 hospitalizations). Treat any single number as a dated snapshot, not a current total.<sup class="cite">[<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#fda-15state" title="Investigation of 15-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">7</a>][<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">23</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></p>
+    </details>
+    <details class="caveat">
+      <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>Other commodities are under active traceback</summary>
+      <p>As of late July 2026, traceback in some of the 2026 investigations was reported to be focused on cilantro, onions and cucumbers. Public health officials in North Carolina indicated fresh parsley and cilantro may be behind the rise in cases in that state. These are open lines of inquiry, not conclusions.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></p>
+    </details>
+
+    <div class="prov-key">
+      <h3>How to read the sourcing markers</h3>
+      <p>Every figure is tagged with where it came from and, where it moves, the date it
+         describes. Nothing here is presented as fact without showing what is behind it.</p>
+      <ul class="prov-legend">
+        <li><span class="prov prov-agency" data-sample="1" title="This claim rests on government, public health or peer-reviewed sources."><span class="vh">Sourcing: </span>agency</span> Backed by a government, public health or
+            peer-reviewed source.</li>
+        <li><span class="prov prov-agency-news" data-sample="1" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span> Backed by a mix of agency sources and
+            news reporting.</li>
+        <li><span class="prov prov-news" data-sample="1" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span> Backed only by news or consumer reporting, and
+            not confirmed against a primary agency document. The weakest claims here.</li>
+        <li><span class="dated"><time datetime="2026-08-05">2026-08-05</time></span>
+            The date the figure describes &mdash; not the date you are reading it.</li>
+      </ul>
+      <p class="prov-caveat"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg> <strong>Important:</strong> an
+         <span class="prov prov-agency" data-sample="1" title="This claim rests on government, public health or peer-reviewed sources."><span class="vh">Sourcing: </span>agency</span> marker means an agency is the origin of the claim,
+         not that we read it off the agency's own page. As explained in the
+         <a href="methodology.html#m5">methodology</a>, cdc.gov and fda.gov were unreachable
+         from the build environment, so most agency figures here arrived by way of sources
+         that cite them.</p>
+    </div>
+  </div>
+</section>
+
+<section id="table" class="band-section alt" aria-labelledby="table-h">
+  <div class="wrap">
+    <h2 id="table-h">Full comparison table</h2>
+    <p class="section-intro">Per single serving eaten in the United States during the current outbreak window. A serving is roughly 1 to 1.5 cups of raw greens (about 70-85 g), or a typical restaurant portion. All values are informed estimates produced by this project, not official statistics.</p>
+    <details class="table-toggle">
+      <summary>Show the full table for all 16 foods</summary>
+      <div class="table-scroll">
+      <table class="risk-table">
+        <caption>Estimated per-serving risk of Cyclospora infection, United States,
+          current outbreak window</caption>
+        <thead>
+          <tr>
+            <th scope="col">Food</th>
+            <th scope="col">2026 status</th>
+            <th scope="col">Est. risk per serving<br><span class="th-sub">before mitigation</span></th>
+            <th scope="col">Primary mitigation</th>
+            <th scope="col">Est. residual risk<br><span class="th-sub">after mitigation</span></th>
+            <th scope="col">Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
       <tr class="band-high">
         <th scope="row">
-          <span class="food-name">Recalled iceberg lettuce</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg>Recalled iceberg lettuce</span>
           <span class="food-detail">Taylor Farms de Mexico product sourced from central Mexico, as consumed before the July 17 recall took effect. Mostly shredded/chopped foodservice packs, plus Marketside retail product at Walmart.<sup class="cite">[<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>][<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">23</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-confirmed">Confirmed - implicated 2026</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">High</span>
+        <td data-label="Estimated risk per serving"><span class="band band-high">Avoid</span>
             <span class="risk">~1 in 200 to 1 in 2,000</span></td>
         <td data-label="Primary mitigation">Do not eat. Discard, or return for refund. Washing does not work on this parasite. This is the one product where avoidance is the whole strategy.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 1,000,000</span>
@@ -179,11 +838,11 @@
       </tr>
       <tr class="band-moderate">
         <th scope="row">
-          <span class="food-name">Restaurant / foodservice iceberg lettuce</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg>Restaurant / foodservice iceberg lettuce</span>
           <span class="food-detail">Shredded iceberg on tacos, burgers, sandwiches and salad bars. This is the exposure route that drove the outbreak: the initial cluster was traced to shredded lettuce served at Taco Bell locations in five states.<sup class="cite">[<a href="sources.html#fda-9state" title="Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026) (FDA)">6</a>][<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-confirmed">Confirmed - implicated 2026</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Moderate</span>
+        <td data-label="Estimated risk per serving"><span class="band band-moderate">Caution</span>
             <span class="risk">~1 in 20,000 to 1 in 200,000 now; roughly 1 in 2,000 to 1 in 20,000 at the June to mid-July peak in affected states</span></td>
         <td data-label="Primary mitigation">The recalled supply has been withdrawn, which does most of the work. Beyond that: ask whether the location sourced from the recalled supplier, order items without shredded lettuce, or choose cooked menu items. Risk is concentrated in the outbreak states, not nationwide.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">~1 in 100,000 to 1 in 1,000,000</span>
@@ -192,11 +851,11 @@
       </tr>
       <tr class="band-moderate">
         <th scope="row">
-          <span class="food-name">Bagged / packaged salad mixes containing iceberg</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-bag"></use></svg>Bagged / packaged salad mixes containing iceberg</span>
           <span class="food-detail">Blended mixes are explicitly within the recall scope where they contain iceberg from the implicated supplier.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#fda-recall" title="Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk (FDA)">8</a>][<a href="sources.html#time-experts" title="What Food Safety Experts Are Eating During the Cyclospora Outbreak (TIME)">28</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-linked-by-recall">In recall scope</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Moderate</span>
+        <td data-label="Estimated risk per serving"><span class="band band-moderate">Caution</span>
             <span class="risk">~1 in 10,000 to 1 in 100,000</span></td>
         <td data-label="Primary mitigation">Check the product against current FDA recall listings. Prefer blends with no iceberg, or buy whole heads and cut them yourself. Precut and bagged products undergo more handling and pool more source fields per bag than a single head.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">~1 in 100,000 to 1 in 1,000,000</span>
@@ -205,11 +864,11 @@
       </tr>
       <tr class="band-low">
         <th scope="row">
-          <span class="food-name">Non-recalled iceberg lettuce (whole head, retail)</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg>Non-recalled iceberg lettuce (whole head, retail)</span>
           <span class="food-detail">Whole heads, predominantly domestic summer supply from California&#x27;s Salinas Valley rather than central Mexico. Read this row carefully: iceberg lettuce IS the implicated commodity in this outbreak, and what is implicated is one supplier&#x27;s product, not the crop. Traceback identifies the supply chains it can see, so the possibility that the implicated supply extends beyond the recall cannot be excluded, particularly given that no product sample ever tested positive.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#time-experts" title="What Food Safety Experts Are Eating During the Cyclospora Outbreak (TIME)">28</a>][<a href="sources.html#usda-lettuce" title="Romaine and leaf lettuces almost as popular as head lettuce (per capita availability) (USDA Economic Research Service)">13</a>][<a href="sources.html#usnews-falsepos" title="FDA: Iceberg Lettuce Recall Stands After False Positive For Cyclospora (U.S. News / HealthDay)">26</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-not-implicated">Not implicated</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-low">Low risk</span>
             <span class="risk">~1 in 100,000 to 1 in 1,000,000</span></td>
         <td data-label="Primary mitigation">Confirm the product is not covered by the recall. Buy whole heads rather than precut. Discard the outer leaves and rinse the rest under running water. Prefer retailers with fast, well-publicized recall programs and loyalty-card recall notification.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">~1 in 200,000 to 1 in 2,000,000</span>
@@ -218,11 +877,11 @@
       </tr>
       <tr class="band-moderate">
         <th scope="row">
-          <span class="food-name">Cilantro</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg>Cilantro</span>
           <span class="food-detail">Reported to be a focus of traceback in at least one 2026 investigation. North Carolina officials indicated cilantro and parsley may be behind that state&#x27;s rise in cases. Also carries the strongest historical record of any herb, from the 2013-2015 outbreaks traced to Puebla, Mexico.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>][<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-under-traceback">Under traceback</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Moderate</span>
+        <td data-label="Estimated risk per serving"><span class="band band-moderate">Caution</span>
             <span class="risk">~1 in 10,000 to 1 in 100,000</span></td>
         <td data-label="Primary mitigation">Add it to hot dishes during cooking rather than as a raw garnish, or omit it while investigations are open. Rinsing helps only marginally: cilantro&#x27;s crinkled leaf surface is close to a worst case for mechanical removal of oocysts.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 1,000,000 if cooked; ~1 in 50,000 to 1 in 500,000 if only rinsed</span>
@@ -231,24 +890,24 @@
       </tr>
       <tr class="band-moderate">
         <th scope="row">
-          <span class="food-name">Fresh parsley</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg>Fresh parsley</span>
           <span class="food-detail">Flagged alongside cilantro by North Carolina officials. Same leaf structure and similar supply chains.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-under-traceback">Under traceback</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Moderate</span>
+        <td data-label="Estimated risk per serving"><span class="band band-moderate">Caution</span>
             <span class="risk">~1 in 20,000 to 1 in 200,000</span></td>
         <td data-label="Primary mitigation">Cook it into the dish rather than using it as a raw finish. Dried parsley carries no meaningful risk.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 1,000,000 if cooked or dried</span>
             </td>
         <td data-label="Confidence"><span class="conf conf-low">low</span></td>
       </tr>
-      <tr class="band-low-moderate">
+      <tr class="band-moderate">
         <th scope="row">
-          <span class="food-name">Cucumbers</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-cucumber"></use></svg>Cucumbers</span>
           <span class="food-detail">Reported among the commodities under traceback in a 2026 investigation. No confirmed link.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-under-traceback">Under traceback</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low-moderate</span>
+        <td data-label="Estimated risk per serving"><span class="band band-moderate">Caution</span>
             <span class="risk">~1 in 50,000 to 1 in 500,000</span></td>
         <td data-label="Primary mitigation">Peel. Peeling physically removes the contaminated surface and is far more effective than washing. Wash before peeling, and do not let the knife carry contamination onto the flesh.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 1,000,000 peeled</span>
@@ -257,11 +916,11 @@
       </tr>
       <tr class="band-low">
         <th scope="row">
-          <span class="food-name">Onions (raw)</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-onion"></use></svg>Onions (raw)</span>
           <span class="food-detail">Reported among commodities under traceback in a 2026 investigation. Onions are usually cooked or have outer layers removed, which limits exposure.<sup class="cite">[<a href="sources.html#cr-consumers" title="Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change (Consumer Reports (Advocacy))">17</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-under-traceback">Under traceback</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-low">Low risk</span>
             <span class="risk">~1 in 100,000 to 1 in 1,000,000</span></td>
         <td data-label="Primary mitigation">Cooking eliminates the risk. Removing outer layers before use also helps.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 2,000,000</span>
@@ -270,11 +929,11 @@
       </tr>
       <tr class="band-low">
         <th scope="row">
-          <span class="food-name">Romaine lettuce</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg>Romaine lettuce</span>
           <span class="food-detail">Not named in the 2026 investigation. Lettuce generally has appeared in past cyclosporiasis outbreaks, so this is not a zero-history commodity.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#time-experts" title="What Food Safety Experts Are Eating During the Cyclospora Outbreak (TIME)">28</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-historical">Historical only</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-low">Low risk</span>
             <span class="risk">~1 in 200,000 to 1 in 2,000,000</span></td>
         <td data-label="Primary mitigation">Whole heads over bagged hearts, discard outer leaves, rinse under running water. A reasonable substitute for iceberg during this outbreak.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">~1 in 500,000 to 1 in 5,000,000</span>
@@ -283,24 +942,24 @@
       </tr>
       <tr class="band-low">
         <th scope="row">
-          <span class="food-name">Spinach</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-leaf"></use></svg>Spinach</span>
           <span class="food-detail">Explicitly not named in the current outbreak investigation. Reporting indicates CDC considers it safe to eat with standard washing.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-not-implicated">Not implicated</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-low">Low risk</span>
             <span class="risk">~1 in 500,000 to 1 in 5,000,000</span></td>
         <td data-label="Primary mitigation">Standard washing. No outbreak-specific precaution is currently indicated. Cooking eliminates residual risk if you want to be conservative.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">~1 in 1,000,000 to 1 in 10,000,000</span>
             </td>
         <td data-label="Confidence"><span class="conf conf-moderate">moderate</span></td>
       </tr>
-      <tr class="band-low">
+      <tr class="band-moderate">
         <th scope="row">
-          <span class="food-name">Fresh basil</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-herb"></use></svg>Fresh basil</span>
           <span class="food-detail">Not implicated in 2026, but basil has a real U.S. outbreak history, including outbreaks traced to imported basil in 2019 and 2020.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#fda-cyclospora" title="Cyclospora (foodborne pathogen overview) (FDA)">9</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-historical">Historical only</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-moderate">Caution</span>
             <span class="risk">~1 in 50,000 to 1 in 500,000</span></td>
         <td data-label="Primary mitigation">Cook it into sauces rather than using raw. Raw pesto and raw garnish are the higher-exposure uses.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 1,000,000 cooked</span>
@@ -309,11 +968,11 @@
       </tr>
       <tr class="band-low">
         <th scope="row">
-          <span class="food-name">Raspberries, blackberries and berry / fruit mixes</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-berry"></use></svg>Raspberries, blackberries and berry / fruit mixes</span>
           <span class="food-detail">Not implicated in 2026. Historically the most famous U.S. cyclosporiasis vehicle, from the 1996-1997 outbreaks traced to imported Guatemalan raspberries.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>][<a href="sources.html#fda-cyclospora" title="Cyclospora (foodborne pathogen overview) (FDA)">9</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-historical">Historical only</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-low">Low risk</span>
             <span class="risk">~1 in 100,000 to 1 in 1,000,000</span></td>
         <td data-label="Primary mitigation">Delicate berries cannot be scrubbed and washing is only partially effective. Frozen berries used in baking or heated preparations carry effectively no risk.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">~1 in 200,000 to 1 in 2,000,000 raw; below 1 in 5,000,000 heated</span>
@@ -322,11 +981,11 @@
       </tr>
       <tr class="band-low">
         <th scope="row">
-          <span class="food-name">Snap peas</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-pod"></use></svg>Snap peas</span>
           <span class="food-detail">Not implicated in 2026. Associated with a 2009 U.S. outbreak traced to Guatemala.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-historical">Historical only</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-low">Low risk</span>
             <span class="risk">~1 in 200,000 to 1 in 2,000,000</span></td>
         <td data-label="Primary mitigation">Blanch or stir-fry. Cooking eliminates the risk.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 5,000,000 cooked</span>
@@ -335,11 +994,11 @@
       </tr>
       <tr class="band-very-low">
         <th scope="row">
-          <span class="food-name">Tomatoes</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-tomato"></use></svg>Tomatoes</span>
           <span class="food-detail">No association with the 2026 outbreak and no significant cyclosporiasis outbreak history. Smooth skin makes mechanical removal of surface contamination comparatively effective.<sup class="cite">[<a href="sources.html#cnn-safe-food" title="What food is safe to eat and what to avoid as cyclosporiasis outbreak surges (CNN)">19</a>]</sup> <span class="prov prov-news" title="This claim rests only on news or consumer reporting. It has not been confirmed against a primary agency document."><span class="vh">Sourcing: </span>news</span></span>
         </th>
         <td data-label="Status"><span class="status status-not-implicated">Not implicated</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Very low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-very-low">Very low risk</span>
             <span class="risk">~1 in 1,000,000 to 1 in 10,000,000</span></td>
         <td data-label="Primary mitigation">Rinse and rub under running water. No outbreak-specific precaution indicated.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 5,000,000</span>
@@ -348,11 +1007,11 @@
       </tr>
       <tr class="band-very-low">
         <th scope="row">
-          <span class="food-name">Peeled fruit (banana, orange, melon, avocado)</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-fruit"></use></svg>Peeled fruit (banana, orange, melon, avocado)</span>
           <span class="food-detail">Peeling removes the surface where oocysts sit. Contamination is a surface phenomenon; it does not penetrate intact flesh.<sup class="cite">[<a href="sources.html#abc-tips" title="Food safety tips to help prevent cyclosporiasis at home (ABC News)">25</a>][<a href="sources.html#canada-prevention" title="Prevention of cyclosporiasis (Cyclospora) (Public Health Agency of Canada)">10</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-not-implicated">Not implicated</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Very low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-very-low">Very low risk</span>
             <span class="risk">~1 in 1,000,000 to 1 in 10,000,000</span></td>
         <td data-label="Primary mitigation">Scrub firm rinds such as melon before cutting, so the knife does not drag contamination from rind into flesh. This cross-contamination step is the only real risk pathway here.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Below 1 in 10,000,000</span>
@@ -361,62 +1020,71 @@
       </tr>
       <tr class="band-very-low">
         <th scope="row">
-          <span class="food-name">Cooked vegetables</span>
+          <span class="food-name"><svg class="icon food-icon" aria-hidden="true" focusable="false"><use href="#i-cooked"></use></svg>Cooked vegetables</span>
           <span class="food-detail">Any vegetable heated through to about 158 F (70 C) or above.<sup class="cite">[<a href="sources.html#michigan" title="Infectious Disease Outbreaks (Michigan Department of Health and Human Services)">12</a>][<a href="sources.html#canada-prevention" title="Prevention of cyclosporiasis (Cyclospora) (Public Health Agency of Canada)">10</a>][<a href="sources.html#abc-tips" title="Food safety tips to help prevent cyclosporiasis at home (ABC News)">25</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></span>
         </th>
         <td data-label="Status"><span class="status status-not-implicated">Not implicated</span></td>
-        <td data-label="Estimated risk per serving"><span class="band-tag">Very low</span>
+        <td data-label="Estimated risk per serving"><span class="band band-very-low">Very low risk</span>
             <span class="risk">Below 1 in 10,000,000</span></td>
         <td data-label="Primary mitigation">Cooking is the definitive control for Cyclospora. The remaining risk is not the cooked food itself but cross-contamination from raw produce handled on the same board or with the same knife.</td>
         <td data-label="Residual risk after mitigation"><span class="risk">Negligible</span>
             </td>
         <td data-label="Confidence"><span class="conf conf-high">high</span></td>
       </tr>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+      </div>
+    </details>
+
+    <h3>What the status labels mean</h3>
+    <ul class="legend">
+      <li><span class="status status-confirmed"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>Confirmed - implicated 2026</span> Named by FDA/CDC as implicated in the 2026 outbreak on epidemiologic and traceback evidence.</li>
+      <li><span class="status status-under-traceback"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Under traceback</span> Reported to be under active traceback or flagged by state officials in a 2026 investigation. Not a conclusion.</li>
+      <li><span class="status status-linked-by-recall"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bag"></use></svg>In recall scope</span> Not independently implicated, but within the scope of the recall because it may contain the implicated ingredient.</li>
+      <li><span class="status status-historical"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>Historical only</span> Associated with prior U.S. cyclosporiasis outbreaks, but not implicated in 2026.</li>
+      <li><span class="status status-not-implicated"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Not implicated</span> No association in the 2026 outbreak and no strong historical association.</li>
+    </ul>
   </div>
-
-  <h3>How to read the status column</h3>
-  <ul class="legend">
-    <li><span class="status status-confirmed">Confirmed - implicated 2026</span> Named by FDA/CDC as implicated in the 2026 outbreak on epidemiologic and traceback evidence.</li>
-    <li><span class="status status-under-traceback">Under traceback</span> Reported to be under active traceback or flagged by state officials in a 2026 investigation. Not a conclusion.</li>
-    <li><span class="status status-linked-by-recall">In recall scope</span> Not independently implicated, but within the scope of the recall because it may contain the implicated ingredient.</li>
-    <li><span class="status status-historical">Historical only</span> Associated with prior U.S. cyclosporiasis outbreaks, but not implicated in 2026.</li>
-    <li><span class="status status-not-implicated">Not implicated</span> No association in the 2026 outbreak and no strong historical association.</li>
-  </ul>
 </section>
 
-<section aria-labelledby="bio-h">
-  <h2 id="bio-h">Why the usual advice does not work here</h2>
-  <dl class="facts">
-    <dt>Washing</dt><dd>Cyclospora oocysts are highly resistant to chlorine and to routine chemical disinfection. Commercial produce washes, vinegar soaks and chlorine rinses are not reliably effective. The oocyst wall is tough and lodges in microscopic surface crevices, so it does not rinse off cleanly. CDC still recommends rinsing produce under running water, but describes disinfection as unlikely to fully eliminate Cyclospora.</dd>
-    <dt>Cooking</dt><dd>Cooking to an internal temperature of about 158 F (70 C) or higher inactivates Cyclospora. Thorough cooking is the single most reliable consumer-level control.</dd>
-    <dt>Peeling</dt><dd>Peeling physically removes the contaminated outer surface and is highly effective, provided the knife and hands do not transfer oocysts to the flesh.</dd>
-    <dt>Household spread</dt><dd>Cyclospora is not transmitted directly person-to-person in a meaningful way. Freshly passed oocysts are not infectious and require days to weeks in the environment to sporulate, so household spread from an ill person is not a significant route.</dd>
-    <dt>Timing of symptoms</dt><dd>Symptoms usually begin about one week after infection, with a range of roughly 2 days to 2 weeks or more. Untreated illness can last from a few days to a month or longer, and relapsing symptoms are common.<sup class="cite">[<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>][<a href="sources.html#canada-prevention" title="Prevention of cyclosporiasis (Cyclospora) (Public Health Agency of Canada)">10</a>][<a href="sources.html#abc-tips" title="Food safety tips to help prevent cyclosporiasis at home (ABC News)">25</a>][<a href="sources.html#michigan" title="Infectious Disease Outbreaks (Michigan Department of Health and Human Services)">12</a>][<a href="sources.html#jhu" title="Understanding the Cyclosporiasis Outbreak (Johns Hopkins Bloomberg School of Public Health)">16</a>]</sup> <span class="prov prov-agency-news" title="This claim rests on a mix of agency sources and news reporting."><span class="vh">Sourcing: </span>agency + news</span></dd>
-  </dl>
-</section>
-
-<section class="when-to-care" aria-labelledby="care-h">
-  <h2 id="care-h">When to seek care</h2>
-  <p>Cyclosporiasis does not resolve reliably on its own and is treated with prescription
-     antibiotics, so it is worth getting diagnosed rather than waiting it out. Standard stool
-     tests do not always look for Cyclospora &mdash; it often requires a specific request or a
-     multiplex GI panel, so mention recent produce exposure to your clinician.</p>
-  <p><strong>Seek care promptly</strong> for watery diarrhea lasting more than a few days,
-     diarrhea that improves and then relapses, signs of dehydration (dizziness on standing,
-     little or no urination), fever, or any diarrheal illness if you are immunocompromised,
-     pregnant, elderly or caring for a young child. <strong>Call 911</strong> for severe
-     dehydration, fainting or bloody stool.</p>
-  <p class="care-note">This section describes when to consult a professional. It is not a
-     diagnosis and not medical advice.</p>
+<section id="care" class="band-section care" aria-labelledby="care-h">
+  <div class="wrap">
+    <h2 id="care-h"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stethoscope"></use></svg> When to seek care</h2>
+    <p>Cyclosporiasis does not reliably resolve on its own and is treated with prescription
+       antibiotics, so it is worth getting diagnosed rather than waiting it out. Standard stool
+       tests do not always look for Cyclospora &mdash; it often needs a specific request or a
+       multiplex GI panel, so mention recent produce exposure to your clinician.</p>
+    <div class="care-grid">
+      <div class="care-box">
+        <h3><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg> Seek care promptly</h3>
+        <ul>
+          <li>Watery diarrhea lasting more than a few days</li>
+          <li>Diarrhea that improves, then relapses</li>
+          <li>Signs of dehydration &mdash; dizziness standing up, little or no urination</li>
+          <li>Fever alongside diarrhea</li>
+          <li>Any diarrheal illness if you are immunocompromised, pregnant, elderly,
+              or caring for a young child</li>
+        </ul>
+      </div>
+      <div class="care-box care-urgent">
+        <h3><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cross"></use></svg> Call 911</h3>
+        <ul>
+          <li>Severe dehydration</li>
+          <li>Fainting or collapse</li>
+          <li>Bloody stool</li>
+        </ul>
+      </div>
+    </div>
+    <p class="care-note">Symptoms usually begin about one week after infection, with a range of roughly 2 days to 2 weeks or more. Untreated illness can last from a few days to a month or longer, and relapsing symptoms are common. This section describes when to consult a
+       professional. It is not a diagnosis and not medical advice.</p>
+  </div>
 </section>
 
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <h2>Disclaimers and limitations</h2>
+    <h2><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg> Disclaimers and limitations</h2>
     <ol class="disclaimers">
       <li><strong>This is not medical advice.</strong> Nothing here diagnoses, treats or
           prevents disease, and it is not a substitute for a licensed clinician. Cyclosporiasis
@@ -452,9 +1120,12 @@
           concentrated in the outbreak states.</li>
       <li><strong>Do not use this for clinical, regulatory, legal or commercial decisions.</strong>
           It is written for members of the public deciding what to eat.</li>
-      <li><strong>Companies are named only because official sources named them.</strong>
-          Naming a firm or product reflects the public record of this investigation and is not
-          an allegation of wrongdoing beyond what agencies have stated.</li>
+      <li><strong>No affiliation, and no agency branding.</strong> This site is not affiliated
+          with, endorsed by, or connected to CDC, FDA, any state health department or any
+          company. No agency logo appears here, deliberately: agency marks beside our own
+          estimates would imply an endorsement that does not exist. Companies are named only
+          because official sources named them, which is not an allegation of wrongdoing beyond
+          what agencies have stated.</li>
       <li><strong>Do not read this as a reason to avoid fruits and vegetables.</strong> The
           health benefits of produce substantially outweigh these risks for nearly everyone.
           <a href="https://www.consumerreports.org/health/food-safety/you-shouldnt-avoid-fruits-and-vegetables-due-to-cyclospora-a9570579349/" rel="noopener">Consumer
@@ -469,5 +1140,6 @@
        Content current through 2026-08-06.</p>
   </div>
 </footer>
+<script src="assets/app.js" defer></script>
 </body>
 </html>
