@@ -361,7 +361,8 @@ def build_index(outbreak, foods, smap):
     <dt>Scope since</dt><dd>{e(io['expansion_detail'])}</dd>
     <dt>Illness onsets</dt><dd>{e(io['onset_range'])}</dd>
     <dt>Evidence basis</dt><dd>{e(io['evidence_basis'])}</dd>
-    <dt>Recall</dt><dd>{e(rc['scope'])} {e(rc['distribution'])} {e(rc['blends_note'])}{cite(rc.get('sources'), smap)}</dd>
+    <dt>Recall</dt><dd>{e(rc['scope'])} {e(rc['distribution'])} {e(rc['blends_note'])}{cite(rc.get('sources'), smap, rc['date'])}</dd>
+    <dt>Recalled retail products</dt><dd>{e(rc['retail_products'])}{cite(['fda-recall', 'cnn-safe-food'], smap, rc['date'])}</dd>
   </dl>
 </section>
 

@@ -54,12 +54,15 @@ def probe(url, attempt=0):
                 return False, (f"HTTP 404 - PATH MISSING "
                                f"(host root returned {root}, so the host is up)")
             except urllib.error.HTTPError as rex:
-                if rex.code in (403, 429):
-                    return True, (f"HTTP 404 but host root returns {rex.code} - "
-                                  f"INCONCLUSIVE, host likely cloaks bot-blocking")
-                return False, f"HTTP 404 (host root also failed: {rex.code})"
+                # A live site's homepage does not 404. If the root gives 404 or
+                # 403, the host is refusing this client wholesale rather than
+                # telling us anything about the path, so we cannot conclude the
+                # citation is dead. fda.gov does exactly this: it 404s every
+                # request from automation, homepage included.
+                return True, (f"HTTP 404 but host root also returns {rex.code} - "
+                              f"INCONCLUSIVE, host blocks automation wholesale")
             except Exception:  # noqa: BLE001
-                return False, "HTTP 404 (host root unreachable)"
+                return True, "HTTP 404, host root unreachable - INCONCLUSIVE"
         return False, f"HTTP {ex.code}"
     except urllib.error.URLError as ex:
         reason = str(ex.reason)

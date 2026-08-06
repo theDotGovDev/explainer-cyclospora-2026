@@ -29,6 +29,7 @@
     "firm": "Taylor Farms de Mexico / Taylor Fresh Foods",
     "scope": "All iceberg lettuce sourced from central Mexico, voluntarily withdrawn from U.S. retail and foodservice supply chains.",
     "distribution": "Recalled shredded and chopped lettuce products were distributed to foodservice customers in more than two dozen states; secondary reporting cites 27 states. The recall notice also included Marketside-brand retail product sold at Walmart.",
+    "retail_products": "The Walmart retail portion was described as Marketside-brand 'Iceberg Salad' in 12-oz and 24-oz sizes and 'Shredded Lettuce' in 8-oz and 16-oz sizes, carrying Best if Used By dates from 7/18/2026 through 8/3/2026. Those use-by dates have now passed, so this detail matters mainly for identifying what was in circulation rather than what is still on a shelf.",
     "blends_note": "The recall covers blended salad mixes that contain iceberg lettuce from this supplier, not only single-ingredient iceberg.",
     "sources": ["fda-recall", "abc-27states", "cnn-safe-food"]
   },
