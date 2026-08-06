@@ -17,6 +17,8 @@ part of every page.
 | `data/foods.json` | The per-food risk table: status, risk estimates, mitigations, residual risk |
 | `data/sources.json` | Every source, graded by tier, with a stable citation id |
 | `build.py` | Renders the site from the JSON. No dependencies. |
+| `tools/validate.py` | Correctness checks — run in CI, blocks merge on failure |
+| `tools/check_links.py` | Advisory check that every cited URL still resolves |
 | `site/` | Generated output — commit this; it is what gets served |
 
 The JSON files are the canonical record. Don't hand-edit `site/*.html`; it will be
@@ -25,18 +27,53 @@ overwritten.
 ## Build
 
 ```sh
-python3 build.py
+python3 build.py && python3 tools/validate.py
 ```
 
-Requires Python 3 only — no packages, no toolchain. The script fails loudly if a citation
-references a source id that doesn't exist, or if a source carries an unrecognized tier, so
-a broken citation can't ship silently.
-
-To preview:
+Requires Python 3 only — no packages, no toolchain. To preview:
 
 ```sh
 python3 -m http.server -d site 8000
 ```
+
+## Automation
+
+> **These workflows are written but not yet active.** They sit in `ci/workflows/` rather
+> than `.github/workflows/`, because the credentials used to author them lack GitHub's
+> `workflow` OAuth scope. See [`ci/README.md`](ci/README.md) for the one-command install.
+
+| Workflow | Trigger | What it does |
+| --- | --- | --- |
+| `ci.yml` | push, PR | Builds, asserts committed `site/` matches `data/`, runs the validator. Also checks source links (advisory). |
+| `pages.yml` | push to `main` | Rebuilds, validates, deploys to GitHub Pages. Won't publish a page that fails validation. |
+| `freshness.yml` | weekly | Opens or updates a `stale-data` issue when `as_of` ages past 21 days. |
+
+`tools/validate.py` enforces the things that would otherwise rot silently:
+
+- every citation resolves, and inline `[n]` markers match the sources page numbering;
+- every citation carries a sourcing marker, so no claim appears unlabeled;
+- all four core disclaimers are present on every page;
+- risk values are hedged — an unhedged point value like `1 in 50,000` fails the build,
+  because these are estimates and must read as estimates;
+- HTML is well-formed and external links carry `rel`;
+- the `as_of` date is present on every page, not in the future, and not stale.
+
+GitHub Pages needs to be enabled once in **Settings → Pages → Source: GitHub Actions**
+before `pages.yml` can deploy.
+
+## Sourcing markers
+
+Every claim is tagged with where it came from, and moving numbers are tagged with the date
+they describe:
+
+- **agency** — backed by a government, public health or peer-reviewed source
+- **agency + news** — a mix of agency sourcing and news reporting
+- **news** — news or consumer reporting only, not confirmed against a primary document
+
+Markers are derived automatically from the `tier` of each cited source, so they cannot
+drift out of sync with the actual citations. Note the distinction the site makes explicitly:
+an **agency** marker means an agency *originated* the claim, not that it was read off the
+agency's own page — see the limitation below.
 
 ## Editorial rules
 

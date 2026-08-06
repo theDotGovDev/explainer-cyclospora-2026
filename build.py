@@ -78,8 +78,38 @@ def source_map(sources_doc):
     return smap
 
 
-def cite(ids, smap):
-    """Render a list of source ids as superscript numbered links to sources.html."""
+PROVENANCE = {
+    "agency": ("agency", "Agency or peer-reviewed sourcing",
+               "This claim rests on government, public health or peer-reviewed sources."),
+    "agency-news": ("agency + news", "Mixed sourcing",
+                    "This claim rests on a mix of agency sources and news reporting."),
+    "news": ("news", "News reporting only",
+             "This claim rests only on news or consumer reporting. It has not been "
+             "confirmed against a primary agency document."),
+}
+
+
+def provenance(ids, smap):
+    """Classify a claim by the strongest tier of source actually behind it."""
+    tiers = {smap[i]["tier"] for i in ids if i in smap}
+    if not tiers:
+        return None
+    strong = bool(tiers & {"primary", "literature"})
+    weak = bool(tiers & {"secondary", "expert"})
+    if strong and weak:
+        return "agency-news"
+    return "agency" if strong else "news"
+
+
+def cite(ids, smap, dated=None):
+    """Render source ids as superscript numbered links plus a provenance marker.
+
+    Every citation on this site is marked with where the claim actually came
+    from, because a figure that reached us via a news article is not as good as
+    one read off an agency page, and the reader is entitled to know which is
+    which without chasing links. `dated` optionally stamps the claim with the
+    date it describes.
+    """
     if not ids:
         return ""
     links = []
@@ -93,7 +123,21 @@ def cite(ids, smap):
                 num=src["_n"],
             )
         )
-    return '<sup class="cite">[' + "][".join(links) + "]</sup>" if links else ""
+    if not links:
+        return ""
+    out = '<sup class="cite">[' + "][".join(links) + "]</sup>"
+
+    kind = provenance(ids, smap)
+    if kind:
+        label, short, explain = PROVENANCE[kind]
+        out += (' <span class="prov prov-{k}" title="{explain}">'
+                '<span class="vh">Sourcing: </span>{label}</span>').format(
+            k=e(kind), explain=e(explain), label=e(label))
+    if dated:
+        out += (' <span class="dated" title="The date this figure describes">'
+                '<span class="vh">as of </span>'
+                '<time datetime="{d}">{d}</time></span>').format(d=e(dated))
+    return out
 
 
 # --------------------------------------------------------------------------
@@ -175,7 +219,7 @@ def page(title, description, body, active, as_of):
           lettuce cluster. Where sources conflict we show the range rather than pick a number.</li>
       <li><strong>This is not the authoritative recall notice.</strong> For the definitive
           list of recalled products, lot codes and dates, use
-          <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts">FDA's
+          <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts" rel="noopener">FDA's
           recall announcements</a> and the recalling firm's own notice.</li>
       <li><strong>Individual risk varies substantially.</strong> These are population-average
           estimates. People who are immunocompromised, pregnant, elderly or very young face
@@ -189,7 +233,8 @@ def page(title, description, body, active, as_of):
           an allegation of wrongdoing beyond what agencies have stated.</li>
       <li><strong>Do not read this as a reason to avoid fruits and vegetables.</strong> The
           health benefits of produce substantially outweigh these risks for nearly everyone.
-          Consumer Reports and food-safety experts have specifically cautioned against
+          <a href="https://www.consumerreports.org/health/food-safety/you-shouldnt-avoid-fruits-and-vegetables-due-to-cyclospora-a9570579349/" rel="noopener">Consumer
+          Reports</a> and food-safety experts have specifically cautioned against
           responding to this outbreak by cutting produce out of the diet. The purpose of this
           page is to help you substitute within produce, not away from it.</li>
     </ol>
@@ -262,24 +307,47 @@ def build_index(outbreak, foods, smap):
   </ul>
 </section>
 
+<section class="prov-key" aria-labelledby="prov-h">
+  <h2 id="prov-h">How to read the sourcing markers</h2>
+  <p>Every figure and claim on this site is tagged with where it came from and, where it
+     is a moving number, the date it describes. Nothing here is presented as fact without
+     showing you what is behind it.</p>
+  <ul class="prov-legend">
+    <li><span class="prov prov-agency">agency</span> Backed by a government, public health
+        or peer-reviewed source.</li>
+    <li><span class="prov prov-agency-news">agency + news</span> Backed by a mix of agency
+        sources and news reporting.</li>
+    <li><span class="prov prov-news">news</span> Backed only by news or consumer reporting,
+        and not confirmed against a primary agency document. Treat these as the weakest
+        claims on the page.</li>
+    <li><span class="dated"><time datetime="2026-08-05">2026-08-05</time></span> The date
+        the figure describes &mdash; not the date you are reading it. Outbreak numbers move.</li>
+  </ul>
+  <p class="prov-caveat"><strong>Important:</strong> an <span class="prov prov-agency">agency</span>
+     marker means an agency is the origin of the claim, not that we read it off the agency's
+     own page. As explained in the <a href="methodology.html#m5">methodology</a>, cdc.gov and
+     fda.gov were unreachable from the build environment, so most agency figures here arrived
+     by way of sources that cite them.</p>
+</section>
+
 <section aria-labelledby="numbers">
   <h2 id="numbers">Where the outbreak stands</h2>
   <div class="stats">
     <div class="stat">
       <span class="stat-num">{ns['lab_confirmed']:,}</span>
-      <span class="stat-label">lab-confirmed cases since May&nbsp;1, 2026{cite(['cdc-surveillance'], smap)}</span>
+      <span class="stat-label">lab-confirmed cases since May&nbsp;1, 2026{cite(ns['sources'], smap, ns['as_of'])}</span>
     </div>
     <div class="stat">
       <span class="stat-num">{ns['probable_under_investigation']:,}</span>
-      <span class="stat-label">additional probable cases under investigation</span>
+      <span class="stat-label">additional probable cases under investigation{cite(ns['sources'], smap, ns['as_of'])}</span>
     </div>
     <div class="stat">
       <span class="stat-num">{ns['hospitalizations']:,}</span>
-      <span class="stat-label">hospitalizations</span>
+      <span class="stat-label">hospitalizations{cite(ns['sources'], smap, ns['as_of'])}</span>
     </div>
     <div class="stat">
       <span class="stat-num">{ns['deaths']}</span>
-      <span class="stat-label">deaths{cite(['cnn-deaths', 'axios-deaths'], smap)}</span>
+      <span class="stat-label">deaths{cite(['cnn-deaths', 'axios-deaths'], smap, '2026-08-03')}</span>
     </div>
   </div>
   <p class="stat-foot">{e(ns['window'])}, as of {e(ns['as_of'])}. {e(ns['states_with_cases'])}
@@ -405,7 +473,7 @@ def build_methodology(outbreak, smap):
      misdiagnosed as ordinary traveler's diarrhea, and many people never get a stool test.
      CDC's foodborne burden model has historically applied an underdiagnosis multiplier of
      about <strong>83&times;</strong> for <em>Cyclospora cayetanensis</em>, with an
-     underreporting multiplier of 1.0.{cite(['cdc-surveillance-1115', 'thehill-underreported'], smap)}</p>
+     underreporting multiplier of 1.0.{cite(['cdc-surveillance-1115', 'pmc-challenges', 'thehill-underreported'], smap)}</p>
   <p>We treat that 83&times; figure as an upper bound rather than a central estimate, because it
      was derived when detection depended on specifically requested stool ova-and-parasite
      testing. Multiplex PCR gastrointestinal panels are now widely used and detect
