@@ -12,7 +12,7 @@
     "deaths_note": "Both deaths were reported in Michigan in people with significant underlying health conditions that may have been adversely affected by cyclosporiasis and dehydration.",
     "states_with_cases": "Reported in roughly 45-47 states; secondary reporting indicates only New Mexico, Montana and Hawaii had reported zero cases since May 1.",
     "as_of": "2026-08-05",
-    "sources": ["cdc-surveillance", "cdc-han", "today-map", "cnn-deaths", "axios-deaths"]
+    "sources": ["cdc-surveillance", "cdc-han", "wadoh", "today-map", "cnn-deaths", "axios-deaths"]
   },
   "implicated_outbreak": {
     "vehicle": "Iceberg lettuce",
@@ -60,6 +60,6 @@
     "peeling": "Peeling physically removes the contaminated outer surface and is highly effective, provided the knife and hands do not transfer oocysts to the flesh.",
     "person_to_person": "Cyclospora is not transmitted directly person-to-person in a meaningful way. Freshly passed oocysts are not infectious and require days to weeks in the environment to sporulate, so household spread from an ill person is not a significant route.",
     "incubation": "Symptoms usually begin about one week after infection, with a range of roughly 2 days to 2 weeks or more. Untreated illness can last from a few days to a month or longer, and relapsing symptoms are common.",
-    "sources": ["cdc-outbreak", "canada-prevention", "abc-tips", "michigan"]
+    "sources": ["cdc-outbreak", "canada-prevention", "abc-tips", "michigan", "jhu"]
   }
 }
