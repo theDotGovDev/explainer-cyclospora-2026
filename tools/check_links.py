@@ -12,6 +12,7 @@ import json
 import pathlib
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -22,7 +23,18 @@ UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 
 
-def probe(url):
+def _raw(url):
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+        return resp.status
+
+
+def host_root(url):
+    parts = urllib.parse.urlsplit(url)
+    return f"{parts.scheme}://{parts.netloc}/"
+
+
+def probe(url, attempt=0):
     """Return (ok, note). GET, not HEAD: many sites 405 on HEAD."""
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     try:
@@ -32,6 +44,22 @@ def probe(url):
         # 403/429 usually means bot-blocked or rate-limited, not a dead link.
         if ex.code in (403, 429):
             return True, f"{ex.code} (blocked to automation, not treated as dead)"
+        if ex.code == 404:
+            # Distinguish "this path is gone" from "this host 404s all robots".
+            # Without this, a site that cloaks bot-blocking as 404 looks
+            # identical to a citation URL that was simply never real - and for
+            # this project that difference decides whether a source is honest.
+            try:
+                root = _raw(host_root(url))
+                return False, (f"HTTP 404 - PATH MISSING "
+                               f"(host root returned {root}, so the host is up)")
+            except urllib.error.HTTPError as rex:
+                if rex.code in (403, 429):
+                    return True, (f"HTTP 404 but host root returns {rex.code} - "
+                                  f"INCONCLUSIVE, host likely cloaks bot-blocking")
+                return False, f"HTTP 404 (host root also failed: {rex.code})"
+            except Exception:  # noqa: BLE001
+                return False, "HTTP 404 (host root unreachable)"
         return False, f"HTTP {ex.code}"
     except urllib.error.URLError as ex:
         reason = str(ex.reason)
@@ -40,7 +68,14 @@ def probe(url):
         if "Tunnel connection failed" in reason or "proxy" in reason.lower():
             return True, f"inconclusive (blocked by egress proxy: {reason})"
         return False, f"unreachable: {reason}"
+    except TimeoutError:
+        if attempt < 2:
+            return probe(url, attempt + 1)
+        return False, f"timed out after {attempt + 1} attempts"
     except Exception as ex:  # noqa: BLE001 - advisory check, never crash CI
+        msg = str(ex)
+        if "timed out" in msg and attempt < 2:
+            return probe(url, attempt + 1)
         return False, f"error: {ex}"
 
 
