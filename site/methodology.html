@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology - U.S. Cyclospora outbreak risk assessment</title>
+<meta name="description" content="How the per-serving risk estimates were calculated, what they assume, and where the method is weak.">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="alert-bar" role="region" aria-label="Medical disclaimer">
+  <strong>Not medical advice.</strong> This is an independent, best-effort explainer.
+  If you are ill, contact a clinician. In an emergency, call 911.
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="eyebrow">Independent explainer &middot; unaffiliated with CDC, FDA or any company</p>
+    <h1>U.S. Cyclospora outbreak: practical risk assessment</h1>
+    <p class="lede">How the per-serving risk estimates were calculated, what they assume, and where the method is weak.</p>
+    <p class="asof">Information current through <time datetime="2026-08-06">2026-08-06</time>.
+       Outbreak data changes frequently &mdash; verify against the primary sources before acting.</p>
+    <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">Risk table</a>
+        <a href="methodology.html" class="active" aria-current="page">Methodology</a>
+        <a href="sources.html">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+<section aria-labelledby="m1">
+  <h2 id="m1">What these numbers are</h2>
+  <p>No agency publishes the probability of getting sick from one serving of a given food.
+     The risk figures on this site are <strong>informed estimates produced by this project</strong>,
+     built from published case counts, published consumption data, and stated assumptions.
+     They are rounded aggressively &mdash; to the nearest order of magnitude &mdash; because
+     the underlying uncertainty does not support more precision.</p>
+  <p>They are fit for one purpose: <strong>ranking foods against each other</strong> so you can
+     decide what to substitute. They are not fit for use as absolute probabilities, and they
+     should never be attributed to CDC, FDA or any state health department.</p>
+</section>
+
+<section aria-labelledby="m2">
+  <h2 id="m2">The calculation, step by step</h2>
+
+  <h3>Step 1 &mdash; Estimate true illnesses, not just reported ones</h3>
+  <p>Reported cases undercount real infections badly. Cyclosporiasis is frequently
+     misdiagnosed as ordinary traveler's diarrhea, and many people never get a stool test.
+     CDC's foodborne burden model has historically applied an underdiagnosis multiplier of
+     about <strong>83&times;</strong> for <em>Cyclospora cayetanensis</em>, with an
+     underreporting multiplier of 1.0.<sup class="cite">[<a href="sources.html#cdc-surveillance-1115" title="Cyclosporiasis Surveillance - United States, 2011-2015 (CDC / MMWR (via PMC))">14</a>][<a href="sources.html#thehill-underreported" title="Why cyclosporiasis cases are likely way underreported (The Hill)">29</a>]</sup></p>
+  <p>We treat that 83&times; figure as an upper bound rather than a central estimate, because it
+     was derived when detection depended on specifically requested stool ova-and-parasite
+     testing. Multiplex PCR gastrointestinal panels are now widely used and detect
+     <em>Cyclospora</em> without a specific request, which mechanically raises ascertainment.
+     Against that, the 12,255 probable cases already under
+     investigation show real detection is running well ahead of confirmation.</p>
+  <p>So from 10,468 lab-confirmed cases since May 1, we carry a range of
+     roughly <strong>100,000 to 900,000 true illnesses</strong> nationally over the season,
+     with a working central value near 250,000. The wide range is honest, not decorative:
+     it is the single largest source of uncertainty in every number on this site.</p>
+
+  <h3>Step 2 &mdash; Estimate servings eaten</h3>
+  <p>USDA Economic Research Service per-capita availability data gives the denominator.
+     Iceberg lettuce availability was about <strong>12.4 lb per person per year</strong>
+     (a record low, down from 24 lb in the 1990s); romaine and leaf lettuce together run
+     about <strong>18 lb per person per year</strong>.<sup class="cite">[<a href="sources.html#usda-lettuce" title="Romaine and leaf lettuces almost as popular as head lettuce (per capita availability) (USDA Economic Research Service)">13</a>]</sup></p>
+  <p>For iceberg, across roughly 342 million people that is about 4.2 billion lb per year, or
+     about 1.1 billion lb over the ~14-week outbreak window. At a serving of about 3 oz
+     (0.19 lb) &mdash; a taco's worth of shredded lettuce or a side salad &mdash; that is on
+     the order of <strong>6 billion servings of iceberg lettuce nationally</strong> during
+     the window.</p>
+
+  <h3>Step 3 &mdash; Divide, then adjust for how much of the supply was implicated</h3>
+  <p>Dividing illnesses by servings gives an average. But the recalled product was one
+     supplier's central-Mexico-sourced lettuce, which is a small fraction of total U.S. iceberg
+     supply &mdash; most U.S. summer iceberg is domestic, from California's Salinas Valley.
+     Concentrating the outbreak-attributable illnesses into that small implicated fraction is
+     what produces the roughly 1-in-200-to-1-in-2,000 figure for recalled product, while
+     leaving non-recalled iceberg two to three orders of magnitude lower.</p>
+
+  <h3>Step 4 &mdash; Sanity-check against a population anchor</h3>
+  <p>A cross-check we can state plainly: 100,000 to 900,000 illnesses across ~342 million
+     people over ~14 weeks is a seasonal per-person risk of roughly 1 in 400 to 1 in 3,400.
+     A typical person eats on the order of 100&ndash;200 servings of raw produce in that
+     window. That implies an <strong>average risk of about 1 in 40,000 to 1 in 700,000 per
+     raw produce serving</strong>, across all produce.</p>
+  <p>Every per-food number on the risk table should sit sensibly around that anchor &mdash;
+     implicated foods above it, cooked and peeled foods well below it. They do. That
+     consistency check is the main reason to trust the <em>ordering</em> of the table even
+     though the absolute values are soft.</p>
+</section>
+
+<section aria-labelledby="m3">
+  <h2 id="m3">How mitigation effects were estimated</h2>
+  <ul class="method-list">
+    <li><strong>Cooking (to ~158 F / 70 C):</strong> treated as near-complete elimination,
+        two to three orders of magnitude. This is the best-supported control and the reason
+        cooked vegetables sit at the bottom of the table.</li>
+    <li><strong>Peeling:</strong> treated as roughly one to two orders of magnitude, since
+        contamination is a surface phenomenon. Discounted slightly for knife
+        cross-contamination from rind to flesh.</li>
+    <li><strong>Avoiding recalled product:</strong> the dominant effect for iceberg, worth
+        several orders of magnitude, because it removes the implicated supply entirely rather
+        than reducing dose.</li>
+    <li><strong>Washing and rinsing:</strong> deliberately credited with very little &mdash;
+        at most a factor of about two, and less for crinkled leaves and delicate berries.
+        Cyclospora oocysts resist chlorine and adhere in surface crevices. Crediting washing
+        the way one would for bacteria would badly misstate the risk here.</li>
+    <li><strong>Choosing whole heads over precut or bagged:</strong> roughly a factor of two
+        to five, reflecting less handling and fewer source fields pooled per package rather
+        than any effect on contamination itself.</li>
+    <li><strong>Retailer recall programs:</strong> a modest effect, and one that acts on speed
+        of removal rather than probability of contamination. Loyalty-card-linked notification
+        shortens the window during which a household keeps eating a recalled product, but
+        cannot act before a recall is issued.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="m4">
+  <h2 id="m4">Known weaknesses of this method</h2>
+  <ol class="weaknesses">
+    <li><strong>The underdiagnosis multiplier dominates everything.</strong> A range of
+        100,000 to 900,000 true illnesses is a factor of nine, and it propagates into every
+        cell of the table.</li>
+    <li><strong>Per-capita availability is not consumption.</strong> USDA availability data
+        does not subtract household and retail waste, which is substantial for leafy greens.
+        This inflates the serving denominator and therefore understates per-serving risk,
+        probably by tens of percent.</li>
+    <li><strong>National averages hide geography.</strong> Risk was heavily concentrated in
+        the outbreak states. A national per-serving average understates risk there and
+        overstates it elsewhere, potentially by an order of magnitude.</li>
+    <li><strong>Attribution across four concurrent investigations is unresolved.</strong>
+        Most 2026 cases are not tied to any cluster. Splitting illnesses between iceberg
+        lettuce and other commodities involves judgment, and if cilantro or cucumbers are
+        later confirmed, their rows should move up and iceberg's should move down.</li>
+    <li><strong>No positive product sample exists.</strong> The iceberg attribution rests
+        entirely on epidemiology and traceback. That is legitimate and often decisive
+        evidence, but it means we cannot calibrate against a measured contamination rate.</li>
+    <li><strong>Risk is not static.</strong> These estimates describe the current window.
+        Post-recall, iceberg risk falls; if a new commodity is named, that row is wrong until
+        updated.</li>
+  </ol>
+</section>
+
+<section aria-labelledby="m5">
+  <h2 id="m5">How sources were accessed &mdash; and a real limitation</h2>
+  <p>The environment in which this site was built could not make outbound connections to
+     cdc.gov or fda.gov; those hosts were blocked at the network egress layer. Agency figures
+     were therefore obtained from <strong>search-indexed summaries of the agency pages and from
+     reputable secondary reporting</strong> that cites them, rather than from a direct read of
+     the primary documents.</p>
+  <p>We are stating this plainly because it matters for how much weight to give these numbers.
+     The practical consequences:</p>
+  <ul>
+    <li>Exact figures may be off, or may reflect a snapshot older than the date on this page.</li>
+    <li>Published counts genuinely conflict across sources. Where they do, we show the range
+        and label it rather than silently choosing one.</li>
+    <li>Primary sources are linked throughout and on the <a href="sources.html">sources page</a>.
+        Where they differ from anything here, <strong>they are correct and this page is not</strong>.</li>
+  </ul>
+  <p>Anyone rebuilding this site from an unrestricted network should re-verify every figure in
+     <code>data/outbreak.json</code> against the primary CDC and FDA pages first.</p>
+</section>
+
+<section aria-labelledby="m6">
+  <h2 id="m6">Reproducing and updating this</h2>
+  <p>All content lives in <code>data/outbreak.json</code>, <code>data/foods.json</code> and
+     <code>data/sources.json</code>. Editing those and running <code>python3 build.py</code>
+     regenerates the site. There are no dependencies and no build toolchain. Every figure is
+     meant to be traceable to a numbered entry on the sources page; if you find one that
+     is not, that is a bug worth filing.</p>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <h2>Disclaimers and limitations</h2>
+    <ol class="disclaimers">
+      <li><strong>This is not medical advice.</strong> Nothing here diagnoses, treats or
+          prevents disease, and it is not a substitute for a licensed clinician. Cyclosporiasis
+          is treated with prescription antibiotics; if you have watery diarrhea lasting more
+          than a few days, seek care. Seek care urgently for signs of dehydration, bloody
+          stool, high fever, or if you are immunocompromised, pregnant, very young or elderly.</li>
+      <li><strong>The risk numbers are our estimates, not official statistics.</strong>
+          No public health agency publishes per-serving risk for these foods. Every probability
+          on this site was derived by this project using the method described on the
+          <a href="methodology.html">methodology page</a>. They are order-of-magnitude
+          approximations intended for relative comparison between foods. Do not cite them
+          as agency figures.</li>
+      <li><strong>Provided on a best-effort basis, without warranty.</strong> The information
+          may be incomplete, outdated or wrong. No warranty of accuracy, completeness or
+          fitness for any purpose is made or implied, and no liability is accepted for
+          decisions made using it.</li>
+      <li><strong>Source access was limited when this page was built.</strong> The build
+          environment could not reach cdc.gov or fda.gov directly. Agency figures were taken
+          from search-indexed summaries of those pages and from reputable secondary reporting,
+          not from a direct read of the primary documents. This is a real reliability limit
+          &mdash; treat the primary sources as authoritative wherever they differ.</li>
+      <li><strong>Published case counts disagree with one another.</strong> Counts vary by
+          snapshot date and by whether they describe the full 2026 season or only the iceberg
+          lettuce cluster. Where sources conflict we show the range rather than pick a number.</li>
+      <li><strong>This is not the authoritative recall notice.</strong> For the definitive
+          list of recalled products, lot codes and dates, use
+          <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts">FDA's
+          recall announcements</a> and the recalling firm's own notice.</li>
+      <li><strong>Individual risk varies substantially.</strong> These are population-average
+          estimates. People who are immunocompromised, pregnant, elderly or very young face
+          materially higher risk of severe illness, and both deaths in this outbreak were in
+          people with significant underlying conditions. Geography matters too: risk was
+          concentrated in the outbreak states.</li>
+      <li><strong>Do not use this for clinical, regulatory, legal or commercial decisions.</strong>
+          It is written for members of the public deciding what to eat.</li>
+      <li><strong>Companies are named only because official sources named them.</strong>
+          Naming a firm or product reflects the public record of this investigation and is not
+          an allegation of wrongdoing beyond what agencies have stated.</li>
+      <li><strong>Do not read this as a reason to avoid fruits and vegetables.</strong> The
+          health benefits of produce substantially outweigh these risks for nearly everyone.
+          Consumer Reports and food-safety experts have specifically cautioned against
+          responding to this outbreak by cutting produce out of the diet. The purpose of this
+          page is to help you substitute within produce, not away from it.</li>
+    </ol>
+    <p class="corrections">Found an error, or have a newer agency figure? Corrections are
+       welcome via an issue or pull request on this repository. Every number here is traceable
+       to an entry on the <a href="sources.html">sources page</a>.</p>
+    <p class="built">Generated from <code>data/*.json</code> by <code>build.py</code>.
+       Content current through 2026-08-06.</p>
+  </div>
+</footer>
+</body>
+</html>

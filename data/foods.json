@@ -1,0 +1,193 @@
+{
+  "risk_basis": "Per single serving eaten in the United States during the current outbreak window. A serving is roughly 1 to 1.5 cups of raw greens (about 70-85 g), or a typical restaurant portion. All values are informed estimates produced by this project, not official statistics.",
+  "status_legend": {
+    "confirmed": "Named by FDA/CDC as implicated in the 2026 outbreak on epidemiologic and traceback evidence.",
+    "under-traceback": "Reported to be under active traceback or flagged by state officials in a 2026 investigation. Not a conclusion.",
+    "linked-by-recall": "Not independently implicated, but within the scope of the recall because it may contain the implicated ingredient.",
+    "historical": "Associated with prior U.S. cyclosporiasis outbreaks, but not implicated in 2026.",
+    "not-implicated": "No association in the 2026 outbreak and no strong historical association."
+  },
+  "foods": [
+    {
+      "name": "Recalled iceberg lettuce",
+      "detail": "Taylor Farms de Mexico product sourced from central Mexico, as consumed before the July 17 recall took effect. Mostly shredded/chopped foodservice packs, plus Marketside retail product at Walmart.",
+      "status": "confirmed",
+      "band": "high",
+      "risk_unmitigated": "~1 in 200 to 1 in 2,000",
+      "mitigation": "Do not eat. Discard, or return for refund. Washing does not work on this parasite. This is the one product where avoidance is the whole strategy.",
+      "risk_residual": "Below 1 in 1,000,000",
+      "residual_note": "The product has been off the market since mid-July and is long past shelf life, so present-day residual risk is driven by the recall having been effective, not by anything a consumer does now.",
+      "confidence": "moderate",
+      "sources": ["fda-recall", "fda-9state", "cdc-outbreak", "nbc-source"]
+    },
+    {
+      "name": "Restaurant / foodservice iceberg lettuce",
+      "detail": "Shredded iceberg on tacos, burgers, sandwiches and salad bars. This is the exposure route that drove the outbreak: the initial cluster was traced to shredded lettuce served at Taco Bell locations in five states.",
+      "status": "confirmed",
+      "band": "moderate",
+      "risk_unmitigated": "~1 in 20,000 to 1 in 200,000 now; roughly 1 in 2,000 to 1 in 20,000 at the June to mid-July peak in affected states",
+      "mitigation": "The recalled supply has been withdrawn, which does most of the work. Beyond that: ask whether the location sourced from the recalled supplier, order items without shredded lettuce, or choose cooked menu items. Risk is concentrated in the outbreak states, not nationwide.",
+      "risk_residual": "~1 in 100,000 to 1 in 1,000,000",
+      "residual_note": "Residual risk reflects that foodservice shredded lettuce involves heavy handling and pooled supply, so a future contaminated lot would again spread widely before detection.",
+      "confidence": "low-moderate",
+      "sources": ["fda-9state", "cdc-outbreak", "cnn-safe-food"]
+    },
+    {
+      "name": "Bagged / packaged salad mixes containing iceberg",
+      "detail": "Blended mixes are explicitly within the recall scope where they contain iceberg from the implicated supplier.",
+      "status": "linked-by-recall",
+      "band": "moderate",
+      "risk_unmitigated": "~1 in 10,000 to 1 in 100,000",
+      "mitigation": "Check the product against current FDA recall listings. Prefer blends with no iceberg, or buy whole heads and cut them yourself. Precut and bagged products undergo more handling and pool more source fields per bag than a single head.",
+      "risk_residual": "~1 in 100,000 to 1 in 1,000,000",
+      "residual_note": "Checking recall lists is effective but lags: a contaminated lot circulates before it is identified. That lag is why residual risk does not fall to the level of whole-head produce.",
+      "confidence": "low-moderate",
+      "sources": ["cnn-safe-food", "fda-recall", "time-experts"]
+    },
+    {
+      "name": "Non-recalled iceberg lettuce (whole head, retail)",
+      "detail": "Whole heads, predominantly domestic summer supply from California's Salinas Valley rather than central Mexico. Read this row carefully: iceberg lettuce IS the implicated commodity in this outbreak, and what is implicated is one supplier's product, not the crop. Traceback identifies the supply chains it can see, so the possibility that the implicated supply extends beyond the recall cannot be excluded, particularly given that no product sample ever tested positive.",
+      "status": "not-implicated",
+      "band": "low",
+      "risk_unmitigated": "~1 in 100,000 to 1 in 1,000,000",
+      "mitigation": "Confirm the product is not covered by the recall. Buy whole heads rather than precut. Discard the outer leaves and rinse the rest under running water. Prefer retailers with fast, well-publicized recall programs and loyalty-card recall notification.",
+      "risk_residual": "~1 in 200,000 to 1 in 2,000,000",
+      "residual_note": "Note that washing contributes little here. The gain comes from avoiding the implicated supply chain and from less handling, not from the rinse.",
+      "confidence": "low",
+      "sources": ["cnn-safe-food", "time-experts", "usda-lettuce", "usnews-falsepos"]
+    },
+    {
+      "name": "Cilantro",
+      "detail": "Reported to be a focus of traceback in at least one 2026 investigation. North Carolina officials indicated cilantro and parsley may be behind that state's rise in cases. Also carries the strongest historical record of any herb, from the 2013-2015 outbreaks traced to Puebla, Mexico.",
+      "status": "under-traceback",
+      "band": "moderate",
+      "risk_unmitigated": "~1 in 10,000 to 1 in 100,000",
+      "mitigation": "Add it to hot dishes during cooking rather than as a raw garnish, or omit it while investigations are open. Rinsing helps only marginally: cilantro's crinkled leaf surface is close to a worst case for mechanical removal of oocysts.",
+      "risk_residual": "Below 1 in 1,000,000 if cooked; ~1 in 50,000 to 1 in 500,000 if only rinsed",
+      "residual_note": "The gap between those two numbers is the single largest mitigation effect on this table. Heat works; washing does not.",
+      "confidence": "low",
+      "sources": ["cr-consumers", "cnn-safe-food"]
+    },
+    {
+      "name": "Fresh parsley",
+      "detail": "Flagged alongside cilantro by North Carolina officials. Same leaf structure and similar supply chains.",
+      "status": "under-traceback",
+      "band": "moderate",
+      "risk_unmitigated": "~1 in 20,000 to 1 in 200,000",
+      "mitigation": "Cook it into the dish rather than using it as a raw finish. Dried parsley carries no meaningful risk.",
+      "risk_residual": "Below 1 in 1,000,000 if cooked or dried",
+      "confidence": "low",
+      "sources": ["cnn-safe-food"]
+    },
+    {
+      "name": "Cucumbers",
+      "detail": "Reported among the commodities under traceback in a 2026 investigation. No confirmed link.",
+      "status": "under-traceback",
+      "band": "low-moderate",
+      "risk_unmitigated": "~1 in 50,000 to 1 in 500,000",
+      "mitigation": "Peel. Peeling physically removes the contaminated surface and is far more effective than washing. Wash before peeling, and do not let the knife carry contamination onto the flesh.",
+      "risk_residual": "Below 1 in 1,000,000 peeled",
+      "confidence": "low",
+      "sources": ["cr-consumers"]
+    },
+    {
+      "name": "Onions (raw)",
+      "detail": "Reported among commodities under traceback in a 2026 investigation. Onions are usually cooked or have outer layers removed, which limits exposure.",
+      "status": "under-traceback",
+      "band": "low",
+      "risk_unmitigated": "~1 in 100,000 to 1 in 1,000,000",
+      "mitigation": "Cooking eliminates the risk. Removing outer layers before use also helps.",
+      "risk_residual": "Below 1 in 2,000,000",
+      "confidence": "low",
+      "sources": ["cr-consumers"]
+    },
+    {
+      "name": "Romaine lettuce",
+      "detail": "Not named in the 2026 investigation. Lettuce generally has appeared in past cyclosporiasis outbreaks, so this is not a zero-history commodity.",
+      "status": "historical",
+      "band": "low",
+      "risk_unmitigated": "~1 in 200,000 to 1 in 2,000,000",
+      "mitigation": "Whole heads over bagged hearts, discard outer leaves, rinse under running water. A reasonable substitute for iceberg during this outbreak.",
+      "risk_residual": "~1 in 500,000 to 1 in 5,000,000",
+      "confidence": "low-moderate",
+      "sources": ["cnn-safe-food", "time-experts"]
+    },
+    {
+      "name": "Spinach",
+      "detail": "Explicitly not named in the current outbreak investigation. Reporting indicates CDC considers it safe to eat with standard washing.",
+      "status": "not-implicated",
+      "band": "low",
+      "risk_unmitigated": "~1 in 500,000 to 1 in 5,000,000",
+      "mitigation": "Standard washing. No outbreak-specific precaution is currently indicated. Cooking eliminates residual risk if you want to be conservative.",
+      "risk_residual": "~1 in 1,000,000 to 1 in 10,000,000",
+      "confidence": "moderate",
+      "sources": ["cnn-safe-food"]
+    },
+    {
+      "name": "Fresh basil",
+      "detail": "Not implicated in 2026, but basil has a real U.S. outbreak history, including outbreaks traced to imported basil in 2019 and 2020.",
+      "status": "historical",
+      "band": "low",
+      "risk_unmitigated": "~1 in 50,000 to 1 in 500,000",
+      "mitigation": "Cook it into sauces rather than using raw. Raw pesto and raw garnish are the higher-exposure uses.",
+      "risk_residual": "Below 1 in 1,000,000 cooked",
+      "confidence": "low",
+      "sources": ["cnn-safe-food", "fda-cyclospora"]
+    },
+    {
+      "name": "Raspberries, blackberries and berry / fruit mixes",
+      "detail": "Not implicated in 2026. Historically the most famous U.S. cyclosporiasis vehicle, from the 1996-1997 outbreaks traced to imported Guatemalan raspberries.",
+      "status": "historical",
+      "band": "low",
+      "risk_unmitigated": "~1 in 100,000 to 1 in 1,000,000",
+      "mitigation": "Delicate berries cannot be scrubbed and washing is only partially effective. Frozen berries used in baking or heated preparations carry effectively no risk.",
+      "risk_residual": "~1 in 200,000 to 1 in 2,000,000 raw; below 1 in 5,000,000 heated",
+      "confidence": "low",
+      "sources": ["cnn-safe-food", "fda-cyclospora"]
+    },
+    {
+      "name": "Snap peas",
+      "detail": "Not implicated in 2026. Associated with a 2009 U.S. outbreak traced to Guatemala.",
+      "status": "historical",
+      "band": "low",
+      "risk_unmitigated": "~1 in 200,000 to 1 in 2,000,000",
+      "mitigation": "Blanch or stir-fry. Cooking eliminates the risk.",
+      "risk_residual": "Below 1 in 5,000,000 cooked",
+      "confidence": "low",
+      "sources": ["cnn-safe-food"]
+    },
+    {
+      "name": "Tomatoes",
+      "detail": "No association with the 2026 outbreak and no significant cyclosporiasis outbreak history. Smooth skin makes mechanical removal of surface contamination comparatively effective.",
+      "status": "not-implicated",
+      "band": "very-low",
+      "risk_unmitigated": "~1 in 1,000,000 to 1 in 10,000,000",
+      "mitigation": "Rinse and rub under running water. No outbreak-specific precaution indicated.",
+      "risk_residual": "Below 1 in 5,000,000",
+      "confidence": "moderate",
+      "sources": ["cnn-safe-food"]
+    },
+    {
+      "name": "Peeled fruit (banana, orange, melon, avocado)",
+      "detail": "Peeling removes the surface where oocysts sit. Contamination is a surface phenomenon; it does not penetrate intact flesh.",
+      "status": "not-implicated",
+      "band": "very-low",
+      "risk_unmitigated": "~1 in 1,000,000 to 1 in 10,000,000",
+      "mitigation": "Scrub firm rinds such as melon before cutting, so the knife does not drag contamination from rind into flesh. This cross-contamination step is the only real risk pathway here.",
+      "risk_residual": "Below 1 in 10,000,000",
+      "confidence": "moderate",
+      "sources": ["abc-tips", "canada-prevention"]
+    },
+    {
+      "name": "Cooked vegetables",
+      "detail": "Any vegetable heated through to about 158 F (70 C) or above.",
+      "status": "not-implicated",
+      "band": "very-low",
+      "risk_unmitigated": "Below 1 in 10,000,000",
+      "mitigation": "Cooking is the definitive control for Cyclospora. The remaining risk is not the cooked food itself but cross-contamination from raw produce handled on the same board or with the same knife.",
+      "risk_residual": "Negligible",
+      "confidence": "high",
+      "sources": ["michigan", "canada-prevention", "abc-tips"]
+    }
+  ]
+}

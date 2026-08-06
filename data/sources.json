@@ -1,0 +1,208 @@
+{
+  "note": "Every figure on this site traces to an entry here. See methodology.html for how these were accessed and what that means for reliability.",
+  "sources": [
+    {
+      "id": "cdc-outbreak",
+      "tier": "primary",
+      "publisher": "CDC",
+      "title": "Cyclospora Outbreak Linked to Iceberg Lettuce",
+      "url": "https://www.cdc.gov/cyclosporiasis/outbreaks/07-26/index.html"
+    },
+    {
+      "id": "cdc-investigation",
+      "tier": "primary",
+      "publisher": "CDC",
+      "title": "Investigation Update: Cyclospora Outbreak, July 2026",
+      "url": "https://www.cdc.gov/cyclosporiasis/outbreaks/07-26/investigation.html"
+    },
+    {
+      "id": "cdc-han",
+      "tier": "primary",
+      "publisher": "CDC Health Alert Network",
+      "title": "HAN 531: Domestically Acquired Cyclosporiasis Cases in Multiple U.S. States, 2026",
+      "url": "https://www.cdc.gov/han/php/notices/han00531.html"
+    },
+    {
+      "id": "cdc-surveillance",
+      "tier": "primary",
+      "publisher": "CDC",
+      "title": "Surveillance of Cyclosporiasis",
+      "url": "https://www.cdc.gov/cyclosporiasis/php/surveillance/index.html"
+    },
+    {
+      "id": "cdc-newsroom",
+      "tier": "primary",
+      "publisher": "CDC Newsroom",
+      "title": "Cyclospora outbreak linked to iceberg lettuce expanded to four new states",
+      "url": "https://www.cdc.gov/media/releases/2026/cyclospora-outbreak-linked-to-iceberg-lettuce-expanded-to-four-new-states.html"
+    },
+    {
+      "id": "fda-9state",
+      "tier": "primary",
+      "publisher": "FDA",
+      "title": "Investigation of 9-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026)",
+      "url": "https://www.fda.gov/food/outbreaks-foodborne-illness/investigation-9-state-outbreak-cyclospora-illnesses-iceberg-lettuce-july-2026"
+    },
+    {
+      "id": "fda-15state",
+      "tier": "primary",
+      "publisher": "FDA",
+      "title": "Investigation of 15-State Outbreak of Cyclospora Illnesses: Iceberg Lettuce (July 2026)",
+      "url": "https://www.fda.gov/food/outbreaks-foodborne-illness/investigation-15-state-outbreak-cyclospora-illnesses-iceberg-lettuce-july-2026"
+    },
+    {
+      "id": "fda-recall",
+      "tier": "primary",
+      "publisher": "FDA",
+      "title": "Taylor Fresh Foods Recalls Iceberg Lettuce from Central Mexico Because of Possible Health Risk",
+      "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/taylor-fresh-foods-recalls-iceberg-lettuce-central-mexico-because-possible-health-risk"
+    },
+    {
+      "id": "fda-cyclospora",
+      "tier": "primary",
+      "publisher": "FDA",
+      "title": "Cyclospora (foodborne pathogen overview)",
+      "url": "https://www.fda.gov/food/foodborne-pathogens/cyclospora"
+    },
+    {
+      "id": "canada-prevention",
+      "tier": "primary",
+      "publisher": "Public Health Agency of Canada",
+      "title": "Prevention of cyclosporiasis (Cyclospora)",
+      "url": "https://www.canada.ca/en/public-health/services/diseases/cyclosporiasis-cyclospora/prevention-cyclosporiasis-cyclospora.html"
+    },
+    {
+      "id": "wadoh",
+      "tier": "primary",
+      "publisher": "Washington State Department of Health",
+      "title": "2026 Cyclosporiasis Outbreak",
+      "url": "https://doh.wa.gov/you-and-your-family/illness-and-disease-z/foodborne-illness/outbreaks/2026-cyclosporiasis-outbreak"
+    },
+    {
+      "id": "michigan",
+      "tier": "primary",
+      "publisher": "Michigan Department of Health and Human Services",
+      "title": "Infectious Disease Outbreaks",
+      "url": "https://www.michigan.gov/mdhhs/keep-mi-healthy/infectious-diseases/infectious-disease-outbreaks"
+    },
+    {
+      "id": "usda-lettuce",
+      "tier": "primary",
+      "publisher": "USDA Economic Research Service",
+      "title": "Romaine and leaf lettuces almost as popular as head lettuce (per capita availability)",
+      "url": "https://www.ers.usda.gov/data-products/charts-of-note/chart-detail?chartId=93321"
+    },
+    {
+      "id": "cdc-surveillance-1115",
+      "tier": "literature",
+      "publisher": "CDC / MMWR (via PMC)",
+      "title": "Cyclosporiasis Surveillance - United States, 2011-2015",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6476303/"
+    },
+    {
+      "id": "pmc-challenges",
+      "tier": "literature",
+      "publisher": "PMC",
+      "title": "Widespread foodborne cyclosporiasis outbreaks present major challenges",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2639931/"
+    },
+    {
+      "id": "jhu",
+      "tier": "expert",
+      "publisher": "Johns Hopkins Bloomberg School of Public Health",
+      "title": "Understanding the Cyclosporiasis Outbreak",
+      "url": "https://publichealth.jhu.edu/2026/understanding-the-cyclosporiasis-outbreak"
+    },
+    {
+      "id": "cr-consumers",
+      "tier": "secondary",
+      "publisher": "Consumer Reports (Advocacy)",
+      "title": "Cyclospora Outbreak 2026: What Consumers Need to Know and What Must Change",
+      "url": "https://advocacy.consumerreports.org/research/cyclospora-outbreak-2026-what-consumers-need-to-know/"
+    },
+    {
+      "id": "cr-dont-avoid",
+      "tier": "secondary",
+      "publisher": "Consumer Reports",
+      "title": "No, You Shouldn't Avoid Fruits and Vegetables Due to Cyclospora",
+      "url": "https://www.consumerreports.org/health/food-safety/you-shouldnt-avoid-fruits-and-vegetables-due-to-cyclospora-a9570579349/"
+    },
+    {
+      "id": "cnn-safe-food",
+      "tier": "secondary",
+      "publisher": "CNN",
+      "title": "What food is safe to eat and what to avoid as cyclosporiasis outbreak surges",
+      "url": "https://www.cnn.com/2026/07/15/health/cyclosporiasis-parasite-food-safe-avoid"
+    },
+    {
+      "id": "cnn-largest",
+      "tier": "secondary",
+      "publisher": "CNN",
+      "title": "Tracking the largest cyclosporiasis outbreak in the US",
+      "url": "https://www.cnn.com/2026/07/21/health/cyclospora-cases-count"
+    },
+    {
+      "id": "cnn-deaths",
+      "tier": "secondary",
+      "publisher": "CNN",
+      "title": "First deaths reported in cyclosporiasis outbreak",
+      "url": "https://www.cnn.com/2026/08/03/health/deaths-cyclospora-outbreak"
+    },
+    {
+      "id": "axios-deaths",
+      "tier": "secondary",
+      "publisher": "Axios",
+      "title": "Cyclospora outbreak causes first two deaths",
+      "url": "https://www.axios.com/2026/08/03/cyclospora-outbreak-deaths-illness-symptoms"
+    },
+    {
+      "id": "nbc-source",
+      "tier": "secondary",
+      "publisher": "NBC News",
+      "title": "Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source)",
+      "url": "https://www.nbcnews.com/health/health-news/fda-names-source-cyclosporiasis-outbreak-rcna587899"
+    },
+    {
+      "id": "abc-27states",
+      "tier": "secondary",
+      "publisher": "ABC News",
+      "title": "Taylor Farms recalls lettuce in 27 states amid cyclosporiasis outbreak",
+      "url": "https://abcnews.com/GMA/News/taylor-farms-amid-cyclosporiasis-outbreak/story?id=134846473"
+    },
+    {
+      "id": "abc-tips",
+      "tier": "secondary",
+      "publisher": "ABC News",
+      "title": "Food safety tips to help prevent cyclosporiasis at home",
+      "url": "https://abcnews.com/GMA/Food/food-safety-tips-prevent-cyclosporiasis-home/story?id=134718493"
+    },
+    {
+      "id": "usnews-falsepos",
+      "tier": "secondary",
+      "publisher": "U.S. News / HealthDay",
+      "title": "FDA: Iceberg Lettuce Recall Stands After False Positive For Cyclospora",
+      "url": "https://www.usnews.com/news/health-news/articles/2026-07-20/fda-iceberg-lettuce-recall-stands-after-false-positive-for-cyclospora"
+    },
+    {
+      "id": "today-map",
+      "tier": "secondary",
+      "publisher": "TODAY",
+      "title": "Cyclospora Outbreak 2026: Map, Foods to Avoid, States Most Impacted",
+      "url": "https://www.today.com/health/news/cyclospora-outbreak-2026-foods-avoid-lettuce-map-parasite-45-states-rcna589833"
+    },
+    {
+      "id": "time-experts",
+      "tier": "secondary",
+      "publisher": "TIME",
+      "title": "What Food Safety Experts Are Eating During the Cyclospora Outbreak",
+      "url": "https://time.com/article/2026/07/22/cyclospora-outbreak-food-safety-experts-lettuce/"
+    },
+    {
+      "id": "thehill-underreported",
+      "tier": "secondary",
+      "publisher": "The Hill",
+      "title": "Why cyclosporiasis cases are likely way underreported",
+      "url": "https://thehill.com/policy/healthcare/5967777-why-cyclosporiasis-cases-are-likely-way-underreported/"
+    }
+  ]
+}
