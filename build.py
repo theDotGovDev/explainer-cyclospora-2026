@@ -601,7 +601,6 @@ def risk_chart(foods):
 # --------------------------------------------------------------------------
 
 GRID_N = 1000
-SERVINGS_PER_YEAR = 104  # two servings a week; stated on the page
 
 
 def dot_grid(foods):
@@ -673,44 +672,35 @@ def ladder_ticks():
 
 
 def comparison_ladder(comparisons, foods, smap):
-    """Foods and real-world anchors on ONE basis: the chance in a single year.
+    """Foods and real-world anchors, all on ONE basis: a single occasion.
 
-    An earlier version put per-serving food risks beside per-lifetime and
-    per-event anchors, which is not a comparison at all. Food risks are now
-    annualised at a stated eating frequency so the units actually match.
+    Per-serving is the unit the whole site uses, so the anchors are converted to
+    per-event rather than the food risks being converted to per-year. Published
+    odds are usually quoted per year or per lifetime; each conversion below shows
+    its arithmetic so it can be checked rather than taken on trust.
     """
     items = []
     for a in comparisons["anchors"]:
-        if not a.get("per_year"):
-            continue
         items.append({
             "odds": a["odds"], "label": a["label"], "kind": "anchor",
-            "sub": "published per-year figure" + (
-                " &middot; derived by us" if a.get("derived") else ""),
+            "sub": a["basis"] + (" &middot; converted by us" if a.get("derived") else ""),
             "sources": a.get("sources", []),
+            "derivation": a.get("derivation"), "note": a.get("note"),
         })
-    withdrawn = []
     for f in foods:
-        # A recalled product has no meaningful annual exposure - nobody can eat
-        # it 104 times a year, and annualising it produces an alarming number
-        # for a food that is not on any shelf.
-        if f.get("withdrawn"):
-            withdrawn.append(f)
-            continue
         lo, hi = f["scale"]["low"], f["scale"]["high"]
-        annual = math.sqrt(lo * hi) / SERVINGS_PER_YEAR
         items.append({
-            "odds": annual, "label": f["name"], "kind": "food",
-            "band": numeric_band(f["scale"]),
-            "capped": lo == hi,
-            "sub": f"eating it {SERVINGS_PER_YEAR}&times; a year", "sources": [],
+            "odds": math.sqrt(lo * hi), "label": f["name"], "kind": "food",
+            "band": numeric_band(f["scale"]), "capped": lo == hi,
+            "sub": "per serving" + (" &middot; withdrawn from sale"
+                                    if f.get("withdrawn") else ""),
+            "sources": [], "derivation": None, "note": None,
         })
 
-    rows = []
+    rows, notes = [], []
     for it in sorted(items, key=lambda x: -x["odds"]):
-        cls = "ladder-anchor" if it["kind"] == "anchor" else f"ladder-food band-{it['band']}"
-        # A capped "below 1 in N" input stays hedged after annualising; printing
-        # an exact figure would invent precision the estimate never had.
+        cls = ("ladder-anchor" if it["kind"] == "anchor"
+               else f"ladder-food band-{it['band']}")
         odds_s = ("below 1 in " if it.get("capped") else "1 in ") + f"{it['odds']:,.0f}"
         rows.append(f"""      <li class="ladder-row {cls}">
         <span class="ladder-label">{e(it['label'])}
@@ -720,13 +710,21 @@ def comparison_ladder(comparisons, foods, smap):
         </span>
         <span class="ladder-odds">{e(odds_s)}{cite(it['sources'], smap)}</span>
       </li>""")
+        if it["derivation"] or it["note"]:
+            body = " ".join(x for x in (it["note"], it["derivation"]) if x)
+            notes.append(f'  <details class="ladder-work">\n'
+                         f'    <summary>{e(it["label"])} &mdash; {e(it["sub"].replace("&middot;", "-"))}</summary>\n'
+                         f'    <p>{e(body)}{cite(it["sources"], smap)}</p>\n'
+                         f'  </details>')
 
     return f"""<figure class="ladder">
-  <figcaption><strong>Everything on one basis: your chance in a single year.</strong>
+  <figcaption><strong>Everything from one single occasion.</strong>
+    One serving, one trip, one meal, one hand, one ticket, one day.
     Further right means more likely.</figcaption>
   <div class="ladder-warn" role="note">
     {icon('info')}
-    <p><strong>Why this chart is on a per-year basis.</strong> {e(comparisons['caution'])}</p>
+    <p><strong>Why these are comparable, and where they are not.</strong>
+       {e(comparisons['basis_note'])} {e(comparisons['caution'])}</p>
   </div>
   <div class="ladder-plot">
     <ol class="ladder-rows">
@@ -738,10 +736,11 @@ def comparison_ladder(comparisons, foods, smap):
       <span></span>
     </div>
   </div>
-  {"".join(f'<p class="chart-foot ladder-excluded">{icon("info")} <strong>{e(w["name"])} is not on this chart.</strong> {e(w["withdrawn_note"])}</p>' for w in withdrawn)}
-  <p class="chart-foot"><strong>The eating-frequency assumption.</strong>
-     {e(comparisons['annualisation'])}</p>
-  <p class="chart-foot">{e(comparisons['one_off_note'])}</p>
+  <h3 class="ladder-h">Where each anchor comes from</h3>
+  <p class="dot-lede">Anchors marked &ldquo;converted by us&rdquo; were not published in
+     per-occasion form; those entries show the full arithmetic so you can check it.
+     The rest show their source.</p>
+{chr(10).join(notes)}
 </figure>"""
 
 
@@ -1237,6 +1236,39 @@ def build_methodology(outbreak, smap):
         Post-recall, iceberg risk falls; if a new commodity is named, that estimate is wrong
         until updated.</li>
   </ol>
+</section>
+
+<section aria-labelledby="mbasis">
+  <h2 id="mbasis">Why the comparisons are per-occasion, not per-year</h2>
+  <p>Every risk figure on this site is <strong>per serving</strong>. Familiar published
+     odds are almost never quoted that way &mdash; they come per year, or across a whole
+     lifetime. Putting a per-serving number beside a per-lifetime number is not a
+     comparison at all, and it is the single easiest way to mislead someone with risk
+     statistics.</p>
+  <p>An earlier version of this page solved that by converting the food risks to a
+     per-year basis. That worked arithmetically but broke down in practice: annualising
+     a recalled product that had been withdrawn from sale produced an alarming figure
+     for a food nobody could buy. So the conversion now runs the other way &mdash; the
+     anchors are converted to a single occasion, and the food figures stay in the unit
+     the rest of the site uses.</p>
+  <p>Two conversions do real work and are worth stating here as well as on the chart:</p>
+  <ul class="method-list">
+    <li><strong>Dying in a car crash, per trip.</strong> NHTSA's 2024 fatality rate is
+        about 1.20 deaths per 100 million vehicle miles travelled; the 2022 National
+        Household Travel Survey puts the average trip at about 13 miles. That gives
+        1.20 &times; 13 / 100,000,000, or roughly <strong>1 in 6,400,000 per trip</strong>.
+        A second route &mdash; about 39,300 deaths a year over roughly 420 billion
+        person-trips &mdash; gives about 1 in 10,700,000. The two agree within a factor
+        of about 1.7, which is the real precision available.</li>
+    <li><strong>Food poisoning from any cause, per meal.</strong> CDC's 48 million
+        illnesses a year, across about 342 million people eating roughly three meals a
+        day, is about 375 billion meals and therefore roughly
+        <strong>1 in 7,800 per meal</strong>. The three-meals-a-day figure is our
+        assumption, not CDC's.</li>
+  </ul>
+  <p>One caveat the chart states but that bears repeating: the car-crash anchor is a risk
+     of <em>dying</em>, while every food figure here is a risk of <em>getting ill</em>.
+     They share a scale, not an outcome.</p>
 </section>
 
 <section aria-labelledby="mcolor">

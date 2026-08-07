@@ -940,3 +940,12 @@ a.band:hover, a.status:hover, a.ev:hover, a.prov:hover { filter: brightness(.94)
 .ladder-food.band-moderate .ladder-dot { background: var(--risk-3); }
 .ladder-food.band-low .ladder-dot { background: var(--risk-2); }
 .ladder-food.band-very-low .ladder-dot { background: var(--risk-1); }
+
+/* per-occasion comparison: the derivations behind converted anchors */
+.ladder-h { margin-top: 2rem; }
+.ladder-work {
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: .6rem .9rem; margin-bottom: .5rem; background: var(--bg);
+}
+.ladder-work summary { cursor: pointer; font-size: .89rem; font-weight: 600; }
+.ladder-work p { margin: .6rem 0 0; font-size: .88rem; color: var(--fg-mute); }

@@ -1,84 +1,53 @@
 {
-  "caution": "Comparing risks measured on different bases is the easiest way to mislead yourself with numbers. So the chart below puts everything on ONE basis: the chance in a single year. Food risks are per-serving figures multiplied by an assumed eating frequency, which is stated on the chart; the anchors are published per-year figures. That makes them genuinely comparable, unlike a per-serving risk set beside a lifetime risk.",
+  "basis_note": "Everything on this chart is the chance from ONE single occasion - one serving, one car trip, one meal, one hand of cards, one lottery ticket, one day. That matches how the food risks on this site are measured, so the comparison is like-for-like. Published odds are usually quoted per year or per lifetime, which are not comparable to a per-serving figure, so several anchors below were converted. Every conversion shows its arithmetic.",
+  "caution": "These are still different kinds of event. A car trip is not a salad, and dying is not the same as a week of diarrhoea - one of these anchors is a fatality risk and the food figures are illness risks. The chart is here to give a feel for the size of a number like 1 in 100,000, not to claim the outcomes are equivalent.",
   "anchors": [
-    {
-      "odds": 6,
-      "label": "Getting food poisoning from any cause",
-      "basis": "in a given year",
-      "note": "CDC estimates roughly 1 in 6 Americans - about 48 million people - get a foodborne illness each year, from all causes combined.",
-      "sources": [
-        "cdc-burden-1in6"
-      ],
-      "per_year": true
-    },
-    {
-      "odds": 107,
-      "label": "Dying in a motor vehicle crash",
-      "basis": "over a lifetime",
-      "note": "National Safety Council lifetime odds, 2024 data.",
-      "sources": [
-        "nsc-odds"
-      ],
-      "per_year": false
-    },
     {
       "odds": 1024,
       "label": "Flipping ten heads in a row",
       "basis": "per attempt",
       "note": "Exact arithmetic: one half to the tenth power.",
-      "sources": [],
-      "per_year": false
+      "sources": []
     },
     {
-      "odds": 8560,
-      "label": "Dying in a motor vehicle crash",
-      "basis": "in a given year",
-      "note": "Derived by this project from the NSC lifetime figure spread across an 80-year life. A rough conversion, not an NSC-published number.",
+      "odds": 7800,
+      "label": "Getting food poisoning from any cause",
+      "basis": "per meal",
       "derived": true,
-      "sources": [
-        "nsc-odds"
-      ],
-      "per_year": true
-    },
-    {
-      "odds": 15300,
-      "label": "Being struck by lightning",
-      "basis": "over an 80-year lifetime",
-      "note": "National Weather Service estimate.",
-      "sources": [
-        "nws-lightning"
-      ],
-      "per_year": false
+      "derivation": "CDC estimates 48 million foodborne illnesses a year in the U.S. Across about 342 million people eating roughly 3 meals a day, that is about 375 billion meals a year, giving roughly 1 in 7,800 per meal. The 3-meals-a-day figure is our assumption, not a CDC one.",
+      "note": "All causes combined - bacteria, viruses and parasites - not Cyclospora alone.",
+      "sources": ["cdc-burden-1in6"]
     },
     {
       "odds": 649740,
       "label": "Being dealt a royal flush",
-      "basis": "in one five-card hand",
+      "basis": "per five-card hand",
       "note": "Exact arithmetic from a standard 52-card deck.",
-      "sources": [],
-      "per_year": false
+      "sources": []
     },
     {
-      "odds": 1222000,
-      "label": "Being struck by lightning",
-      "basis": "in a given year",
-      "note": "National Weather Service estimate for the average American.",
-      "sources": [
-        "nws-lightning"
-      ],
-      "per_year": true
+      "odds": 6400000,
+      "label": "Dying in a car crash",
+      "basis": "per trip",
+      "derived": true,
+      "derivation": "NHTSA puts the 2024 fatality rate at about 1.20 deaths per 100 million vehicle miles travelled. The 2022 National Household Travel Survey puts the average trip at about 13 miles. So one trip carries roughly 1.20 x 13 / 100,000,000, or about 1 in 6,400,000. Cross-checking by a different route - about 39,300 deaths a year divided by roughly 420 billion person-trips - gives about 1 in 10,700,000. The two methods agree to within a factor of about 1.7, which is the honest precision here.",
+      "note": "This is a risk of DYING. Every food figure on this site is a risk of getting ill. They are not equivalent outcomes.",
+      "sources": ["nhtsa-2024", "nhts-2022"]
     },
     {
       "odds": 292200000,
       "label": "Winning the Powerball jackpot",
-      "basis": "on one ticket",
+      "basis": "per ticket",
       "note": "Published game odds.",
-      "sources": [
-        "powerball-odds"
-      ],
-      "per_year": false
+      "sources": ["powerball-odds"]
+    },
+    {
+      "odds": 446000000,
+      "label": "Being struck by lightning",
+      "basis": "on a given day",
+      "derived": true,
+      "derivation": "The National Weather Service puts the odds at about 1 in 1,222,000 in a given year. Spread evenly across 365 days that is about 1 in 446,000,000 on any one day. Spreading evenly is a simplification - lightning risk is concentrated in summer afternoons and in some states far more than others.",
+      "sources": ["nws-lightning"]
     }
-  ],
-  "annualisation": "Food figures assume two servings a week, or 104 servings a year, of that specific food. That is an assumption we chose, not a measurement - if you eat a food far more or less often than that, scale accordingly. The arithmetic is a simple multiplication of the per-serving estimate, which is accurate enough at these small probabilities.",
-  "one_off_note": "Some familiar odds are per single event rather than per year - a Powerball ticket is 1 in 292,200,000, a royal flush 1 in 649,740, ten heads in a row 1 in 1,024. They are left off the chart deliberately, because putting a per-event number on a per-year axis is exactly the error this section is trying to avoid."
+  ]
 }
