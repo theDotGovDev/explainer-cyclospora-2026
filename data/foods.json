@@ -28,7 +28,8 @@
       "scale": {
         "low": 200,
         "high": 2000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Restaurant / foodservice iceberg lettuce",
@@ -49,7 +50,8 @@
       "scale": {
         "low": 20000,
         "high": 200000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Bagged / packaged salad mixes containing iceberg",
@@ -70,7 +72,8 @@
       "scale": {
         "low": 10000,
         "high": 100000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Non-recalled iceberg lettuce (whole head, retail)",
@@ -92,7 +95,8 @@
       "scale": {
         "low": 100000,
         "high": 1000000
-      }
+      },
+      "evidence": "general-guidance"
     },
     {
       "name": "Cilantro",
@@ -112,7 +116,8 @@
       "scale": {
         "low": 10000,
         "high": 100000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Fresh parsley",
@@ -130,7 +135,8 @@
       "scale": {
         "low": 20000,
         "high": 200000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Cucumbers",
@@ -148,7 +154,8 @@
       "scale": {
         "low": 50000,
         "high": 500000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Onions (raw)",
@@ -166,7 +173,8 @@
       "scale": {
         "low": 100000,
         "high": 1000000
-      }
+      },
+      "evidence": "named-2026"
     },
     {
       "name": "Romaine lettuce",
@@ -185,7 +193,8 @@
       "scale": {
         "low": 200000,
         "high": 2000000
-      }
+      },
+      "evidence": "general-guidance"
     },
     {
       "name": "Spinach",
@@ -203,7 +212,8 @@
       "scale": {
         "low": 500000,
         "high": 5000000
-      }
+      },
+      "evidence": "general-guidance"
     },
     {
       "name": "Fresh basil",
@@ -222,7 +232,8 @@
       "scale": {
         "low": 50000,
         "high": 500000
-      }
+      },
+      "evidence": "named-historical"
     },
     {
       "name": "Raspberries, blackberries and berry / fruit mixes",
@@ -241,7 +252,8 @@
       "scale": {
         "low": 100000,
         "high": 1000000
-      }
+      },
+      "evidence": "named-historical"
     },
     {
       "name": "Snap peas",
@@ -259,7 +271,8 @@
       "scale": {
         "low": 200000,
         "high": 2000000
-      }
+      },
+      "evidence": "named-historical"
     },
     {
       "name": "Tomatoes",
@@ -271,13 +284,15 @@
       "risk_residual": "Below 1 in 5,000,000",
       "confidence": "moderate",
       "sources": [
-        "cnn-safe-food"
+        "canada-prevention",
+        "abc-tips"
       ],
       "icon": "tomato",
       "scale": {
         "low": 1000000,
         "high": 10000000
-      }
+      },
+      "evidence": "extrapolated"
     },
     {
       "name": "Peeled fruit (banana, orange, melon, avocado)",
@@ -296,7 +311,8 @@
       "scale": {
         "low": 1000000,
         "high": 10000000
-      }
+      },
+      "evidence": "general-guidance"
     },
     {
       "name": "Cooked vegetables",
@@ -316,7 +332,14 @@
       "scale": {
         "low": 10000000,
         "high": 10000000
-      }
+      },
+      "evidence": "general-guidance"
     }
-  ]
+  ],
+  "evidence_legend": {
+    "named-2026": "This specific food is named in a 2026 outbreak source - an agency investigation, recall notice, or a state health department statement. The naming is cited; the risk number is still our estimate.",
+    "named-historical": "This food is not implicated in 2026, but is named in sources describing earlier U.S. cyclosporiasis outbreaks. The historical association is cited; the risk number is still our estimate.",
+    "general-guidance": "No source names this food as implicated, but published guidance covers it directly - for example advice that it is safe with standard washing, or that cooking to temperature inactivates the parasite. The guidance is cited; the risk number is still our estimate.",
+    "extrapolated": "No source names this food at all. Its risk is inferred by us from how Cyclospora behaves and how the food is handled. This is the weakest basis on the site and is labelled wherever it appears."
+  }
 }

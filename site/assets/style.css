@@ -828,3 +828,40 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   .t100-rank { width: auto; }
   .t100-rank::before { content: "#"; }
 }
+
+/* ---------- evidence basis labels ---------- */
+
+.ev {
+  display: inline-block;
+  font-size: .66rem; font-weight: 700; line-height: 1.5;
+  text-transform: uppercase; letter-spacing: .04em;
+  padding: 0 .35rem; border-radius: 3px;
+  border: 1px solid currentColor;
+  white-space: nowrap; cursor: help; vertical-align: baseline;
+}
+.ev-referenced { color: var(--good); background: var(--good-bg); }
+/* Extrapolated is the weakest claim on the site, so it is styled to be noticed
+   rather than to blend in with the referenced ones. */
+.ev-extrapolated {
+  color: var(--warn-line); background: var(--warn-bg);
+  border-style: dashed; white-space: normal;
+}
+.food-ev { display: block; margin-top: .35rem; }
+.row-ev { display: block; margin-top: .45rem; }
+.card-foot .ev { margin-top: .4rem; }
+
+.evkey {
+  background: var(--bg); border: 1px solid var(--line);
+  border-left: 4px solid var(--warn-line);
+  border-radius: var(--radius); padding: 1.15rem 1.35rem; margin-bottom: 1.5rem;
+}
+.evkey h2 { font-size: 1.1rem; border-bottom: none; margin-bottom: .4rem; }
+.evkey > p { font-size: .92rem; }
+.evkey-list { list-style: none; padding: 0; margin: .9rem 0; }
+.evkey-list li { margin-bottom: .55rem; font-size: .9rem; }
+.evkey-list .ev { margin-right: .4rem; }
+.evkey-foot {
+  font-size: .88rem; background: var(--warn-bg);
+  border-left: 3px solid var(--warn-line); padding: .7rem .9rem;
+  border-radius: 0 4px 4px 0; margin-bottom: 0;
+}

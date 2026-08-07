@@ -135,6 +135,38 @@ def prov_tag(kind, sample=False):
             f'<span class="vh">Sourcing: </span>{e(label)}</span>')
 
 
+EVIDENCE = {
+    "named-2026": ("named in 2026 sources", "referenced",
+                   "This specific food is named in a 2026 outbreak source. The naming "
+                   "is cited; the risk number is still our estimate."),
+    "named-historical": ("named in past outbreaks", "referenced",
+                         "Named in sources describing earlier U.S. outbreaks, not in "
+                         "2026. The association is cited; the number is our estimate."),
+    "general-guidance": ("covered by published guidance", "referenced",
+                         "No source names this food as implicated, but published "
+                         "guidance covers it directly. The guidance is cited; the "
+                         "number is still our estimate."),
+    "extrapolated": ("extrapolated - no source names this food", "extrapolated",
+                     "No source names this food. Its risk is inferred by us from how "
+                     "Cyclospora behaves and how the food is handled. This is the "
+                     "weakest basis used on this site."),
+}
+
+
+def evidence_tag(kind):
+    """Say, for every food, whether a source names it or we extrapolated it.
+
+    A citation can support 'this food was named in the outbreak' without
+    supporting our per-serving number. Keeping the two separate stops a
+    reference lending unearned authority to an estimate.
+    """
+    if kind not in EVIDENCE:
+        raise SystemExit(f"unknown evidence kind: {kind!r}")
+    label, cls, explain = EVIDENCE[kind]
+    return (f'<span class="ev ev-{e(cls)}" title="{e(explain)}">'
+            f'<span class="vh">Evidence basis: </span>{e(label)}</span>')
+
+
 def cite(ids, smap, dated=None):
     """Render source ids as numbered links plus a provenance marker.
 
@@ -520,7 +552,8 @@ def top100_rows(items, smap=None):
         <th scope="row"><span class="food-name">{icon(f['icon'], 'icon food-icon')}{e(f['name'])}</span></th>
         <td data-label="Estimated risk"><span class="band band-{e(band)}">{e(BAND_LABEL[band])}</span>
           <span class="risk">{e(odds)}</span></td>
-        <td data-label="Why">{e(f['basis'])}{note}{link}</td>
+        <td data-label="Why">{e(f['basis'])}{note}{link}
+          <span class="row-ev">{evidence_tag(f['evidence'])}{cite(f.get('sources'), smap)}</span></td>
       </tr>""")
     return "\n".join(out)
 
@@ -530,10 +563,11 @@ def odds_text(scale):
     return f"Below 1 in {lo:,}" if lo == hi else f"~1 in {lo:,} to 1 in {hi:,}"
 
 
-def tier_defs(top100):
+def tier_defs(top100, smap):
     out = []
     for v in top100["tiers"].values():
-        out.append(f'    <dt>{e(odds_text(v))}</dt><dd>{e(v["basis"])}</dd>')
+        out.append(f'    <dt>{e(odds_text(v))}</dt>'
+                   f'<dd>{e(v["basis"])}{cite(v.get("sources"), smap)}</dd>')
     return "\n".join(out)
 
 
@@ -548,6 +582,23 @@ def build_foods_page(outbreak, top100, smap):
 <div class="keypoint">
   {icon('info')}
   <p><strong>The single most useful fact on this page:</strong> {e(top100['key_point'])}</p>
+</div>
+
+<div class="evkey">
+  <h2>How each food's risk is grounded</h2>
+  <p>Every food below carries one of these labels, so you can tell at a glance whether a
+     source names it or whether we worked it out.</p>
+  <ul class="evkey-list">
+    <li>{evidence_tag('named-2026')} A 2026 outbreak source names this food.</li>
+    <li>{evidence_tag('named-historical')} Named in sources about earlier U.S. outbreaks.</li>
+    <li>{evidence_tag('general-guidance')} Not named as implicated, but published guidance
+        covers it directly.</li>
+    <li>{evidence_tag('extrapolated')} <strong>The weakest basis here.</strong>
+        {e(top100['evidence_note'])}</li>
+  </ul>
+  <p class="evkey-foot"><strong>In every case the risk number itself is our estimate.</strong>
+     A citation showing a food was named in the outbreak does not mean any agency published
+     a per-serving probability for it &mdash; none has.</p>
 </div>
 
 <div class="stats t100-stats">
@@ -599,7 +650,7 @@ def build_foods_page(outbreak, top100, smap):
   <h3>The risk figures</h3>
   <p>{e(top100['risk_basis'])} The tiers, and the reasoning behind each:</p>
   <dl class="facts">
-{tier_defs(top100)}
+{tier_defs(top100, smap)}
   </dl>
   <p>These are informed estimates produced by this project, not official statistics.
      The <a href="methodology.html">methodology page</a> explains how they were derived
@@ -641,6 +692,7 @@ def food_cards(foods, smap):
         </dl>
         <footer class="card-foot">
           <span class="status status-{e(f['status'])}">{icon(STATUS_ICON[f['status']])}{e(STATUS_LABEL[f['status']])}</span>
+          {evidence_tag(f['evidence'])}
           <details class="card-more">
             <summary>Why, and how sure we are</summary>
             <p>{e(f['detail'])}{cite(f.get('sources'), smap)}</p>
@@ -666,6 +718,7 @@ def build_index(outbreak, foods, top100, comparisons, smap):
         <th scope="row">
           <span class="food-name">{icon(f['icon'], 'icon food-icon')}{e(f['name'])}</span>
           <span class="food-detail">{e(f['detail'])}{cite(f.get('sources'), smap)}</span>
+          <span class="food-ev">{evidence_tag(f['evidence'])}</span>
         </th>
         <td data-label="Status"><span class="status status-{e(f['status'])}">{e(STATUS_LABEL[f['status']])}</span></td>
         <td data-label="Estimated risk per serving"><span class="band band-{e(numeric_band(f['scale']))}">{e(BAND_LABEL[numeric_band(f['scale'])])}</span>
@@ -860,6 +913,19 @@ def build_index(outbreak, foods, top100, comparisons, smap):
 {caveats}
 
     <div class="prov-key">
+      <h3>How to read the evidence labels on each food</h3>
+      <p>Every food carries a label saying whether a source names it or whether we
+         extrapolated it from how the parasite behaves:</p>
+      <ul class="evkey-list">
+        <li>{evidence_tag('named-2026')} A 2026 outbreak source names this food.</li>
+        <li>{evidence_tag('named-historical')} Named in earlier U.S. outbreaks.</li>
+        <li>{evidence_tag('general-guidance')} Published guidance covers it directly.</li>
+        <li>{evidence_tag('extrapolated')} No source names it. Inferred by us &mdash; the
+            weakest basis on this site.</li>
+      </ul>
+      <p><strong>The risk number is always our estimate</strong>, whichever label a food
+         carries. No agency publishes per-serving probabilities for foods.</p>
+
       <h3>How to read the sourcing markers</h3>
       <p>Every figure is tagged with where it came from and, where it moves, the date it
          describes. Nothing here is presented as fact without showing what is behind it.</p>

@@ -17,7 +17,8 @@ import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-from build import numeric_band  # noqa: E402
+from build import EVIDENCE, numeric_band  # noqa: E402
+from icons import SPRITE_SYMBOLS  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
@@ -88,6 +89,15 @@ def check_data(outbreak, foods, sources):
                      f"{numeric_band(sc)!r}")
         if not f.get("icon"):
             fail(f"food {f['name']!r} has no icon")
+
+        # Every food must say how its risk claim is grounded, and anything
+        # claiming a reference must actually carry one.
+        ev = f.get("evidence")
+        if ev not in EVIDENCE:
+            fail(f"food {f['name']!r} has missing/unknown evidence basis {ev!r}")
+        elif ev != "extrapolated" and not f.get("sources"):
+            fail(f"food {f['name']!r} claims evidence {ev!r} but cites no source; "
+                 f"either cite one or mark it 'extrapolated'")
         for sid in f.get("sources", []):
             if sid not in smap:
                 fail(f"food {f['name']!r} cites unknown source {sid!r}")
@@ -117,6 +127,50 @@ def check_data(outbreak, foods, sources):
         cited.update(sid for sid, s in smap.items() if s["url"] in text)
     for sid in sorted(set(smap) - cited):
         warn(f"source {sid!r} is listed but never cited on any page")
+
+
+def check_top100(top100, sources):
+    """The 100-food list is mostly extrapolation, so the labelling has to hold."""
+    smap = {s["id"] for s in sources["sources"]}
+    seen_ranks = set()
+    for f in top100["foods"]:
+        who = f.get("name", "?")
+        if f.get("rank") in seen_ranks:
+            fail(f"top100 {who!r} has duplicate rank {f.get('rank')}")
+        seen_ranks.add(f.get("rank"))
+        for field in ("name", "icon", "tier", "scale", "basis", "evidence"):
+            if not f.get(field):
+                fail(f"top100 {who!r} missing {field}")
+        ev = f.get("evidence")
+        if ev not in EVIDENCE:
+            fail(f"top100 {who!r} has missing/unknown evidence basis {ev!r}")
+        # Extrapolated entries still cite the pathogen behaviour they rest on,
+        # so every food carries at least one source either way.
+        if not f.get("sources"):
+            fail(f"top100 {who!r} cites no source at all")
+        for sid in f.get("sources", []):
+            if sid not in smap:
+                fail(f"top100 {who!r} cites unknown source {sid!r}")
+    for name, v in top100.get("tiers", {}).items():
+        if not v.get("sources"):
+            fail(f"top100 tier {name!r} states a basis with no sources")
+        for sid in v.get("sources", []):
+            if sid not in smap:
+                fail(f"top100 tier {name!r} cites unknown source {sid!r}")
+
+
+def check_icons(foods, top100):
+    """Every icon name must exist in the sprite.
+
+    A name that is not in the sprite renders as an empty <use> - silently, with
+    no console error and no layout shift, so it is easy to ship. Three did.
+    """
+    for label, items in (("foods.json", foods["foods"]),
+                         ("top100.json", top100["foods"])):
+        for f in items:
+            if f.get("icon") and f["icon"] not in SPRITE_SYMBOLS:
+                fail(f"{label}: {f['name']!r} uses icon {f['icon']!r}, which is "
+                     f"not defined in the sprite")
 
 
 def check_dates(outbreak):
@@ -212,6 +266,23 @@ def check_citations():
                      f"numbers it [{numbering.get(sid)}]")
 
 
+def check_evidence_labels(foods, top100):
+    """No food may render without a visible evidence label."""
+    expected = {
+        "index.html": len(foods["foods"]) * 2,   # card + detailed table row
+        "foods.html": len(top100["foods"]),
+    }
+    for name, least in expected.items():
+        path = SITE / name
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        found = len(re.findall(r'<span class="ev ev-', text))
+        if found < least:
+            fail(f"{name}: {found} evidence labels rendered, expected at least "
+                 f"{least} - a food is rendering without one")
+
+
 def check_provenance():
     """Every citation must carry a sourcing marker, so no claim is unlabeled."""
     for name in PAGES:
@@ -227,12 +298,16 @@ def main():
     outbreak = load("outbreak.json")
     foods = load("foods.json")
     sources = load("sources.json")
+    top100 = load("top100.json")
 
     check_data(outbreak, foods, sources)
+    check_top100(top100, sources)
+    check_icons(foods, top100)
     check_dates(outbreak)
     check_html(outbreak)
     check_citations()
     check_provenance()
+    check_evidence_labels(foods, top100)
 
     for w in warnings:
         print(f"warning: {w}")

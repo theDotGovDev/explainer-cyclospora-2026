@@ -27,6 +27,23 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
+# Sources behind each tier's reasoning. A tier is an EXTRAPOLATION: no source
+# says "carrots are 1 in N". What the sources do support is the underlying
+# behaviour - Cyclospora is a fresh-produce and water pathogen, cooking to
+# temperature inactivates it, peeling removes surface contamination, and washing
+# does not reliably work. The tier applies that behaviour to how a food is
+# handled. Citing the behaviour is honest; citing it as if it named the food
+# would not be.
+TIER_SOURCES = {
+    "raw-herb": ["cnn-safe-food", "fda-cyclospora", "canada-prevention"],
+    "raw-leafy": ["cnn-safe-food", "canada-prevention"],
+    "raw-soft": ["canada-prevention", "abc-tips"],
+    "raw-firm": ["canada-prevention", "abc-tips"],
+    "peeled": ["abc-tips", "canada-prevention"],
+    "cooked-produce": ["michigan", "canada-prevention"],
+    "non-produce": ["fda-cyclospora", "cdc-outbreak", "canada-prevention"],
+}
+
 # tier -> (low, high, basis).  low/high are the "1 in N" denominators.
 TIERS = collections.OrderedDict([
     ("raw-herb", (50_000, 500_000,
@@ -77,7 +94,7 @@ FOODS = [
     (18, "Pork", "meat", "non-produce", None),
     (19, "Butter and margarine", "dairy", "non-produce", None),
     (20, "Lettuce - iceberg", "leaf", "implicated", None),
-    (21, "Corn (sweet, cooked)", "cooked-produce", "cooked-produce", None),
+    (21, "Corn (sweet, cooked)", "cooked", "cooked-produce", None),
     (22, "Yogurt", "dairy", "non-produce", None),
     (23, "Soft drinks", "drink", "non-produce", None),
     (24, "Oranges", "fruit", "peeled", "The peel is discarded."),
@@ -90,23 +107,23 @@ FOODS = [
     (31, "Ice cream", "dairy", "non-produce", None),
     (32, "Watermelon", "fruit", "peeled",
      "Flesh is protected by the rind. Scrub the rind before cutting."),
-    (33, "French fries", "cooked-produce", "cooked-produce", "Deep fried."),
+    (33, "French fries", "cooked", "cooked-produce", "Deep fried."),
     (34, "Bacon and sausage", "meat", "non-produce", None),
     (35, "Strawberries", "berry", "raw-soft", "Delicate surface; cannot be scrubbed."),
     (36, "Wine", "drink", "non-produce", None),
-    (37, "Cooking oils", "non-produce", "non-produce", None),
+    (37, "Cooking oils", "drink", "non-produce", None),
     (38, "Tortillas", "bread", "non-produce", "Cooked on a griddle."),
     (39, "Beans (cooked, canned or dried)", "pod", "cooked-produce", None),
     (40, "Onions (raw)", "onion", "implicated", None),
     (41, "Cucumbers", "cucumber", "implicated", None),
     (42, "Peppers, bell (raw)", "tomato", "raw-firm", "Smooth skin rinses well."),
-    (43, "Broccoli (cooked)", "cooked-produce", "cooked-produce", None),
+    (43, "Broccoli (cooked)", "cooked", "cooked-produce", None),
     (44, "Apple juice", "drink", "non-produce", "Pasteurized."),
     (45, "Cabbage and coleslaw", "leaf", "raw-leafy", "Outer leaves are discarded; dense head."),
     (46, "Chocolate", "sweet", "non-produce", None),
     (47, "Tea", "drink", "non-produce", "Brewed with hot water."),
     (48, "Fish and seafood", "fish", "non-produce", None),
-    (49, "Mushrooms (cooked)", "cooked-produce", "cooked-produce", None),
+    (49, "Mushrooms (cooked)", "cooked", "cooked-produce", None),
     (50, "Peaches and nectarines", "fruit", "raw-soft", "Fuzzy or soft skin, eaten unpeeled."),
     (51, "Pineapple", "fruit", "peeled", "Rind is removed."),
     (52, "Sweet potatoes", "root", "cooked-produce", None),
@@ -123,29 +140,29 @@ FOODS = [
     (62, "Lemons and limes", "fruit", "peeled",
      "Juice and zest. Wash the peel if zesting or dropping a wedge in a drink."),
     (63, "Pears", "fruit", "raw-firm", "Firm skin can be rinsed and rubbed."),
-    (64, "Cauliflower (cooked)", "cooked-produce", "cooked-produce", None),
+    (64, "Cauliflower (cooked)", "cooked", "cooked-produce", None),
     (65, "Peas (cooked)", "pod", "cooked-produce", None),
     (66, "Cilantro", "herb", "implicated", None),
     (67, "Salsa and pico de gallo", "tomato", "raw-firm",
      "Raw and often contains cilantro or onion - treat by its riskiest ingredient."),
     (68, "Raspberries and blackberries", "berry", "implicated", None),
-    (69, "Garlic (cooked)", "cooked-produce", "cooked-produce", None),
-    (70, "Squash and zucchini (cooked)", "cooked-produce", "cooked-produce", None),
+    (69, "Garlic (cooked)", "cooked", "cooked-produce", None),
+    (70, "Squash and zucchini (cooked)", "cooked", "cooked-produce", None),
     (71, "Deli meats", "meat", "non-produce", None),
-    (72, "Soup (canned or cooked)", "cooked-produce", "non-produce", "Heated through."),
-    (73, "Mayonnaise and dressings", "non-produce", "non-produce", "Shelf-stable, acidified."),
+    (72, "Soup (canned or cooked)", "cooked", "non-produce", "Heated through."),
+    (73, "Mayonnaise and dressings", "snack", "non-produce", "Shelf-stable, acidified."),
     (74, "Bagged salad mixes", "bag", "implicated", None),
     (75, "Cherries", "berry", "raw-soft", "Eaten whole and unpeeled."),
-    (76, "Asparagus (cooked)", "cooked-produce", "cooked-produce", None),
+    (76, "Asparagus (cooked)", "cooked", "cooked-produce", None),
     (77, "Grapefruit", "fruit", "peeled", "The peel is discarded."),
     (78, "Kale and chard", "leaf", "raw-leafy", "Often eaten raw in salads."),
     (79, "Plums", "fruit", "raw-soft", "Soft skin, eaten unpeeled."),
-    (80, "Sweet corn (raw, in salads)", "cooked-produce", "raw-firm",
+    (80, "Sweet corn (raw, in salads)", "grain", "raw-firm",
      "Uncooked kernels in salads and salsas do not get the benefit of heat."),
     (81, "Fresh parsley", "herb", "implicated", None),
     (82, "Fresh basil", "herb", "implicated", None),
     (83, "Mango", "fruit", "peeled", "Skin is removed."),
-    (84, "Brussels sprouts (cooked)", "cooked-produce", "cooked-produce", None),
+    (84, "Brussels sprouts (cooked)", "cooked", "cooked-produce", None),
     (85, "Radishes", "root", "raw-firm", "Firm and scrubbable."),
     (86, "Snap peas and snow peas", "pod", "implicated", None),
     (87, "Beets (cooked)", "root", "cooked-produce", None),
@@ -154,11 +171,11 @@ FOODS = [
     (89, "Kiwi", "fruit", "peeled", "Skin is usually removed."),
     (90, "Green onions and scallions (raw)", "onion", "raw-leafy",
      "Raw, layered structure that traps contamination between layers."),
-    (91, "Eggplant (cooked)", "cooked-produce", "cooked-produce", None),
+    (91, "Eggplant (cooked)", "cooked", "cooked-produce", None),
     (92, "Guacamole", "fruit", "raw-firm",
      "Avocado flesh is protected, but often mixed with raw onion and cilantro."),
     (93, "Coleslaw and prepared salads", "bag", "raw-leafy", "Raw, pre-shredded, heavily handled."),
-    (94, "Hummus and dips", "non-produce", "non-produce", "Cooked chickpea base."),
+    (94, "Hummus and dips", "snack", "non-produce", "Cooked chickpea base."),
     (95, "Fresh mint", "herb", "raw-herb", "Raw leafy herb, often used as a garnish."),
     (96, "Fresh dill", "herb", "raw-herb", "Raw leafy herb with a very fine, folded surface."),
     (97, "Sprouts (alfalfa, bean)", "herb", "raw-leafy",
@@ -201,6 +218,8 @@ def main():
                 "scale": src["scale"],
                 "basis": src["mitigation"],
                 "detail_of": src["name"],
+                "evidence": src["evidence"],
+                "sources": src["sources"],
             })
         else:
             low, high, basis = TIERS[tier]
@@ -208,6 +227,10 @@ def main():
                 "tier": tier,
                 "scale": {"low": low, "high": high},
                 "basis": basis,
+                # No source names this food. The number is ours, extrapolated
+                # from the pathogen behaviour the tier sources establish.
+                "evidence": "extrapolated",
+                "sources": TIER_SOURCES[tier],
             })
         if note:
             entry["note"] = note
@@ -231,8 +254,17 @@ def main():
          "egg, grain or shelf-stable food pathogen, and cooking destroys it. Most of "
          "this list is negligible-risk for that reason, not because the risk is "
          "merely small."),
+        ("evidence_note",
+         "Every food on this list is labelled with how its risk claim is grounded. "
+         "Foods marked EXTRAPOLATED are not named by any source: the number is "
+         "inferred by this project from how Cyclospora behaves and how the food is "
+         "handled. The sources cited on an extrapolated food support that "
+         "behaviour - that cooking inactivates the parasite, that peeling removes "
+         "surface contamination, that it is a produce and water pathogen - not the "
+         "food itself. That is the weakest basis used anywhere on this site."),
         ("tiers", collections.OrderedDict(
-            (k, {"low": v[0], "high": v[1], "basis": v[2]}) for k, v in TIERS.items())),
+            (k, {"low": v[0], "high": v[1], "basis": v[2],
+                 "sources": TIER_SOURCES[k]}) for k, v in TIERS.items())),
         ("foods", out),
     ])
     path = ROOT / "data" / "top100.json"
