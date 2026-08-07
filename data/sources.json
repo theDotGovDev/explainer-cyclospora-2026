@@ -233,18 +233,18 @@
       "url": "https://www.powerball.com/powerball-prize-chart"
     },
     {
-      "id": "nhtsa-2024",
-      "tier": "primary",
-      "publisher": "NHTSA",
-      "title": "NHTSA Estimates 39,345 Traffic Fatalities in 2024 (fatality rate per 100 million VMT)",
-      "url": "https://www.nhtsa.gov/press-releases/nhtsa-estimates-39345-traffic-fatalities-2024"
-    },
-    {
       "id": "nhts-2022",
       "tier": "primary",
       "publisher": "FHWA / Oak Ridge National Laboratory",
       "title": "Summary of Travel Trends: 2022 National Household Travel Survey",
       "url": "https://nhts.ornl.gov/assets/2022/pub/2022_NHTS_Summary_Travel_Trends.pdf"
+    },
+    {
+      "id": "nhtsa-crashes",
+      "tier": "primary",
+      "publisher": "NHTSA",
+      "title": "Summary of Motor Vehicle Traffic Crashes: 2023 Data (police-reported crashes and vehicle miles travelled)",
+      "url": "https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813762"
     }
   ]
 }
