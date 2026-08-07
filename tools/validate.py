@@ -17,13 +17,13 @@ import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-from build import EVIDENCE, numeric_band  # noqa: E402
+from build import EVIDENCE, PROVENANCE, STATUS_LABEL, numeric_band  # noqa: E402
 from icons import SPRITE_SYMBOLS  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 SITE = ROOT / "site"
-PAGES = ["index.html", "foods.html", "methodology.html", "sources.html"]
+PAGES = ["index.html", "methodology.html", "sources.html"]
 
 # How stale the outbreak data may get before CI complains.
 STALE_AFTER_DAYS = 21
@@ -129,44 +129,13 @@ def check_data(outbreak, foods, sources):
         warn(f"source {sid!r} is listed but never cited on any page")
 
 
-def check_top100(top100, sources):
-    """The 100-food list is mostly extrapolation, so the labelling has to hold."""
-    smap = {s["id"] for s in sources["sources"]}
-    seen_ranks = set()
-    for f in top100["foods"]:
-        who = f.get("name", "?")
-        if f.get("rank") in seen_ranks:
-            fail(f"top100 {who!r} has duplicate rank {f.get('rank')}")
-        seen_ranks.add(f.get("rank"))
-        for field in ("name", "icon", "tier", "scale", "basis", "evidence"):
-            if not f.get(field):
-                fail(f"top100 {who!r} missing {field}")
-        ev = f.get("evidence")
-        if ev not in EVIDENCE:
-            fail(f"top100 {who!r} has missing/unknown evidence basis {ev!r}")
-        # Extrapolated entries still cite the pathogen behaviour they rest on,
-        # so every food carries at least one source either way.
-        if not f.get("sources"):
-            fail(f"top100 {who!r} cites no source at all")
-        for sid in f.get("sources", []):
-            if sid not in smap:
-                fail(f"top100 {who!r} cites unknown source {sid!r}")
-    for name, v in top100.get("tiers", {}).items():
-        if not v.get("sources"):
-            fail(f"top100 tier {name!r} states a basis with no sources")
-        for sid in v.get("sources", []):
-            if sid not in smap:
-                fail(f"top100 tier {name!r} cites unknown source {sid!r}")
-
-
-def check_icons(foods, top100):
+def check_icons(foods):
     """Every icon name must exist in the sprite.
 
     A name that is not in the sprite renders as an empty <use> - silently, with
     no console error and no layout shift, so it is easy to ship. Three did.
     """
-    for label, items in (("foods.json", foods["foods"]),
-                         ("top100.json", top100["foods"])):
+    for label, items in (("foods.json", foods["foods"]),):
         for f in items:
             if f.get("icon") and f["icon"] not in SPRITE_SYMBOLS:
                 fail(f"{label}: {f['name']!r} uses icon {f['icon']!r}, which is "
@@ -266,21 +235,47 @@ def check_citations():
                      f"numbers it [{numbering.get(sid)}]")
 
 
-def check_evidence_labels(foods, top100):
+def check_evidence_labels(foods):
     """No food may render without a visible evidence label."""
-    expected = {
-        "index.html": len(foods["foods"]) * 2,   # card + detailed table row
-        "foods.html": len(top100["foods"]),
-    }
+    expected = {"index.html": len(foods["foods"]) * 2}  # card + table row
     for name, least in expected.items():
         path = SITE / name
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
-        found = len(re.findall(r'<span class="ev ev-', text))
+        found = len(re.findall(r'<a class="ev ev-', text))
         if found < least:
             fail(f"{name}: {found} evidence labels rendered, expected at least "
                  f"{least} - a food is rendering without one")
+
+
+def check_label_links():
+    """Every badge links to a definition, and every definition exists.
+
+    Badges used to explain themselves with a title attribute, which is invisible
+    on touch and cannot be linked to. They are links now, so a missing anchor
+    would be a dead end on the most-clicked element on the site.
+    """
+    meth = (SITE / "methodology.html")
+    if not meth.exists():
+        fail("methodology.html missing, cannot verify label definitions")
+        return
+    ids = set(re.findall(r'id="((?:ev|status|prov)-[a-z0-9-]+)"',
+                         meth.read_text(encoding="utf-8")))
+    want = ({f"ev-{k}" for k in EVIDENCE} | {f"prov-{k}" for k in PROVENANCE}
+            | {f"status-{k}" for k in STATUS_LABEL})
+    for missing in sorted(want - ids):
+        fail(f"label {missing!r} has no definition on methodology.html")
+    for name in PAGES:
+        path = SITE / name
+        if not path.exists():
+            continue
+        for target in set(re.findall(
+                r'href="methodology\.html#((?:ev|status|prov)-[a-z0-9-]+)"',
+                path.read_text(encoding="utf-8"))):
+            if target not in ids:
+                fail(f"{name}: badge links to methodology.html#{target}, "
+                     f"which does not exist")
 
 
 def check_provenance():
@@ -289,7 +284,7 @@ def check_provenance():
         text = (SITE / name).read_text(encoding="utf-8")
         cites = len(re.findall(r'<sup class="cite">', text))
         # Legend/illustrative swatches carry data-sample and are not claims.
-        marks = len(re.findall(r'<span class="prov prov-[a-z-]+"(?! data-sample)', text))
+        marks = len(re.findall(r'<a class="prov prov-[a-z-]+"[^>]*?(?<!data-sample=")>', text))
         if cites and marks < cites:
             fail(f"{name}: {cites} citations but only {marks} sourcing markers")
 
@@ -298,16 +293,15 @@ def main():
     outbreak = load("outbreak.json")
     foods = load("foods.json")
     sources = load("sources.json")
-    top100 = load("top100.json")
 
     check_data(outbreak, foods, sources)
-    check_top100(top100, sources)
-    check_icons(foods, top100)
+    check_icons(foods)
     check_dates(outbreak)
     check_html(outbreak)
     check_citations()
     check_provenance()
-    check_evidence_labels(foods, top100)
+    check_label_links()
+    check_evidence_labels(foods)
 
     for w in warnings:
         print(f"warning: {w}")

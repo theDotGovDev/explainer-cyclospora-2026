@@ -29,7 +29,9 @@
         "low": 200,
         "high": 2000
       },
-      "evidence": "named-2026"
+      "evidence": "named-2026",
+      "withdrawn": true,
+      "withdrawn_note": "This product was withdrawn from the market on 2026-07-17, so there is no meaningful 'per year' exposure to state - you cannot buy it. Its per-serving figure describes what the risk was while it was on shelves."
     },
     {
       "name": "Restaurant / foodservice iceberg lettuce",

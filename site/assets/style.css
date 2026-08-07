@@ -75,19 +75,22 @@
     --warn-line: #b08428;
     --alert-bg: #7d1a1a;
 
-    /* dark steps selected against the dark surface, not an inverted light ramp */
-    --risk-1: #8a3a1e;
-    --risk-2: #c25c34;
-    --risk-3: #e58a5e;
-    --risk-4: #f5bb9b;
+    /* Dark steps run the SAME direction as light: higher risk is darker and
+       more saturated in both themes. An earlier version inverted the ramp for
+       the dark surface, which made the most dangerous food the palest thing on
+       the page - legible, but backwards to read. */
+    --risk-1: #eec0a4;
+    --risk-2: #dd8a5a;
+    --risk-3: #c05730;
+    --risk-4: #ad4120;
     --risk-1-soft: #251409;
     --risk-2-soft: #2d180b;
     --risk-3-soft: #351c0d;
     --risk-4-soft: #3d200f;
-    --risk-1-ink: #d98c62;
-    --risk-2-ink: #e59a72;
-    --risk-3-ink: #e58a5e;
-    --risk-4-ink: #f5bb9b;
+    --risk-1-ink: #eec0a4;
+    --risk-2-ink: #dd8a5a;
+    --risk-3-ink: #dd8a5a;
+    --risk-4-ink: #eec0a4;
 
     --good: #7cc998;
     --good-bg: #14301f;
@@ -313,19 +316,8 @@ html:not(.has-js) .filter-status { display: none; }
 .card-icon .icon { width: 1.4rem; height: 1.4rem; }
 .card-head h3 { margin: 0; font-size: 1.02rem; line-height: 1.25; align-self: end; }
 
-.band {
-  display: inline-block; justify-self: start; align-self: start;
-  font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
-  padding: .1rem .45rem; border-radius: 3px; margin-top: .15rem;
-}
-.band.band-high { background: var(--risk-4); color: #fff; }
-.band.band-moderate { background: var(--risk-3); color: #fff; }
-.band.band-low { background: var(--risk-2-soft); color: var(--risk-2-ink); border: 1px solid var(--risk-2); }
-.band.band-very-low { background: var(--risk-1-soft); color: var(--risk-1-ink); border: 1px solid var(--risk-1); }
-@media (prefers-color-scheme: dark) {
-  .band.band-high { color: #1a0d06; }
-  .band.band-moderate { color: #1a0d06; }
-}
+
+
 
 .card-body { margin: 0; padding: .25rem 1.1rem 0; flex: 1; }
 .card-body dt {
@@ -338,18 +330,7 @@ html:not(.has-js) .filter-status { display: none; }
 .card-risk { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .98rem !important; }
 
 .card-foot { padding: 1rem 1.1rem 1.1rem; margin-top: .9rem; }
-.status {
-  display: inline-flex; align-items: center; gap: .3rem;
-  font-size: .74rem; font-weight: 600;
-  padding: .2rem .55rem; border-radius: 999px;
-  border: 1px solid currentColor;
-}
-.status .icon { width: .9rem; height: .9rem; }
-.status-confirmed { color: var(--bad); background: var(--bad-bg); }
-.status-under-traceback { color: var(--risk-3-ink); background: var(--risk-3-soft); }
-.status-linked-by-recall { color: var(--risk-3-ink); background: var(--risk-3-soft); }
-.status-historical { color: var(--fg-mute); background: var(--bg-sunk); }
-.status-not-implicated { color: var(--good); background: var(--good-bg); }
+
 
 .card-more { margin-top: .75rem; }
 .card-more summary {
@@ -512,15 +493,7 @@ html:not(.has-js) .filter-status { display: none; }
 .caveat summary .icon { color: var(--warn-line); }
 .caveat p { margin: .7rem 0 0; font-size: .93rem; }
 
-.prov {
-  display: inline-block; font-size: .66rem; font-weight: 700; line-height: 1.5;
-  text-transform: uppercase; letter-spacing: .04em;
-  padding: 0 .35rem; border-radius: 3px; border: 1px solid currentColor;
-  vertical-align: baseline; white-space: nowrap; cursor: help;
-}
-.prov-agency { color: var(--good); background: var(--good-bg); }
-.prov-agency-news { color: var(--accent); background: var(--accent-soft); }
-.prov-news { color: var(--bad); background: var(--bad-bg); }
+
 
 .dated {
   display: inline-block; font-size: .68rem; font-variant-numeric: tabular-nums;
@@ -831,21 +804,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
 
 /* ---------- evidence basis labels ---------- */
 
-.ev {
-  display: inline-block;
-  font-size: .66rem; font-weight: 700; line-height: 1.5;
-  text-transform: uppercase; letter-spacing: .04em;
-  padding: 0 .35rem; border-radius: 3px;
-  border: 1px solid currentColor;
-  white-space: nowrap; cursor: help; vertical-align: baseline;
-}
-.ev-referenced { color: var(--good); background: var(--good-bg); }
-/* Extrapolated is the weakest claim on the site, so it is styled to be noticed
-   rather than to blend in with the referenced ones. */
-.ev-extrapolated {
-  color: var(--warn-line); background: var(--warn-bg);
-  border-style: dashed; white-space: normal;
-}
+
 .food-ev { display: block; margin-top: .35rem; }
 .row-ev { display: block; margin-top: .45rem; }
 .card-foot .ev { margin-top: .4rem; }
@@ -865,3 +824,119 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   border-left: 3px solid var(--warn-line); padding: .7rem .9rem;
   border-radius: 0 4px 4px 0; margin-bottom: 0;
 }
+
+/* ---------- unified badge system ----------
+
+   Two deliberate channels, so a reader can tell at a glance which question a
+   badge answers:
+
+     WARM (the risk ramp)  = how dangerous / how implicated this food is.
+                             Risk bands and outbreak status share it, because
+                             they describe the same axis - the subject itself.
+
+     COOL (accent + grey)  = how well-supported our claim is. Evidence basis
+                             and sourcing share it, because they describe our
+                             confidence, not the food's danger.
+
+   Keeping them apart matters: a food can be strongly evidenced as low risk, or
+   weakly evidenced as high risk, and one colour scale cannot say both. Weakness
+   in the cool channel is shown by a dashed border and muted ink, never by
+   borrowing a warning colour from the warm channel. */
+
+.band, .status, .ev, .prov {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .68rem; font-weight: 700; line-height: 1.6;
+  text-transform: uppercase; letter-spacing: .04em;
+  padding: .05rem .45rem; border-radius: 4px;
+  border: 1px solid transparent;
+  text-decoration: none; vertical-align: baseline;
+  white-space: nowrap;
+}
+a.band, a.status, a.ev, a.prov { cursor: pointer; }
+a.band:hover, a.status:hover, a.ev:hover, a.prov:hover { filter: brightness(.94); }
+@media (prefers-color-scheme: dark) {
+  a.band:hover, a.status:hover, a.ev:hover, a.prov:hover { filter: brightness(1.2); }
+}
+.status .icon, .band .icon { width: .85rem; height: .85rem; }
+.band { justify-self: start; align-self: start; margin-top: .15rem; font-weight: 800; }
+
+/* --- warm channel: severity and implication. Darker = worse, in both themes. --- */
+.band.band-high, .status-confirmed {
+  background: var(--risk-4); color: #fff; border-color: var(--risk-4);
+}
+.band.band-moderate, .status-under-traceback {
+  background: var(--risk-3); color: #fff; border-color: var(--risk-3);
+}
+.band.band-low, .status-linked-by-recall {
+  background: var(--risk-2-soft); color: var(--risk-2-ink); border-color: var(--risk-2);
+}
+.band.band-very-low, .status-historical {
+  background: var(--risk-1-soft); color: var(--risk-1-ink); border-color: var(--risk-1);
+}
+.status-not-implicated {
+  background: var(--bg-sunk); color: var(--fg-mute); border-color: var(--line);
+}
+
+/* --- cool channel: how well evidenced --- */
+.ev-referenced, .prov-agency {
+  background: var(--accent-soft); color: var(--accent-hover); border-color: var(--accent);
+}
+.prov-agency-news {
+  background: var(--accent-soft); color: var(--accent-hover);
+  border-color: var(--accent); border-style: dashed;
+}
+/* The weakest claims on the site. Dashed and deliberately quiet: a warning
+   colour here would read as "dangerous", which is the other channel's job. */
+.ev-extrapolated, .prov-news {
+  background: var(--bg-sunk); color: var(--fg-mute);
+  border-color: var(--fg-mute); border-style: dashed;
+}
+.ev-extrapolated { white-space: normal; text-align: left; }
+@media (prefers-color-scheme: dark) {
+  .ev-referenced, .prov-agency, .prov-agency-news { color: var(--accent); }
+}
+
+/* glossary the badges link into */
+.glossary .gloss-group {
+  margin-top: 2rem; padding-bottom: .4rem; border-bottom: 1px solid var(--line);
+}
+.gloss {
+  border-left: 3px solid var(--line); padding: .1rem 0 .1rem 1rem; margin: 1.25rem 0;
+}
+.gloss:target { border-left-color: var(--accent); background: var(--accent-soft);
+  border-radius: 0 var(--radius) var(--radius) 0; padding-right: 1rem; }
+.gloss h3 { margin: 0 0 .2rem; font-size: 1rem; }
+.gloss-sum { font-weight: 600; margin: 0 0 .4rem; }
+.gloss p { font-size: .93rem; }
+
+
+/* ---------- foods placed on the dot-grid scale ---------- */
+
+.dot-h { margin-top: 2rem; }
+.dot-lede { color: var(--fg-mute); font-size: .93rem; margin-bottom: 1rem; }
+.dotrows {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr auto minmax(8rem, auto);
+  gap: .55rem .9rem; align-items: center;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 1rem 1.1rem;
+}
+.dotrow { display: contents; }
+.dotrow-name { display: flex; align-items: center; gap: .4rem; font-size: .9rem; }
+.dotrow-name .food-icon { color: var(--fg-mute); width: 1rem; height: 1rem; }
+.dotrow-count {
+  font-weight: 700; font-variant-numeric: tabular-nums; font-size: .9rem;
+  text-align: right;
+}
+@media (max-width: 620px) {
+  .dotrows { grid-template-columns: 1fr auto; }
+  .dotrow-count { grid-column: 1 / -1; text-align: left; }
+}
+
+/* foods vs anchors on the per-year axis */
+.ladder-anchor .ladder-dot { background: var(--fg-mute); }
+.ladder-anchor .ladder-label { color: var(--fg-mute); font-style: italic; }
+.ladder-food.band-high .ladder-dot { background: var(--risk-4); }
+.ladder-food.band-moderate .ladder-dot { background: var(--risk-3); }
+.ladder-food.band-low .ladder-dot { background: var(--risk-2); }
+.ladder-food.band-very-low .ladder-dot { background: var(--risk-1); }

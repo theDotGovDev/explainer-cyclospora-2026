@@ -131,8 +131,9 @@ def provenance(ids, smap):
 def prov_tag(kind, sample=False):
     label, explain = PROVENANCE[kind]
     attr = ' data-sample="1"' if sample else ""
-    return (f'<span class="prov prov-{e(kind)}"{attr} title="{e(explain)}">'
-            f'<span class="vh">Sourcing: </span>{e(label)}</span>')
+    return (f'<a class="prov prov-{e(kind)}" href="methodology.html#prov-{e(kind)}"{attr} '
+            f'title="{e(explain)} Click for the full definition.">'
+            f'<span class="vh">Sourcing: </span>{e(label)}</a>')
 
 
 EVIDENCE = {
@@ -153,18 +154,30 @@ EVIDENCE = {
 }
 
 
-def evidence_tag(kind):
+def evidence_tag(kind, sample=False):
     """Say, for every food, whether a source names it or we extrapolated it.
 
     A citation can support 'this food was named in the outbreak' without
     supporting our per-serving number. Keeping the two separate stops a
     reference lending unearned authority to an estimate.
+
+    Rendered as a link rather than a tooltip: a title attribute is invisible on
+    touch devices and cannot be shared or pointed at.
     """
     if kind not in EVIDENCE:
         raise SystemExit(f"unknown evidence kind: {kind!r}")
     label, cls, explain = EVIDENCE[kind]
-    return (f'<span class="ev ev-{e(cls)}" title="{e(explain)}">'
-            f'<span class="vh">Evidence basis: </span>{e(label)}</span>')
+    attr = ' data-sample="1"' if sample else ""
+    return (f'<a class="ev ev-{e(cls)}" href="methodology.html#ev-{e(kind)}"{attr} '
+            f'title="{e(explain)} Click for the full definition.">'
+            f'<span class="vh">Evidence basis: </span>{e(label)}</a>')
+
+
+def status_tag(kind):
+    """Outbreak status chip, linked to its definition."""
+    return (f'<a class="status status-{e(kind)}" href="methodology.html#status-{e(kind)}" '
+            f'title="{e(STATUS_DOC[kind][0])} Click for the full definition.">'
+            f'{icon(STATUS_ICON[kind])}{e(STATUS_LABEL[kind])}</a>')
 
 
 def cite(ids, smap, dated=None):
@@ -202,12 +215,144 @@ def cite(ids, smap, dated=None):
 
 
 # --------------------------------------------------------------------------
+# label glossary - every badge on the site links into this
+# --------------------------------------------------------------------------
+
+STATUS_DOC = {
+    "confirmed": (
+        "Named by FDA or CDC as implicated in the 2026 outbreak.",
+        "Investigators interviewed people who got sick, found this food eaten far "
+        "more often than expected, and traced the product back through distribution "
+        "to a common supplier. That combination - epidemiology plus traceback - is "
+        "what agencies act on, and it is what triggered the recall. It is worth "
+        "knowing that no product sample in this outbreak has ever tested positive "
+        "for Cyclospora: a border sample flagged positive was re-reviewed and "
+        "reclassified as a false positive. The parasite is notoriously hard to "
+        "detect in food, so a confirmed status here rests on where the illnesses "
+        "point, not on a laboratory finding in the food itself."),
+    "under-traceback": (
+        "Investigators are actively tracing this food. It is not a conclusion.",
+        "Traceback means following a product backwards through distributors, "
+        "processors and growers to see whether the supply chains behind separate "
+        "clusters of illness converge on one source. A food under traceback is a "
+        "lead being checked, not a finding. Most commodities that enter traceback "
+        "are eventually cleared, because early interviews pick up whatever people "
+        "commonly eat. Treat this label as a reason for reasonable caution while "
+        "the question is open, not as evidence the food made anyone ill."),
+    "linked-by-recall": (
+        "Not implicated on its own, but inside the recall's scope.",
+        "The recall covers blended and prepared products that may contain the "
+        "implicated ingredient, not only the single-ingredient product. A salad "
+        "mix falls here if it can contain iceberg from the recalled supplier. The "
+        "risk attaches to the ingredient, not to the category."),
+    "historical": (
+        "Associated with earlier U.S. outbreaks, but not with 2026.",
+        "Cyclospora has a long U.S. outbreak record - imported raspberries in "
+        "1996-97, snap peas in 2009, cilantro traced to Puebla in 2013-15, basil in "
+        "2019 and 2020. A food carrying this label is not part of the current "
+        "outbreak. The history matters because it shows the commodity can carry the "
+        "parasite when growing or handling conditions go wrong, which is why these "
+        "foods sit slightly above the ones with no such record."),
+    "not-implicated": (
+        "No association in 2026 and no strong outbreak history.",
+        "Nothing in the current investigation points at this food, and it does not "
+        "carry a meaningful record from past outbreaks. That is not the same as a "
+        "guarantee. Traceback only sees the supply chains investigators look at, "
+        "and an outbreak with no positive product sample cannot fully exclude "
+        "commodities that were never sampled."),
+}
+
+PROVENANCE_DOC = {
+    "agency": (
+        "A government, public health or peer-reviewed source is behind this claim.",
+        "The strongest sourcing used here. Note carefully what it does not mean: it "
+        "says an agency originated the claim, not that we read it off the agency's "
+        "own page. The build environment could not reach cdc.gov or fda.gov, so most "
+        "agency figures on this site arrived by way of sources that cite them."),
+    "agency-news": (
+        "A mix of agency sources and news reporting.",
+        "Typically an agency figure that reached us through reporting, with a news "
+        "outlet supplying the date or the wording. Weaker than a claim resting on "
+        "agency sources alone."),
+    "news": (
+        "News or consumer reporting only.",
+        "No agency document supports this claim directly. These are the weakest "
+        "claims on the site. They are still worth including - reporting often "
+        "captures a state official's statement that never appears in a federal "
+        "document - but they should carry the least weight."),
+}
+
+EVIDENCE_DOC = {
+    "named-2026": (
+        "A 2026 outbreak source names this specific food.",
+        "An agency investigation, a recall notice, or a state health department "
+        "statement identifies this food by name in the current outbreak. That is "
+        "the strongest food-level evidence available here. It still does not mean "
+        "an agency published a per-serving probability for it - none has, for any "
+        "food. The naming is cited; the number remains our estimate."),
+    "named-historical": (
+        "Named in sources describing earlier U.S. outbreaks.",
+        "This food is not implicated in 2026, but it appears by name in the record "
+        "of past U.S. cyclosporiasis outbreaks. We treat that as real but weaker "
+        "evidence: it shows the commodity can carry the parasite, not that it is "
+        "carrying it now."),
+    "general-guidance": (
+        "Published guidance covers this food directly.",
+        "No source names this food as implicated, but agency or expert guidance "
+        "speaks to it - for example that it is considered safe with standard "
+        "washing, or that cooking to temperature inactivates the parasite. The "
+        "guidance is cited. The per-serving number is still ours."),
+    "extrapolated": (
+        "No source names this food. We worked the risk out ourselves.",
+        "The weakest basis used anywhere on this site, and the one behind most of "
+        "the 100-food list. We took what the sources establish about how Cyclospora "
+        "behaves - that it is a fresh produce and water pathogen, that cooking to "
+        "about 158 F inactivates it, that peeling removes surface contamination, "
+        "that washing does not reliably work - and applied it to how the food is "
+        "normally handled. The sources cited on an extrapolated food support that "
+        "behaviour, not the food. If you are making a decision that matters, this "
+        "is the label to be most sceptical of."),
+}
+
+
+def glossary():
+    """The definitions every badge links to."""
+    def block(prefix, doc, labels):
+        out = []
+        for key, (summary, detail) in doc.items():
+            out.append(
+                f'  <div class="gloss" id="{prefix}-{e(key)}">\n'
+                f'    <h3>{labels[key]}</h3>\n'
+                f'    <p class="gloss-sum">{e(summary)}</p>\n'
+                f'    <p>{e(detail)}</p>\n'
+                f'  </div>')
+        return "\n".join(out)
+
+    return f"""
+<section class="glossary" aria-labelledby="labels-h">
+  <h2 id="labels-h">What every label on this site means</h2>
+  <p>Badges throughout the site link here. Each one answers a different question,
+     and they are deliberately kept separate because they can disagree: a food can
+     be named by an agency (strong evidence that it is implicated) while its risk
+     number is still an estimate of ours (weak evidence for the number).</p>
+
+  <h3 class="gloss-group">Outbreak status &mdash; what investigators have found about this food</h3>
+{block("status", STATUS_DOC, {k: e(v) for k, v in STATUS_LABEL.items()})}
+
+  <h3 class="gloss-group">Evidence basis &mdash; how our risk claim for this food is grounded</h3>
+{block("ev", EVIDENCE_DOC, {k: e(v[0]) for k, v in EVIDENCE.items()})}
+
+  <h3 class="gloss-group">Sourcing &mdash; where a given figure came from</h3>
+{block("prov", PROVENANCE_DOC, {k: e(v[0]) for k, v in PROVENANCE.items()})}
+</section>"""
+
+
+# --------------------------------------------------------------------------
 # shared chrome
 # --------------------------------------------------------------------------
 
 def page(title, description, body, active, as_of, subnav=None, extra_js=""):
     nav = [("index.html", "Risk by food"),
-           ("foods.html", "All 100 foods"),
            ("methodology.html", "Methodology"),
            ("sources.html", "Sources")]
     nav_html = "\n".join(
@@ -359,7 +504,14 @@ LOG_LO, LOG_HI = 2, 7  # 1-in-100 .. 1-in-10,000,000
 
 
 def _pos(n):
-    return max(0.0, min(100.0, (math.log10(n) - LOG_LO) / (LOG_HI - LOG_LO) * 100))
+    """Position a '1 in N' value. Higher risk (smaller N) sits further RIGHT.
+
+    The axis is reversed relative to the raw log scale on purpose: readers
+    expect worse to be further along, and the first version put the most
+    dangerous food at the far left.
+    """
+    frac = (math.log10(n) - LOG_LO) / (LOG_HI - LOG_LO)
+    return max(0.0, min(100.0, (1 - frac) * 100))
 
 
 def risk_chart(foods):
@@ -377,9 +529,10 @@ def risk_chart(foods):
     # up with the bars and gridlines rather than with the figure's outer edge.
     # First and last are anchored inward so their labels are not clipped.
     tick_html = ""
-    for i, (v, lab) in enumerate(ticks):
-        edge = " tick-first" if i == 0 else (" tick-last" if i == len(ticks) - 1 else "")
-        tick_html += (f'<span class="tick{edge}" style="left:{_pos(v):.2f}%">'
+    for v, lab in ticks:
+        x = _pos(v)
+        edge = " tick-first" if x < 1 else (" tick-last" if x > 99 else "")
+        tick_html += (f'<span class="tick{edge}" style="left:{x:.2f}%">'
                       f'<span>{e(lab)}</span></span>')
     grid_html = "".join(
         f'<span class="grid-line" style="left:{_pos(v):.2f}%"></span>' for v, _ in ticks
@@ -388,14 +541,15 @@ def risk_chart(foods):
     bars = []
     for f in rows:
         lo, hi = f["scale"]["low"], f["scale"]["high"]
-        x1, x2 = _pos(lo), _pos(hi)
+        # lo is the smaller denominator, so the higher risk, so further right.
+        x_right, x_left = _pos(lo), _pos(hi)
         capped = lo == hi  # e.g. cooked vegetables, "below 1 in 10,000,000"
         if capped:
-            # An open-ended "below 1 in N" has no left edge to draw, so show a
-            # short stub at the axis end that fades out leftward.
-            x1, width = max(0.0, x2 - 6), 6.0
+            # "Below 1 in N" continues off-scale to the left, so draw a stub at
+            # the low-risk end that fades out leftward rather than a hard edge.
+            x1, width = 0.0, 6.0
         else:
-            width = max(x2 - x1, 1.2)
+            x1, width = x_left, max(x_right - x_left, 1.2)
         band = numeric_band(f["scale"])
         label = (f"{f['name']}: estimated {f['risk_unmitigated']}. "
                  f"{BAND_LABEL[numeric_band(f['scale'])]}.")
@@ -409,18 +563,20 @@ def risk_chart(foods):
         <span class="chart-value">{e(f['risk_unmitigated'].split(';')[0])}</span>
       </li>""")
 
+    # Ordered low -> high so the legend reads in the same direction as the axis.
     legend = "".join(
         f'<span class="chart-key chart-{e(k)}"><i></i>{e(v)}</span>'
-        for k, v in [("high", "Avoid"), ("moderate", "Caution"),
-                     ("low", "Low risk"), ("very-low", "Very low risk")]
+        for k, v in [("very-low", "Very low risk"), ("low", "Low risk"),
+                     ("moderate", "Caution"), ("high", "Avoid")]
     )
 
     return f"""<figure class="chart">
   <figcaption>
     <strong>Estimated risk per serving, before mitigation.</strong>
-    Further right is safer. The scale is logarithmic &mdash; each gridline is
-    ten times less likely than the one to its left. Bars show the estimated
-    range, not a precise value.
+    Further right means higher risk, and darker means higher risk &mdash; the two
+    say the same thing. The scale is logarithmic: each gridline is ten times more
+    likely than the one to its left. Bars show the estimated range, not a
+    precise value.
   </figcaption>
   <div class="chart-legend">{legend}</div>
   <div class="chart-plot">
@@ -445,32 +601,53 @@ def risk_chart(foods):
 # --------------------------------------------------------------------------
 
 GRID_N = 1000
+SERVINGS_PER_YEAR = 104  # two servings a week; stated on the page
 
 
-def dot_grid():
-    """A literal 1-in-1,000 grid. Abstract odds become a picture you can count."""
+def dot_grid(foods):
+    """A literal 1-in-1,000 grid, then every food expressed in the same terms.
+
+    Abstract odds become countable. Each food says how many grids like this one
+    you would have to fill before expecting a single case - which puts all of
+    them on one concrete scale instead of a wall of "1 in N".
+    """
     dots = "".join(
         f'<span class="dot{" dot-on" if i == 436 else ""}"></span>'
         for i in range(GRID_N)
     )
+    rows = []
+    for f in sorted(foods, key=lambda x: math.sqrt(x["scale"]["low"] * x["scale"]["high"])):
+        lo, hi = f["scale"]["low"], f["scale"]["high"]
+        mid = math.sqrt(lo * hi)
+        grids = mid / GRID_N
+        if grids < 1:
+            # Riskier than the reference grid: more than one dot lights up in it.
+            howmany = f"{GRID_N / mid:.1f} dots in this one grid"
+        elif f["scale"]["low"] == f["scale"]["high"]:
+            howmany = f"{grids:,.0f}+ grids"
+        else:
+            howmany = f"{grids:,.0f} grids"
+        band = numeric_band(f["scale"])
+        rows.append(f"""      <li class="dotrow">
+        <span class="dotrow-name">{icon(f['icon'], 'icon food-icon')}{e(f['name'])}</span>
+        <span class="band band-{e(band)}">{e(BAND_LABEL[band])}</span>
+        <span class="dotrow-count">{e(howmany)}</span>
+      </li>""")
+
     return f"""<figure class="dotfig">
   <figcaption><strong>This is what 1 in 1,000 looks like.</strong> Every dot is one
     person eating one serving. One of them &mdash; the dark one &mdash; gets sick.</figcaption>
   <div class="dots" role="img"
        aria-label="A grid of 1,000 dots with a single dot highlighted, illustrating odds of 1 in 1,000.">{dots}</div>
-  <div class="dot-scale">
-    <p><strong>Now scale it.</strong> Every step down the risk scale on this page means
-       one dot in <em>ten times</em> as many grids:</p>
-    <ul>
-      <li><strong>1 in 1,000</strong> &mdash; one dot in the grid above.</li>
-      <li><strong>1 in 100,000</strong> &mdash; one dot across <strong>100</strong> of
-          these grids. Roughly where non-recalled iceberg lettuce sits.</li>
-      <li><strong>1 in 10,000,000</strong> &mdash; one dot across
-          <strong>10,000</strong> of these grids. Where cooked vegetables and
-          non-produce foods sit &mdash; a stack of paper about as tall as a
-          four-storey building.</li>
-    </ul>
-  </div>
+
+  <h3 class="dot-h">Every food on this page, in grids</h3>
+  <p class="dot-lede">How many grids like the one above you would need to fill before
+     expecting a single case of illness. <strong>More grids means safer.</strong>
+     Where a food is riskier than the reference grid, more than one dot lights up
+     inside it instead.</p>
+  <ol class="dotrows">
+{chr(10).join(rows)}
+  </ol>
 </figure>"""
 
 
@@ -478,192 +655,94 @@ LADDER_LO, LADDER_HI = 0, 9  # 1-in-1 .. 1-in-1,000,000,000
 
 
 def _lpos(n):
-    return max(0.0, min(100.0, (math.log10(n) - LADDER_LO) / (LADDER_HI - LADDER_LO) * 100))
+    """Same convention as the risk chart: more likely sits further RIGHT."""
+    frac = (math.log10(n) - LADDER_LO) / (LADDER_HI - LADDER_LO)
+    return max(0.0, min(100.0, (1 - frac) * 100))
 
 
-def comparison_ladder(comparisons, smap):
-    """Real-world anchors on the same log axis, with an explicit health warning
-    that they are measured on different bases and are not equivalences."""
+def ladder_ticks():
+    out = []
+    for i in range(10):
+        if i % 3 and i != 9:
+            continue
+        x = _lpos(10 ** i)
+        edge = " tick-first" if x < 1 else (" tick-last" if x > 99 else "")
+        out.append(f'<span class="tick{edge}" style="left:{x:.2f}%">'
+                   f'<span>1 in {10 ** i:,}</span></span>')
+    return "".join(out)
+
+
+def comparison_ladder(comparisons, foods, smap):
+    """Foods and real-world anchors on ONE basis: the chance in a single year.
+
+    An earlier version put per-serving food risks beside per-lifetime and
+    per-event anchors, which is not a comparison at all. Food risks are now
+    annualised at a stated eating frequency so the units actually match.
+    """
+    items = []
+    for a in comparisons["anchors"]:
+        if not a.get("per_year"):
+            continue
+        items.append({
+            "odds": a["odds"], "label": a["label"], "kind": "anchor",
+            "sub": "published per-year figure" + (
+                " &middot; derived by us" if a.get("derived") else ""),
+            "sources": a.get("sources", []),
+        })
+    withdrawn = []
+    for f in foods:
+        # A recalled product has no meaningful annual exposure - nobody can eat
+        # it 104 times a year, and annualising it produces an alarming number
+        # for a food that is not on any shelf.
+        if f.get("withdrawn"):
+            withdrawn.append(f)
+            continue
+        lo, hi = f["scale"]["low"], f["scale"]["high"]
+        annual = math.sqrt(lo * hi) / SERVINGS_PER_YEAR
+        items.append({
+            "odds": annual, "label": f["name"], "kind": "food",
+            "band": numeric_band(f["scale"]),
+            "capped": lo == hi,
+            "sub": f"eating it {SERVINGS_PER_YEAR}&times; a year", "sources": [],
+        })
+
     rows = []
-    for a in sorted(comparisons["anchors"], key=lambda x: x["odds"]):
-        derived = a.get("derived")
-        rows.append(f"""      <li class="ladder-row">
-        <span class="ladder-label">{e(a['label'])}
-          <span class="ladder-basis">{e(a['basis'])}{' &middot; derived by us' if derived else ''}</span></span>
+    for it in sorted(items, key=lambda x: -x["odds"]):
+        cls = "ladder-anchor" if it["kind"] == "anchor" else f"ladder-food band-{it['band']}"
+        # A capped "below 1 in N" input stays hedged after annualising; printing
+        # an exact figure would invent precision the estimate never had.
+        odds_s = ("below 1 in " if it.get("capped") else "1 in ") + f"{it['odds']:,.0f}"
+        rows.append(f"""      <li class="ladder-row {cls}">
+        <span class="ladder-label">{e(it['label'])}
+          <span class="ladder-basis">{it['sub']}</span></span>
         <span class="ladder-track">
-          <span class="ladder-dot" style="left:{_lpos(a['odds']):.2f}%"></span>
+          <span class="ladder-dot" style="left:{_lpos(max(it['odds'], 1.0)):.2f}%"></span>
         </span>
-        <span class="ladder-odds">1 in {a['odds']:,}{cite(a.get('sources'), smap)}</span>
+        <span class="ladder-odds">{e(odds_s)}{cite(it['sources'], smap)}</span>
       </li>""")
 
-    band_l, band_r = _lpos(200), _lpos(10_000_000)
     return f"""<figure class="ladder">
-  <figcaption><strong>How those numbers compare to things you already have a feel for.</strong>
-    Further right is rarer.</figcaption>
+  <figcaption><strong>Everything on one basis: your chance in a single year.</strong>
+    Further right means more likely.</figcaption>
   <div class="ladder-warn" role="note">
-    {icon('alert')}
-    <p><strong>These are not equivalences.</strong> {e(comparisons['caution'])}</p>
+    {icon('info')}
+    <p><strong>Why this chart is on a per-year basis.</strong> {e(comparisons['caution'])}</p>
   </div>
   <div class="ladder-plot">
-    <!-- Overlay, rows and axis all use the same 3-column grid template, so the
-         band, the dots and the ticks are positioned against the same box. The
-         first version positioned the axis and band against the plot's full
-         width while the dots sat inside the middle column, which silently
-         shifted every tick by the width of the label column. -->
-    <div class="ladder-overlay" aria-hidden="true">
-      <span></span>
-      <div class="ladder-bandwrap">
-        <div class="ladder-bandmark" style="left:{band_l:.2f}%;width:{max(band_r - band_l, 1):.2f}%">
-          <span>Everything on this site sits in this range</span>
-        </div>
-      </div>
-      <span></span>
-    </div>
     <ol class="ladder-rows">
 {chr(10).join(rows)}
     </ol>
     <div class="ladder-axis-row">
       <span></span>
-      <div class="ladder-axis">
-      {"".join(f'<span class="tick{" tick-first" if i == 0 else (" tick-last" if i == 9 else "")}" style="left:{_lpos(10 ** i):.2f}%"><span>1 in {10 ** i:,}</span></span>' for i in range(10) if i % 3 == 0 or i == 9)}
-      </div>
+      <div class="ladder-axis">{ladder_ticks()}</div>
       <span></span>
     </div>
   </div>
+  {"".join(f'<p class="chart-foot ladder-excluded">{icon("info")} <strong>{e(w["name"])} is not on this chart.</strong> {e(w["withdrawn_note"])}</p>' for w in withdrawn)}
+  <p class="chart-foot"><strong>The eating-frequency assumption.</strong>
+     {e(comparisons['annualisation'])}</p>
+  <p class="chart-foot">{e(comparisons['one_off_note'])}</p>
 </figure>"""
-
-
-# --------------------------------------------------------------------------
-# top 100 foods
-# --------------------------------------------------------------------------
-
-def top100_rows(items, smap=None):
-    out = []
-    for f in items:
-        band = numeric_band(f["scale"])
-        odds = odds_text(f["scale"])
-        note = f" {e(f['note'])}" if f.get("note") else ""
-        link = ""
-        if f.get("detail_of"):
-            link = ' <a class="deeplink" href="index.html#check">detailed assessment &rarr;</a>'
-        out.append(f"""      <tr class="band-{e(band)}" data-name="{e(f['name'].lower())}"
-          data-band="{e(band)}">
-        <td class="t100-rank">{f['rank']}</td>
-        <th scope="row"><span class="food-name">{icon(f['icon'], 'icon food-icon')}{e(f['name'])}</span></th>
-        <td data-label="Estimated risk"><span class="band band-{e(band)}">{e(BAND_LABEL[band])}</span>
-          <span class="risk">{e(odds)}</span></td>
-        <td data-label="Why">{e(f['basis'])}{note}{link}
-          <span class="row-ev">{evidence_tag(f['evidence'])}{cite(f.get('sources'), smap)}</span></td>
-      </tr>""")
-    return "\n".join(out)
-
-
-def odds_text(scale):
-    lo, hi = scale["low"], scale["high"]
-    return f"Below 1 in {lo:,}" if lo == hi else f"~1 in {lo:,} to 1 in {hi:,}"
-
-
-def tier_defs(top100, smap):
-    out = []
-    for v in top100["tiers"].values():
-        out.append(f'    <dt>{e(odds_text(v))}</dt>'
-                   f'<dd>{e(v["basis"])}{cite(v.get("sources"), smap)}</dd>')
-    return "\n".join(out)
-
-
-def build_foods_page(outbreak, top100, smap):
-    counts = collections.Counter(numeric_band(f["scale"]) for f in top100["foods"])
-    body = f"""
-<div class="wrap page-body">
-<h1>All 100 foods</h1>
-<p class="page-lede">The 100 most commonly eaten foods in the United States, each with an
-   estimated per-serving risk of Cyclospora infection during the current outbreak.</p>
-
-<div class="keypoint">
-  {icon('info')}
-  <p><strong>The single most useful fact on this page:</strong> {e(top100['key_point'])}</p>
-</div>
-
-<div class="evkey">
-  <h2>How each food's risk is grounded</h2>
-  <p>Every food below carries one of these labels, so you can tell at a glance whether a
-     source names it or whether we worked it out.</p>
-  <ul class="evkey-list">
-    <li>{evidence_tag('named-2026')} A 2026 outbreak source names this food.</li>
-    <li>{evidence_tag('named-historical')} Named in sources about earlier U.S. outbreaks.</li>
-    <li>{evidence_tag('general-guidance')} Not named as implicated, but published guidance
-        covers it directly.</li>
-    <li>{evidence_tag('extrapolated')} <strong>The weakest basis here.</strong>
-        {e(top100['evidence_note'])}</li>
-  </ul>
-  <p class="evkey-foot"><strong>In every case the risk number itself is our estimate.</strong>
-     A citation showing a food was named in the outbreak does not mean any agency published
-     a per-serving probability for it &mdash; none has.</p>
-</div>
-
-<div class="stats t100-stats">
-  <div class="stat"><span class="stat-num">{counts.get('very-low', 0)}</span>
-    <span class="stat-label">of 100 are very low risk</span></div>
-  <div class="stat"><span class="stat-num">{counts.get('low', 0)}</span>
-    <span class="stat-label">are low risk</span></div>
-  <div class="stat"><span class="stat-num">{counts.get('moderate', 0)}</span>
-    <span class="stat-label">warrant caution</span></div>
-  <div class="stat"><span class="stat-num">{counts.get('high', 0)}</span>
-    <span class="stat-label">to avoid</span></div>
-</div>
-
-<div class="filters">
-  <div class="search-wrap">
-    {icon('search', 'icon search-icon')}
-    <label class="vh" for="t100-search">Search the 100 foods</label>
-    <input type="search" id="t100-search" placeholder="Search: chicken, spinach, coffee&hellip;"
-           autocomplete="off">
-  </div>
-  <div class="chips" role="group" aria-label="Filter by risk level">
-    <button type="button" class="chip is-on" data-t100="all">All 100</button>
-    <button type="button" class="chip" data-t100="high">Avoid</button>
-    <button type="button" class="chip" data-t100="moderate">Caution</button>
-    <button type="button" class="chip" data-t100="low">Low</button>
-    <button type="button" class="chip" data-t100="very-low">Very low</button>
-  </div>
-</div>
-<p class="filter-status" id="t100-status" role="status"></p>
-
-<div class="table-scroll">
-<table class="risk-table t100">
-  <caption>Ranked by how commonly the food is eaten, not by risk.</caption>
-  <thead>
-    <tr><th scope="col">#</th><th scope="col">Food</th>
-        <th scope="col">Estimated risk per serving</th><th scope="col">Why</th></tr>
-  </thead>
-  <tbody id="t100-body">
-{top100_rows(top100['foods'], smap)}
-  </tbody>
-</table>
-</div>
-<p class="no-results" id="t100-empty" hidden>No foods match that search.</p>
-
-<section aria-labelledby="t100-method">
-  <h2 id="t100-method">How this list was built</h2>
-  <h3>The ordering</h3>
-  <p>{e(top100['ordering_basis'])}</p>
-  <h3>The risk figures</h3>
-  <p>{e(top100['risk_basis'])} The tiers, and the reasoning behind each:</p>
-  <dl class="facts">
-{tier_defs(top100, smap)}
-  </dl>
-  <p>These are informed estimates produced by this project, not official statistics.
-     The <a href="methodology.html">methodology page</a> explains how they were derived
-     and where the method is weak.</p>
-</section>
-</div>
-"""
-    js = '<script src="assets/app.js" defer></script>'
-    return page(
-        "All 100 foods - U.S. Cyclospora outbreak risk",
-        "Estimated Cyclospora risk for the 100 most commonly eaten U.S. foods.",
-        body, "foods.html", outbreak["as_of"], extra_js=js,
-    )
 
 
 # --------------------------------------------------------------------------
@@ -691,7 +770,7 @@ def food_cards(foods, smap):
           <dd class="card-risk">{e(f['risk_residual'])}</dd>
         </dl>
         <footer class="card-foot">
-          <span class="status status-{e(f['status'])}">{icon(STATUS_ICON[f['status']])}{e(STATUS_LABEL[f['status']])}</span>
+          {status_tag(f['status'])}
           {evidence_tag(f['evidence'])}
           <details class="card-more">
             <summary>Why, and how sure we are</summary>
@@ -705,7 +784,7 @@ def food_cards(foods, smap):
     return "\n".join(cards)
 
 
-def build_index(outbreak, foods, top100, comparisons, smap):
+def build_index(outbreak, foods, comparisons, smap):
     ns = outbreak["national_season"]
     io = outbreak["implicated_outbreak"]
     rc = outbreak["recall"]
@@ -720,7 +799,7 @@ def build_index(outbreak, foods, top100, comparisons, smap):
           <span class="food-detail">{e(f['detail'])}{cite(f.get('sources'), smap)}</span>
           <span class="food-ev">{evidence_tag(f['evidence'])}</span>
         </th>
-        <td data-label="Status"><span class="status status-{e(f['status'])}">{e(STATUS_LABEL[f['status']])}</span></td>
+        <td data-label="Status">{status_tag(f['status'])}</td>
         <td data-label="Estimated risk per serving"><span class="band band-{e(numeric_band(f['scale']))}">{e(BAND_LABEL[numeric_band(f['scale'])])}</span>
             <span class="risk">{e(f['risk_unmitigated'])}</span></td>
         <td data-label="Primary mitigation">{e(f['mitigation'])}</td>
@@ -806,29 +885,8 @@ def build_index(outbreak, foods, top100, comparisons, smap):
     <h2 id="sense-h">What does "1 in 100,000" actually mean?</h2>
     <p class="section-intro">Risk numbers this small are hard to feel. Two ways to get a
        grip on them &mdash; one by counting, one by comparison.</p>
-{dot_grid()}
-{comparison_ladder(comparisons, smap)}
-  </div>
-</section>
-
-<section id="top10" class="band-section alt" aria-labelledby="top10-h">
-  <div class="wrap">
-    <h2 id="top10-h">The 10 most commonly eaten foods</h2>
-    <p class="section-intro">Most of what people actually eat carries negligible risk, and
-       it is worth seeing that plainly. {e(top100['key_point'])}</p>
-    <div class="table-scroll">
-      <table class="risk-table t100">
-        <caption>Ranked by how commonly the food is eaten, not by risk.</caption>
-        <thead>
-          <tr><th scope="col">#</th><th scope="col">Food</th>
-              <th scope="col">Estimated risk per serving</th><th scope="col">Why</th></tr>
-        </thead>
-        <tbody>
-{top100_rows(top100['foods'][:10], smap)}
-        </tbody>
-      </table>
-    </div>
-    <p class="more-link"><a class="btn btn-primary" href="foods.html">See all 100 foods {icon('search')}</a></p>
+{dot_grid(flist)}
+{comparison_ladder(comparisons, flist, smap)}
   </div>
 </section>
 
@@ -917,10 +975,10 @@ def build_index(outbreak, foods, top100, comparisons, smap):
       <p>Every food carries a label saying whether a source names it or whether we
          extrapolated it from how the parasite behaves:</p>
       <ul class="evkey-list">
-        <li>{evidence_tag('named-2026')} A 2026 outbreak source names this food.</li>
-        <li>{evidence_tag('named-historical')} Named in earlier U.S. outbreaks.</li>
-        <li>{evidence_tag('general-guidance')} Published guidance covers it directly.</li>
-        <li>{evidence_tag('extrapolated')} No source names it. Inferred by us &mdash; the
+        <li>{evidence_tag('named-2026', sample=True)} A 2026 outbreak source names this food.</li>
+        <li>{evidence_tag('named-historical', sample=True)} Named in earlier U.S. outbreaks.</li>
+        <li>{evidence_tag('general-guidance', sample=True)} Published guidance covers it directly.</li>
+        <li>{evidence_tag('extrapolated', sample=True)} No source names it. Inferred by us &mdash; the
             weakest basis on this site.</li>
       </ul>
       <p><strong>The risk number is always our estimate</strong>, whichever label a food
@@ -978,7 +1036,7 @@ def build_index(outbreak, foods, top100, comparisons, smap):
 
     <h3>What the status labels mean</h3>
     <ul class="legend">
-{chr(10).join(f'      <li><span class="status status-{e(k)}">{icon(STATUS_ICON[k])}{e(STATUS_LABEL[k])}</span> {e(v)}</li>' for k, v in foods["status_legend"].items())}
+{chr(10).join(f'      <li>{status_tag(k)} {e(v)}</li>' for k, v in foods["status_legend"].items())}
     </ul>
   </div>
 </section>
@@ -1017,7 +1075,7 @@ def build_index(outbreak, foods, top100, comparisons, smap):
 </section>
 """
     subnav = [("check", "Check a food"), ("scale", "Risk scale"),
-              ("sense", "What the odds mean"), ("top10", "Most-eaten foods"),
+              ("sense", "What the odds mean"),
               ("works", "What works"), ("status", "Outbreak"),
               ("evidence", "Evidence"), ("care", "Seek care")]
     js = '<script src="assets/app.js" defer></script>'
@@ -1193,6 +1251,8 @@ def build_methodology(outbreak, smap):
      carries a text label, so colour is never the only channel.</p>
 </section>
 
+{glossary()}
+
 <section aria-labelledby="m5">
   <h2 id="m5">How sources were accessed &mdash; and a real limitation</h2>
   <p>The environment in which this site was built could not make outbound connections to
@@ -1304,7 +1364,6 @@ def main():
     outbreak = load("outbreak.json")
     foods = load("foods.json")
     sources_doc = load("sources.json")
-    top100 = load("top100.json")
     comparisons = load("comparisons.json")
     smap = source_map(sources_doc)
 
@@ -1313,8 +1372,7 @@ def main():
     (SITE / "assets" / "favicon.svg").write_text(FAVICON, encoding="utf-8")
 
     pages = {
-        "index.html": build_index(outbreak, foods, top100, comparisons, smap),
-        "foods.html": build_foods_page(outbreak, top100, smap),
+        "index.html": build_index(outbreak, foods, comparisons, smap),
         "methodology.html": build_methodology(outbreak, smap),
         "sources.html": build_sources(outbreak, sources_doc, smap),
     }
