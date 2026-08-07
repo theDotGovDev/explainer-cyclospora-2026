@@ -22,7 +22,7 @@ from build import numeric_band  # noqa: E402
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 SITE = ROOT / "site"
-PAGES = ["index.html", "methodology.html", "sources.html"]
+PAGES = ["index.html", "foods.html", "methodology.html", "sources.html"]
 
 # How stale the outbreak data may get before CI complains.
 STALE_AFTER_DAYS = 21
@@ -180,6 +180,7 @@ def check_html(outbreak):
             ("best-effort", "best-effort disclaimer"),
             ("not official statistics", "estimates-are-not-official disclaimer"),
             ("cdc.gov or fda.gov", "source-access limitation"),
+            ("generated using ai", "AI-generation disclosure"),
         ]:
             if needle.lower() not in text.lower():
                 fail(f"{name}: missing {label} (looked for {needle!r})")

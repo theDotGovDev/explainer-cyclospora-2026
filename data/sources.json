@@ -203,6 +203,34 @@
       "publisher": "The Hill",
       "title": "Why cyclosporiasis cases are likely way underreported",
       "url": "https://thehill.com/policy/healthcare/5967777-why-cyclosporiasis-cases-are-likely-way-underreported/"
+    },
+    {
+      "id": "nsc-odds",
+      "tier": "primary",
+      "publisher": "National Safety Council",
+      "title": "Odds of Dying (2024 data), Injury Facts",
+      "url": "https://injuryfacts.nsc.org/all-injuries/preventable-death-overview/odds-of-dying/"
+    },
+    {
+      "id": "nws-lightning",
+      "tier": "primary",
+      "publisher": "NOAA National Weather Service",
+      "title": "How Dangerous is Lightning? (odds of being struck)",
+      "url": "https://www.weather.gov/safety/lightning-odds"
+    },
+    {
+      "id": "cdc-burden-1in6",
+      "tier": "primary",
+      "publisher": "CDC Foundation",
+      "title": "Each Year 1 in 6 Americans Get Sick from Eating Contaminated Food",
+      "url": "https://www.cdcfoundation.org/pr/2015/CDC-protects-Americans-from-foodborne-illnesses"
+    },
+    {
+      "id": "powerball-odds",
+      "tier": "secondary",
+      "publisher": "Powerball",
+      "title": "Powerball Prize Chart and published game odds",
+      "url": "https://www.powerball.com/powerball-prize-chart"
     }
   ]
 }

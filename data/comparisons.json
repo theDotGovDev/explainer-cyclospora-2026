@@ -1,0 +1,62 @@
+{
+  "caution": "These anchors are NOT equivalent to the food risks on this site. Each one is measured on its own basis - some are per year, some are over a whole lifetime, some are per single event - while the food figures are per serving eaten. They are here to give a feel for how big or small a number like '1 in 100,000' actually is, not to say that eating a salad is 'the same as' any of them. Comparing across different bases is the single easiest way to mislead yourself with risk numbers.",
+  "anchors": [
+    {
+      "odds": 6,
+      "label": "Getting food poisoning from any cause",
+      "basis": "in a given year",
+      "note": "CDC estimates roughly 1 in 6 Americans - about 48 million people - get a foodborne illness each year, from all causes combined.",
+      "sources": ["cdc-burden-1in6"]
+    },
+    {
+      "odds": 107,
+      "label": "Dying in a motor vehicle crash",
+      "basis": "over a lifetime",
+      "note": "National Safety Council lifetime odds, 2024 data.",
+      "sources": ["nsc-odds"]
+    },
+    {
+      "odds": 1024,
+      "label": "Flipping ten heads in a row",
+      "basis": "per attempt",
+      "note": "Exact arithmetic: one half to the tenth power.",
+      "sources": []
+    },
+    {
+      "odds": 8560,
+      "label": "Dying in a motor vehicle crash",
+      "basis": "in a given year",
+      "note": "Derived by this project from the NSC lifetime figure spread across an 80-year life. A rough conversion, not an NSC-published number.",
+      "derived": true,
+      "sources": ["nsc-odds"]
+    },
+    {
+      "odds": 15300,
+      "label": "Being struck by lightning",
+      "basis": "over an 80-year lifetime",
+      "note": "National Weather Service estimate.",
+      "sources": ["nws-lightning"]
+    },
+    {
+      "odds": 649740,
+      "label": "Being dealt a royal flush",
+      "basis": "in one five-card hand",
+      "note": "Exact arithmetic from a standard 52-card deck.",
+      "sources": []
+    },
+    {
+      "odds": 1222000,
+      "label": "Being struck by lightning",
+      "basis": "in a given year",
+      "note": "National Weather Service estimate for the average American.",
+      "sources": ["nws-lightning"]
+    },
+    {
+      "odds": 292200000,
+      "label": "Winning the Powerball jackpot",
+      "basis": "on one ticket",
+      "note": "Published game odds.",
+      "sources": ["powerball-odds"]
+    }
+  ]
+}

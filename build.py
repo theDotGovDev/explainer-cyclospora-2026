@@ -7,6 +7,7 @@ script, and commit the regenerated HTML. No third-party dependencies.
     python3 build.py
 """
 
+import collections
 import html
 import json
 import math
@@ -174,6 +175,7 @@ def cite(ids, smap, dated=None):
 
 def page(title, description, body, active, as_of, subnav=None, extra_js=""):
     nav = [("index.html", "Risk by food"),
+           ("foods.html", "All 100 foods"),
            ("methodology.html", "Methodology"),
            ("sources.html", "Sources")]
     nav_html = "\n".join(
@@ -227,6 +229,19 @@ def page(title, description, body, active, as_of, subnav=None, extra_js=""):
   </div>{sub}
 </header>
 
+<div class="ai-note" role="note">
+  <div class="wrap ai-note-inner">
+    {icon('info', 'icon')}
+    <p><strong>This page was generated using AI.</strong> The research, risk estimates and
+       wording were produced by an AI system with human direction, and
+       <strong>it may contain errors</strong> &mdash; including confidently-worded ones.
+       The risk figures are our own estimates, not official statistics. Please read the
+       <a href="methodology.html">methodology page</a> for how the numbers were derived,
+       what they assume, and where the method is weak, and check anything that matters
+       against the <a href="sources.html">primary sources</a>.</p>
+  </div>
+</div>
+
 <main id="main">
 {body}
 </main>
@@ -235,6 +250,15 @@ def page(title, description, body, active, as_of, subnav=None, extra_js=""):
   <div class="wrap">
     <h2>{icon('info')} Disclaimers and limitations</h2>
     <ol class="disclaimers">
+      <li><strong>This page was generated using AI, and may contain errors.</strong>
+          The research, analysis, risk estimates and text were produced by an AI system
+          working under human direction. AI systems can be wrong in ways that read as
+          confident and well-sourced, including misreading a source, mis-stating a number,
+          or citing something that does not support the claim. Everything here is traceable
+          to the <a href="sources.html">sources page</a> and the
+          <a href="methodology.html">methodology page</a> precisely so that you can check
+          it rather than take it on trust. For anything that affects a real decision, verify
+          against the primary agency sources.</li>
       <li><strong>This is not medical advice.</strong> Nothing here diagnoses, treats or
           prevents disease, and it is not a substitute for a licensed clinician. Cyclosporiasis
           is treated with prescription antibiotics; if you have watery diarrhea lasting more
@@ -385,6 +409,213 @@ def risk_chart(foods):
 
 
 # --------------------------------------------------------------------------
+# making "1 in N" mean something
+# --------------------------------------------------------------------------
+
+GRID_N = 1000
+
+
+def dot_grid():
+    """A literal 1-in-1,000 grid. Abstract odds become a picture you can count."""
+    dots = "".join(
+        f'<span class="dot{" dot-on" if i == 436 else ""}"></span>'
+        for i in range(GRID_N)
+    )
+    return f"""<figure class="dotfig">
+  <figcaption><strong>This is what 1 in 1,000 looks like.</strong> Every dot is one
+    person eating one serving. One of them &mdash; the dark one &mdash; gets sick.</figcaption>
+  <div class="dots" role="img"
+       aria-label="A grid of 1,000 dots with a single dot highlighted, illustrating odds of 1 in 1,000.">{dots}</div>
+  <div class="dot-scale">
+    <p><strong>Now scale it.</strong> Every step down the risk scale on this page means
+       one dot in <em>ten times</em> as many grids:</p>
+    <ul>
+      <li><strong>1 in 1,000</strong> &mdash; one dot in the grid above.</li>
+      <li><strong>1 in 100,000</strong> &mdash; one dot across <strong>100</strong> of
+          these grids. Roughly where non-recalled iceberg lettuce sits.</li>
+      <li><strong>1 in 10,000,000</strong> &mdash; one dot across
+          <strong>10,000</strong> of these grids. Where cooked vegetables and
+          non-produce foods sit &mdash; a stack of paper about as tall as a
+          four-storey building.</li>
+    </ul>
+  </div>
+</figure>"""
+
+
+LADDER_LO, LADDER_HI = 0, 9  # 1-in-1 .. 1-in-1,000,000,000
+
+
+def _lpos(n):
+    return max(0.0, min(100.0, (math.log10(n) - LADDER_LO) / (LADDER_HI - LADDER_LO) * 100))
+
+
+def comparison_ladder(comparisons, smap):
+    """Real-world anchors on the same log axis, with an explicit health warning
+    that they are measured on different bases and are not equivalences."""
+    rows = []
+    for a in sorted(comparisons["anchors"], key=lambda x: x["odds"]):
+        derived = a.get("derived")
+        rows.append(f"""      <li class="ladder-row">
+        <span class="ladder-label">{e(a['label'])}
+          <span class="ladder-basis">{e(a['basis'])}{' &middot; derived by us' if derived else ''}</span></span>
+        <span class="ladder-track">
+          <span class="ladder-dot" style="left:{_lpos(a['odds']):.2f}%"></span>
+        </span>
+        <span class="ladder-odds">1 in {a['odds']:,}{cite(a.get('sources'), smap)}</span>
+      </li>""")
+
+    band_l, band_r = _lpos(200), _lpos(10_000_000)
+    return f"""<figure class="ladder">
+  <figcaption><strong>How those numbers compare to things you already have a feel for.</strong>
+    Further right is rarer.</figcaption>
+  <div class="ladder-warn" role="note">
+    {icon('alert')}
+    <p><strong>These are not equivalences.</strong> {e(comparisons['caution'])}</p>
+  </div>
+  <div class="ladder-plot">
+    <!-- Overlay, rows and axis all use the same 3-column grid template, so the
+         band, the dots and the ticks are positioned against the same box. The
+         first version positioned the axis and band against the plot's full
+         width while the dots sat inside the middle column, which silently
+         shifted every tick by the width of the label column. -->
+    <div class="ladder-overlay" aria-hidden="true">
+      <span></span>
+      <div class="ladder-bandwrap">
+        <div class="ladder-bandmark" style="left:{band_l:.2f}%;width:{max(band_r - band_l, 1):.2f}%">
+          <span>Everything on this site sits in this range</span>
+        </div>
+      </div>
+      <span></span>
+    </div>
+    <ol class="ladder-rows">
+{chr(10).join(rows)}
+    </ol>
+    <div class="ladder-axis-row">
+      <span></span>
+      <div class="ladder-axis">
+      {"".join(f'<span class="tick{" tick-first" if i == 0 else (" tick-last" if i == 9 else "")}" style="left:{_lpos(10 ** i):.2f}%"><span>1 in {10 ** i:,}</span></span>' for i in range(10) if i % 3 == 0 or i == 9)}
+      </div>
+      <span></span>
+    </div>
+  </div>
+</figure>"""
+
+
+# --------------------------------------------------------------------------
+# top 100 foods
+# --------------------------------------------------------------------------
+
+def top100_rows(items, smap=None):
+    out = []
+    for f in items:
+        band = numeric_band(f["scale"])
+        odds = odds_text(f["scale"])
+        note = f" {e(f['note'])}" if f.get("note") else ""
+        link = ""
+        if f.get("detail_of"):
+            link = ' <a class="deeplink" href="index.html#check">detailed assessment &rarr;</a>'
+        out.append(f"""      <tr class="band-{e(band)}" data-name="{e(f['name'].lower())}"
+          data-band="{e(band)}">
+        <td class="t100-rank">{f['rank']}</td>
+        <th scope="row"><span class="food-name">{icon(f['icon'], 'icon food-icon')}{e(f['name'])}</span></th>
+        <td data-label="Estimated risk"><span class="band band-{e(band)}">{e(BAND_LABEL[band])}</span>
+          <span class="risk">{e(odds)}</span></td>
+        <td data-label="Why">{e(f['basis'])}{note}{link}</td>
+      </tr>""")
+    return "\n".join(out)
+
+
+def odds_text(scale):
+    lo, hi = scale["low"], scale["high"]
+    return f"Below 1 in {lo:,}" if lo == hi else f"~1 in {lo:,} to 1 in {hi:,}"
+
+
+def tier_defs(top100):
+    out = []
+    for v in top100["tiers"].values():
+        out.append(f'    <dt>{e(odds_text(v))}</dt><dd>{e(v["basis"])}</dd>')
+    return "\n".join(out)
+
+
+def build_foods_page(outbreak, top100, smap):
+    counts = collections.Counter(numeric_band(f["scale"]) for f in top100["foods"])
+    body = f"""
+<div class="wrap page-body">
+<h1>All 100 foods</h1>
+<p class="page-lede">The 100 most commonly eaten foods in the United States, each with an
+   estimated per-serving risk of Cyclospora infection during the current outbreak.</p>
+
+<div class="keypoint">
+  {icon('info')}
+  <p><strong>The single most useful fact on this page:</strong> {e(top100['key_point'])}</p>
+</div>
+
+<div class="stats t100-stats">
+  <div class="stat"><span class="stat-num">{counts.get('very-low', 0)}</span>
+    <span class="stat-label">of 100 are very low risk</span></div>
+  <div class="stat"><span class="stat-num">{counts.get('low', 0)}</span>
+    <span class="stat-label">are low risk</span></div>
+  <div class="stat"><span class="stat-num">{counts.get('moderate', 0)}</span>
+    <span class="stat-label">warrant caution</span></div>
+  <div class="stat"><span class="stat-num">{counts.get('high', 0)}</span>
+    <span class="stat-label">to avoid</span></div>
+</div>
+
+<div class="filters">
+  <div class="search-wrap">
+    {icon('search', 'icon search-icon')}
+    <label class="vh" for="t100-search">Search the 100 foods</label>
+    <input type="search" id="t100-search" placeholder="Search: chicken, spinach, coffee&hellip;"
+           autocomplete="off">
+  </div>
+  <div class="chips" role="group" aria-label="Filter by risk level">
+    <button type="button" class="chip is-on" data-t100="all">All 100</button>
+    <button type="button" class="chip" data-t100="high">Avoid</button>
+    <button type="button" class="chip" data-t100="moderate">Caution</button>
+    <button type="button" class="chip" data-t100="low">Low</button>
+    <button type="button" class="chip" data-t100="very-low">Very low</button>
+  </div>
+</div>
+<p class="filter-status" id="t100-status" role="status"></p>
+
+<div class="table-scroll">
+<table class="risk-table t100">
+  <caption>Ranked by how commonly the food is eaten, not by risk.</caption>
+  <thead>
+    <tr><th scope="col">#</th><th scope="col">Food</th>
+        <th scope="col">Estimated risk per serving</th><th scope="col">Why</th></tr>
+  </thead>
+  <tbody id="t100-body">
+{top100_rows(top100['foods'], smap)}
+  </tbody>
+</table>
+</div>
+<p class="no-results" id="t100-empty" hidden>No foods match that search.</p>
+
+<section aria-labelledby="t100-method">
+  <h2 id="t100-method">How this list was built</h2>
+  <h3>The ordering</h3>
+  <p>{e(top100['ordering_basis'])}</p>
+  <h3>The risk figures</h3>
+  <p>{e(top100['risk_basis'])} The tiers, and the reasoning behind each:</p>
+  <dl class="facts">
+{tier_defs(top100)}
+  </dl>
+  <p>These are informed estimates produced by this project, not official statistics.
+     The <a href="methodology.html">methodology page</a> explains how they were derived
+     and where the method is weak.</p>
+</section>
+</div>
+"""
+    js = '<script src="assets/app.js" defer></script>'
+    return page(
+        "All 100 foods - U.S. Cyclospora outbreak risk",
+        "Estimated Cyclospora risk for the 100 most commonly eaten U.S. foods.",
+        body, "foods.html", outbreak["as_of"], extra_js=js,
+    )
+
+
+# --------------------------------------------------------------------------
 # index
 # --------------------------------------------------------------------------
 
@@ -422,7 +653,7 @@ def food_cards(foods, smap):
     return "\n".join(cards)
 
 
-def build_index(outbreak, foods, smap):
+def build_index(outbreak, foods, top100, comparisons, smap):
     ns = outbreak["national_season"]
     io = outbreak["implicated_outbreak"]
     rc = outbreak["recall"]
@@ -514,6 +745,37 @@ def build_index(outbreak, foods, smap):
     <p class="section-intro">The same estimates, ordered from most to least risky, so
        you can see how far apart they actually are.</p>
 {risk_chart(flist)}
+  </div>
+</section>
+
+<section id="sense" class="band-section" aria-labelledby="sense-h">
+  <div class="wrap">
+    <h2 id="sense-h">What does "1 in 100,000" actually mean?</h2>
+    <p class="section-intro">Risk numbers this small are hard to feel. Two ways to get a
+       grip on them &mdash; one by counting, one by comparison.</p>
+{dot_grid()}
+{comparison_ladder(comparisons, smap)}
+  </div>
+</section>
+
+<section id="top10" class="band-section alt" aria-labelledby="top10-h">
+  <div class="wrap">
+    <h2 id="top10-h">The 10 most commonly eaten foods</h2>
+    <p class="section-intro">Most of what people actually eat carries negligible risk, and
+       it is worth seeing that plainly. {e(top100['key_point'])}</p>
+    <div class="table-scroll">
+      <table class="risk-table t100">
+        <caption>Ranked by how commonly the food is eaten, not by risk.</caption>
+        <thead>
+          <tr><th scope="col">#</th><th scope="col">Food</th>
+              <th scope="col">Estimated risk per serving</th><th scope="col">Why</th></tr>
+        </thead>
+        <tbody>
+{top100_rows(top100['foods'][:10], smap)}
+        </tbody>
+      </table>
+    </div>
+    <p class="more-link"><a class="btn btn-primary" href="foods.html">See all 100 foods {icon('search')}</a></p>
   </div>
 </section>
 
@@ -689,6 +951,7 @@ def build_index(outbreak, foods, smap):
 </section>
 """
     subnav = [("check", "Check a food"), ("scale", "Risk scale"),
+              ("sense", "What the odds mean"), ("top10", "Most-eaten foods"),
               ("works", "What works"), ("status", "Outbreak"),
               ("evidence", "Evidence"), ("care", "Seek care")]
     js = '<script src="assets/app.js" defer></script>'
@@ -711,6 +974,32 @@ def build_methodology(outbreak, smap):
 <h1>Methodology</h1>
 <p class="page-lede">How the per-serving risk estimates were calculated, what they
    assume, and where the method is weak.</p>
+
+<section class="ai-section" aria-labelledby="m0">
+  <h2 id="m0">How this site was made, and what that means for trusting it</h2>
+  <p><strong>This site was generated using AI.</strong> An AI system did the research,
+     built the risk model, wrote the text and produced the code, working under human
+     direction. That is worth stating plainly at the top of the methodology rather than
+     in small print, because it should change how you read everything else here.</p>
+  <h3>What that means in practice</h3>
+  <ul>
+    <li><strong>Errors are possible and will not look like errors.</strong> AI systems
+        produce fluent, confident, well-formatted text whether or not the underlying facts
+        are right. A wrong number here will look exactly like a right one.</li>
+    <li><strong>The specific failure modes worth watching for</strong> are a misread source,
+        a number transcribed from the wrong row or the wrong date, a citation attached to a
+        claim it does not actually support, and a plausible-sounding inference presented
+        with more confidence than the evidence carries.</li>
+    <li><strong>Everything is designed to be checkable.</strong> Every claim carries a
+        numbered source and a marker showing whether it came from an agency or from news
+        reporting. The calculation is written out step by step below, including its
+        weaknesses. That structure exists so you can audit the work rather than trust it.</li>
+    <li><strong>No clinician or epidemiologist has reviewed this.</strong> It has not been
+        through professional or peer review.</li>
+  </ul>
+  <p>If you find an error, an issue or pull request on the repository is welcome and will
+     be acted on.</p>
+</section>
 
 <section aria-labelledby="m1">
   <h2 id="m1">What these numbers are</h2>
@@ -949,6 +1238,8 @@ def main():
     outbreak = load("outbreak.json")
     foods = load("foods.json")
     sources_doc = load("sources.json")
+    top100 = load("top100.json")
+    comparisons = load("comparisons.json")
     smap = source_map(sources_doc)
 
     SITE.mkdir(exist_ok=True)
@@ -956,7 +1247,8 @@ def main():
     (SITE / "assets" / "favicon.svg").write_text(FAVICON, encoding="utf-8")
 
     pages = {
-        "index.html": build_index(outbreak, foods, smap),
+        "index.html": build_index(outbreak, foods, top100, comparisons, smap),
+        "foods.html": build_foods_page(outbreak, top100, smap),
         "methodology.html": build_methodology(outbreak, smap),
         "sources.html": build_sources(outbreak, sources_doc, smap),
     }

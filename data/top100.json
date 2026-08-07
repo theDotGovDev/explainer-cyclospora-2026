@@ -1,0 +1,1209 @@
+{
+  "ordering_basis": "Ordering is an editorial approximation of how commonly each food is eaten in the United States, informed by USDA per-capita availability categories. It is not a published ranking - no agency publishes one in this form - and small differences in position are not meaningful.",
+  "risk_basis": "Risk is assigned by tier rather than per food, so two foods handled the same way cannot end up with different numbers. Foods that also appear in the detailed 16-food assessment use those figures directly.",
+  "key_point": "Cyclospora is spread by fresh produce and water. It is not a meat, dairy, egg, grain or shelf-stable food pathogen, and cooking destroys it. Most of this list is negligible-risk for that reason, not because the risk is merely small.",
+  "tiers": {
+    "raw-herb": {
+      "low": 50000,
+      "high": 500000,
+      "basis": "Raw leafy herbs. Crinkled leaf surfaces are close to a worst case for rinsing off oocysts, and herbs have a real U.S. outbreak history."
+    },
+    "raw-leafy": {
+      "low": 200000,
+      "high": 2000000,
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks."
+    },
+    "raw-soft": {
+      "low": 500000,
+      "high": 5000000,
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially."
+    },
+    "raw-firm": {
+      "low": 1000000,
+      "high": 10000000,
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded."
+    },
+    "peeled": {
+      "low": 2000000,
+      "high": 10000000,
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh."
+    },
+    "cooked-produce": {
+      "low": 10000000,
+      "high": 10000000,
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    "non-produce": {
+      "low": 10000000,
+      "high": 10000000,
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    }
+  },
+  "foods": [
+    {
+      "rank": 1,
+      "name": "Coffee",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Brewed with near-boiling water."
+    },
+    {
+      "rank": 2,
+      "name": "Milk",
+      "icon": "dairy",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 3,
+      "name": "Bread and rolls",
+      "icon": "bread",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Baked."
+    },
+    {
+      "rank": 4,
+      "name": "Chicken",
+      "icon": "meat",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Cooked to temperature."
+    },
+    {
+      "rank": 5,
+      "name": "Potatoes",
+      "icon": "root",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route.",
+      "note": "Almost always cooked through."
+    },
+    {
+      "rank": 6,
+      "name": "Cheese",
+      "icon": "dairy",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 7,
+      "name": "Bananas",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "The peel is discarded."
+    },
+    {
+      "rank": 8,
+      "name": "Eggs",
+      "icon": "egg",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 9,
+      "name": "Beef",
+      "icon": "meat",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 10,
+      "name": "Tomatoes",
+      "icon": "tomato",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Smooth skin rinses comparatively well."
+    },
+    {
+      "rank": 11,
+      "name": "Rice",
+      "icon": "rice",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Boiled."
+    },
+    {
+      "rank": 12,
+      "name": "Apples",
+      "icon": "fruit",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Firm skin can be rinsed and rubbed."
+    },
+    {
+      "rank": 13,
+      "name": "Onions (cooked)",
+      "icon": "onion",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 14,
+      "name": "Pasta",
+      "icon": "grain",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Boiled."
+    },
+    {
+      "rank": 15,
+      "name": "Sugar and sweeteners",
+      "icon": "sweet",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 16,
+      "name": "Breakfast cereal",
+      "icon": "grain",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 17,
+      "name": "Orange juice",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Pasteurized; fruit is peeled before pressing."
+    },
+    {
+      "rank": 18,
+      "name": "Pork",
+      "icon": "meat",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 19,
+      "name": "Butter and margarine",
+      "icon": "dairy",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 20,
+      "name": "Lettuce - iceberg",
+      "icon": "leaf",
+      "tier": "implicated",
+      "scale": {
+        "low": 100000,
+        "high": 1000000
+      },
+      "basis": "Confirm the product is not covered by the recall. Buy whole heads rather than precut. Discard the outer leaves and rinse the rest under running water. Prefer retailers with fast, well-publicized recall programs and loyalty-card recall notification.",
+      "detail_of": "Non-recalled iceberg lettuce (whole head, retail)"
+    },
+    {
+      "rank": 21,
+      "name": "Corn (sweet, cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 22,
+      "name": "Yogurt",
+      "icon": "dairy",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 23,
+      "name": "Soft drinks",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 24,
+      "name": "Oranges",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "The peel is discarded."
+    },
+    {
+      "rank": 25,
+      "name": "Turkey",
+      "icon": "meat",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 26,
+      "name": "Carrots (raw)",
+      "icon": "root",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Usually peeled or scrubbed hard."
+    },
+    {
+      "rank": 27,
+      "name": "Beer",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 28,
+      "name": "Grapes",
+      "icon": "berry",
+      "tier": "raw-soft",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially.",
+      "note": "Eaten whole and unpeeled."
+    },
+    {
+      "rank": 29,
+      "name": "Peanut butter",
+      "icon": "nut",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Roasted and ground."
+    },
+    {
+      "rank": 30,
+      "name": "Lettuce - romaine and leaf",
+      "icon": "leaf",
+      "tier": "implicated",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Whole heads over bagged hearts, discard outer leaves, rinse under running water. A reasonable substitute for iceberg during this outbreak.",
+      "detail_of": "Romaine lettuce"
+    },
+    {
+      "rank": 31,
+      "name": "Ice cream",
+      "icon": "dairy",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 32,
+      "name": "Watermelon",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Flesh is protected by the rind. Scrub the rind before cutting."
+    },
+    {
+      "rank": 33,
+      "name": "French fries",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route.",
+      "note": "Deep fried."
+    },
+    {
+      "rank": 34,
+      "name": "Bacon and sausage",
+      "icon": "meat",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 35,
+      "name": "Strawberries",
+      "icon": "berry",
+      "tier": "raw-soft",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially.",
+      "note": "Delicate surface; cannot be scrubbed."
+    },
+    {
+      "rank": 36,
+      "name": "Wine",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 37,
+      "name": "Cooking oils",
+      "icon": "non-produce",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 38,
+      "name": "Tortillas",
+      "icon": "bread",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Cooked on a griddle."
+    },
+    {
+      "rank": 39,
+      "name": "Beans (cooked, canned or dried)",
+      "icon": "pod",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 40,
+      "name": "Onions (raw)",
+      "icon": "onion",
+      "tier": "implicated",
+      "scale": {
+        "low": 100000,
+        "high": 1000000
+      },
+      "basis": "Cooking eliminates the risk. Removing outer layers before use also helps.",
+      "detail_of": "Onions (raw)"
+    },
+    {
+      "rank": 41,
+      "name": "Cucumbers",
+      "icon": "cucumber",
+      "tier": "implicated",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      },
+      "basis": "Peel. Peeling physically removes the contaminated surface and is far more effective than washing. Wash before peeling, and do not let the knife carry contamination onto the flesh.",
+      "detail_of": "Cucumbers"
+    },
+    {
+      "rank": 42,
+      "name": "Peppers, bell (raw)",
+      "icon": "tomato",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Smooth skin rinses well."
+    },
+    {
+      "rank": 43,
+      "name": "Broccoli (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 44,
+      "name": "Apple juice",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Pasteurized."
+    },
+    {
+      "rank": 45,
+      "name": "Cabbage and coleslaw",
+      "icon": "leaf",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Outer leaves are discarded; dense head."
+    },
+    {
+      "rank": 46,
+      "name": "Chocolate",
+      "icon": "sweet",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 47,
+      "name": "Tea",
+      "icon": "drink",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Brewed with hot water."
+    },
+    {
+      "rank": 48,
+      "name": "Fish and seafood",
+      "icon": "fish",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 49,
+      "name": "Mushrooms (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 50,
+      "name": "Peaches and nectarines",
+      "icon": "fruit",
+      "tier": "raw-soft",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially.",
+      "note": "Fuzzy or soft skin, eaten unpeeled."
+    },
+    {
+      "rank": 51,
+      "name": "Pineapple",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Rind is removed."
+    },
+    {
+      "rank": 52,
+      "name": "Sweet potatoes",
+      "icon": "root",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 53,
+      "name": "Melon - cantaloupe and honeydew",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Rind removed, but scrub it first - the knife can carry contamination inward."
+    },
+    {
+      "rank": 54,
+      "name": "Blueberries",
+      "icon": "berry",
+      "tier": "raw-soft",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially.",
+      "note": "Eaten whole and unpeeled."
+    },
+    {
+      "rank": 55,
+      "name": "Avocado",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Skin and pit discarded."
+    },
+    {
+      "rank": 56,
+      "name": "Spinach",
+      "icon": "leaf",
+      "tier": "implicated",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Standard washing. No outbreak-specific precaution is currently indicated. Cooking eliminates residual risk if you want to be conservative.",
+      "detail_of": "Spinach"
+    },
+    {
+      "rank": 57,
+      "name": "Crackers and chips",
+      "icon": "snack",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 58,
+      "name": "Pizza",
+      "icon": "bread",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Baked; raw garnish is the only route."
+    },
+    {
+      "rank": 59,
+      "name": "Nuts and seeds",
+      "icon": "nut",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Usually roasted."
+    },
+    {
+      "rank": 60,
+      "name": "Green beans (cooked)",
+      "icon": "pod",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 61,
+      "name": "Celery",
+      "icon": "leaf",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Ribbed surface, but firm enough to scrub."
+    },
+    {
+      "rank": 62,
+      "name": "Lemons and limes",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Juice and zest. Wash the peel if zesting or dropping a wedge in a drink."
+    },
+    {
+      "rank": 63,
+      "name": "Pears",
+      "icon": "fruit",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Firm skin can be rinsed and rubbed."
+    },
+    {
+      "rank": 64,
+      "name": "Cauliflower (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 65,
+      "name": "Peas (cooked)",
+      "icon": "pod",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 66,
+      "name": "Cilantro",
+      "icon": "herb",
+      "tier": "implicated",
+      "scale": {
+        "low": 10000,
+        "high": 100000
+      },
+      "basis": "Add it to hot dishes during cooking rather than as a raw garnish, or omit it while investigations are open. Rinsing helps only marginally: cilantro's crinkled leaf surface is close to a worst case for mechanical removal of oocysts.",
+      "detail_of": "Cilantro"
+    },
+    {
+      "rank": 67,
+      "name": "Salsa and pico de gallo",
+      "icon": "tomato",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Raw and often contains cilantro or onion - treat by its riskiest ingredient."
+    },
+    {
+      "rank": 68,
+      "name": "Raspberries and blackberries",
+      "icon": "berry",
+      "tier": "implicated",
+      "scale": {
+        "low": 100000,
+        "high": 1000000
+      },
+      "basis": "Delicate berries cannot be scrubbed and washing is only partially effective. Frozen berries used in baking or heated preparations carry effectively no risk.",
+      "detail_of": "Raspberries, blackberries and berry / fruit mixes"
+    },
+    {
+      "rank": 69,
+      "name": "Garlic (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 70,
+      "name": "Squash and zucchini (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 71,
+      "name": "Deli meats",
+      "icon": "meat",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board."
+    },
+    {
+      "rank": 72,
+      "name": "Soup (canned or cooked)",
+      "icon": "cooked-produce",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Heated through."
+    },
+    {
+      "rank": 73,
+      "name": "Mayonnaise and dressings",
+      "icon": "non-produce",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Shelf-stable, acidified."
+    },
+    {
+      "rank": 74,
+      "name": "Bagged salad mixes",
+      "icon": "bag",
+      "tier": "implicated",
+      "scale": {
+        "low": 10000,
+        "high": 100000
+      },
+      "basis": "Check the product against current FDA recall listings. Prefer blends with no iceberg, or buy whole heads and cut them yourself. Precut and bagged products undergo more handling and pool more source fields per bag than a single head.",
+      "detail_of": "Bagged / packaged salad mixes containing iceberg"
+    },
+    {
+      "rank": 75,
+      "name": "Cherries",
+      "icon": "berry",
+      "tier": "raw-soft",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially.",
+      "note": "Eaten whole and unpeeled."
+    },
+    {
+      "rank": 76,
+      "name": "Asparagus (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 77,
+      "name": "Grapefruit",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "The peel is discarded."
+    },
+    {
+      "rank": 78,
+      "name": "Kale and chard",
+      "icon": "leaf",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Often eaten raw in salads."
+    },
+    {
+      "rank": 79,
+      "name": "Plums",
+      "icon": "fruit",
+      "tier": "raw-soft",
+      "scale": {
+        "low": 500000,
+        "high": 5000000
+      },
+      "basis": "Raw produce eaten whole and unpeeled, where the surface cannot be scrubbed hard. Washing helps only partially.",
+      "note": "Soft skin, eaten unpeeled."
+    },
+    {
+      "rank": 80,
+      "name": "Sweet corn (raw, in salads)",
+      "icon": "cooked-produce",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Uncooked kernels in salads and salsas do not get the benefit of heat."
+    },
+    {
+      "rank": 81,
+      "name": "Fresh parsley",
+      "icon": "herb",
+      "tier": "implicated",
+      "scale": {
+        "low": 20000,
+        "high": 200000
+      },
+      "basis": "Cook it into the dish rather than using it as a raw finish. Dried parsley carries no meaningful risk.",
+      "detail_of": "Fresh parsley"
+    },
+    {
+      "rank": 82,
+      "name": "Fresh basil",
+      "icon": "herb",
+      "tier": "implicated",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      },
+      "basis": "Cook it into sauces rather than using raw. Raw pesto and raw garnish are the higher-exposure uses.",
+      "detail_of": "Fresh basil"
+    },
+    {
+      "rank": 83,
+      "name": "Mango",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Skin is removed."
+    },
+    {
+      "rank": 84,
+      "name": "Brussels sprouts (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 85,
+      "name": "Radishes",
+      "icon": "root",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Firm and scrubbable."
+    },
+    {
+      "rank": 86,
+      "name": "Snap peas and snow peas",
+      "icon": "pod",
+      "tier": "implicated",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Blanch or stir-fry. Cooking eliminates the risk.",
+      "detail_of": "Snap peas"
+    },
+    {
+      "rank": 87,
+      "name": "Beets (cooked)",
+      "icon": "root",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 88,
+      "name": "Arugula and mixed baby greens",
+      "icon": "leaf",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Tender leaves, eaten raw, heavily handled in bagged form."
+    },
+    {
+      "rank": 89,
+      "name": "Kiwi",
+      "icon": "fruit",
+      "tier": "peeled",
+      "scale": {
+        "low": 2000000,
+        "high": 10000000
+      },
+      "basis": "Peeled before eating. Contamination is a surface phenomenon, so removing the skin removes essentially all of it. Residual risk is knife cross-contamination from rind to flesh.",
+      "note": "Skin is usually removed."
+    },
+    {
+      "rank": 90,
+      "name": "Green onions and scallions (raw)",
+      "icon": "onion",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Raw, layered structure that traps contamination between layers."
+    },
+    {
+      "rank": 91,
+      "name": "Eggplant (cooked)",
+      "icon": "cooked-produce",
+      "tier": "cooked-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Produce that is essentially always cooked. Heating to about 158 F (70 C) inactivates Cyclospora, so the cooked food itself is not a route."
+    },
+    {
+      "rank": 92,
+      "name": "Guacamole",
+      "icon": "fruit",
+      "tier": "raw-firm",
+      "scale": {
+        "low": 1000000,
+        "high": 10000000
+      },
+      "basis": "Raw produce with a smooth firm surface that can be rinsed and rubbed, or an outer layer that is discarded.",
+      "note": "Avocado flesh is protected, but often mixed with raw onion and cilantro."
+    },
+    {
+      "rank": 93,
+      "name": "Coleslaw and prepared salads",
+      "icon": "bag",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Raw, pre-shredded, heavily handled."
+    },
+    {
+      "rank": 94,
+      "name": "Hummus and dips",
+      "icon": "non-produce",
+      "tier": "non-produce",
+      "scale": {
+        "low": 10000000,
+        "high": 10000000
+      },
+      "basis": "Not a produce item. Cyclospora is not a meat, dairy, egg, grain or shelf-stable food pathogen - it does not occur in these foods. Any residual risk comes from a raw produce garnish or from a shared cutting board.",
+      "note": "Cooked chickpea base."
+    },
+    {
+      "rank": 95,
+      "name": "Fresh mint",
+      "icon": "herb",
+      "tier": "raw-herb",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      },
+      "basis": "Raw leafy herbs. Crinkled leaf surfaces are close to a worst case for rinsing off oocysts, and herbs have a real U.S. outbreak history.",
+      "note": "Raw leafy herb, often used as a garnish."
+    },
+    {
+      "rank": 96,
+      "name": "Fresh dill",
+      "icon": "herb",
+      "tier": "raw-herb",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      },
+      "basis": "Raw leafy herbs. Crinkled leaf surfaces are close to a worst case for rinsing off oocysts, and herbs have a real U.S. outbreak history.",
+      "note": "Raw leafy herb with a very fine, folded surface."
+    },
+    {
+      "rank": 97,
+      "name": "Sprouts (alfalfa, bean)",
+      "icon": "herb",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Raw, grown warm and damp, and impossible to wash effectively."
+    },
+    {
+      "rank": 98,
+      "name": "Endive, radicchio and escarole",
+      "icon": "leaf",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Raw salad leaves."
+    },
+    {
+      "rank": 99,
+      "name": "Watercress",
+      "icon": "leaf",
+      "tier": "raw-leafy",
+      "scale": {
+        "low": 200000,
+        "high": 2000000
+      },
+      "basis": "Raw leafy greens not implicated in 2026. Large folded surface area, eaten uncooked, and leafy greens have appeared in past outbreaks.",
+      "note": "Raw, grown in water, tender leaves."
+    },
+    {
+      "rank": 100,
+      "name": "Fresh chives",
+      "icon": "herb",
+      "tier": "raw-herb",
+      "scale": {
+        "low": 50000,
+        "high": 500000
+      },
+      "basis": "Raw leafy herbs. Crinkled leaf surfaces are close to a worst case for rinsing off oocysts, and herbs have a real U.S. outbreak history.",
+      "note": "Raw herb garnish, added after cooking."
+    }
+  ]
+}
