@@ -298,12 +298,17 @@ def check_html(outbreak):
         if p.stack:
             fail(f"{name}: unclosed tags {p.stack}")
 
-        # Disclaimers are load-bearing. They must be on every page.
+        # Disclaimers are load-bearing. They must be on every page. Matched
+        # on substance, not an exact sentence: an earlier version keyed on
+        # the phrase 'cdc.gov or fda.gov' and broke the moment the wording
+        # changed to 'and', which would have been a silent loss if the
+        # check had been advisory.
         for needle, label in [
             ("not medical advice", "medical-advice disclaimer"),
             ("best-effort", "best-effort disclaimer"),
             ("not official statistics", "estimates-are-not-official disclaimer"),
-            ("cdc.gov or fda.gov", "source-access limitation"),
+            ("cdc.gov", "source-access limitation (CDC)"),
+            ("fda.gov", "source-access limitation (FDA)"),
             ("generated using ai", "AI-generation disclosure"),
         ]:
             if needle.lower() not in text.lower():

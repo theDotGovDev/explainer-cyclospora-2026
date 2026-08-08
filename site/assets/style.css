@@ -965,3 +965,13 @@ a.band:hover, a.status:hover, a.ev:hover, a.prov:hover { filter: brightness(.94)
   display: block; font-size: .66rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .04em; color: var(--fg-mute);
 }
+
+.attrib-note {
+  font-size: .88rem; color: var(--fg-mute);
+  background: var(--bg); border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: .7rem .9rem; margin-top: .75rem;
+}
+.attrib-note .icon { color: var(--accent); }
+.attrib-note strong { color: var(--fg); }

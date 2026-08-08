@@ -325,27 +325,38 @@
 </section>
 
 <section aria-labelledby="m5">
-  <h2 id="m5">How sources were accessed &mdash; and a real limitation</h2>
-  <p>The environment in which this site was built could not make outbound connections to
-     cdc.gov or fda.gov; those hosts were blocked at the network egress layer. Agency figures
-     were therefore obtained from <strong>search-indexed summaries of the agency pages and from
-     reputable secondary reporting</strong> that cites them, rather than from a direct read of
-     the primary documents.</p>
-  <p>We state this plainly because it matters for how much weight to give these numbers.
-     The practical consequences:</p>
+  <h2 id="m5">Where the numbers actually come from</h2>
+  <p>The case counts on this site &mdash; confirmed cases, probable cases, hospitalisations,
+     deaths &mdash; originate with CDC surveillance. But they reached this page through
+     <strong>news reporting of that surveillance</strong>, not from CDC directly. Both
+     cdc.gov and fda.gov refuse automated requests: CDC returns 403, and FDA returns 404 on
+     every URL including its own homepage. Nobody working on this site has read those
+     figures off an agency page.</p>
+  <p>So each figure is cited to the reporting that actually carried it. That is a weaker
+     citation than an agency document, and the sourcing markers say so: the case counts
+     carry a <strong>news</strong> marker rather than an agency one. The agency pages are
+     still listed, under &ldquo;where to check for updates&rdquo; on the
+     <a href="sources.html">sources page</a>, because that is where you should go to
+     confirm anything that matters.</p>
+  <p>The alternative &mdash; citing a CDC page for a number we took from a news article
+     about that page &mdash; would look more authoritative and be less true. A citation
+     should point at where a claim came from, not at where it originated.</p>
+  <h3>What this does and does not affect</h3>
   <ul>
-    <li>Exact figures may be off, or may reflect a snapshot older than the date on this page.</li>
-    <li>Published counts genuinely conflict across sources. Where they do, we show the range
-        and label it rather than silently choosing one.</li>
-    <li>Primary sources are linked throughout and on the <a href="sources.html">sources page</a>.
-        Where they differ from anything here, <strong>they are correct and this page is not</strong>.</li>
+    <li><strong>Outbreak counts:</strong> reported by journalists, cited to them, marked as
+        news-sourced. Most likely to be stale or revised.</li>
+    <li><strong>Pathogen behaviour</strong> &mdash; that cooking to about 158&nbsp;F
+        inactivates it, that washing does not reliably work, that peeling removes surface
+        contamination &mdash; comes from agency pages that <em>are</em> reachable, including
+        the Public Health Agency of Canada and Michigan's health department. Those citations
+        are as strong as they look.</li>
+    <li><strong>Comparison anchors</strong> come from NHTSA, the NHTS, the National Weather
+        Service and the CDC Foundation, all reachable and spot-checked automatically.</li>
   </ul>
-  <p>A related note on link checking: fda.gov returns HTTP 404 to automated requests for
-     every URL including its own homepage, where cdc.gov returns 403. Both are blocking
-     automation; only the status code differs. An automated checker that treats 404 as
-     "page missing" will wrongly report the FDA citations as dead.</p>
-  <p>Anyone rebuilding this site from an unrestricted network should re-verify every figure in
-     <code>data/outbreak.json</code> against the primary CDC and FDA pages first.</p>
+  <p>A related note for anyone running the link checker: an automated request to fda.gov
+     returns 404 for every URL including the homepage. That is bot-blocking, not a missing
+     page, and a checker that treats 404 as &ldquo;dead&rdquo; will wrongly report the FDA
+     citations as broken.</p>
 </section>
 
 <section aria-labelledby="m6">
@@ -388,11 +399,13 @@
           may be incomplete, outdated or wrong. No warranty of accuracy, completeness or
           fitness for any purpose is made or implied, and no liability is accepted for
           decisions made using it.</li>
-      <li><strong>Source access was limited when this page was built.</strong> The build
-          environment could not reach cdc.gov or fda.gov directly. Agency figures were taken
-          from search-indexed summaries of those pages and from reputable secondary reporting,
-          not from a direct read of the primary documents. This is a real reliability limit
-          &mdash; treat the primary sources as authoritative wherever they differ.</li>
+      <li><strong>The case counts here come from news reporting, and are cited that way.</strong>
+          They originate with CDC surveillance, but they reached this site through journalists
+          reporting on it &mdash; cdc.gov and fda.gov both refuse automated requests, so nobody
+          here has read those figures off an agency page. Rather than cite pages we have not
+          read, we cite the reporting that actually carried each number, and link the agency
+          pages separately as the place to verify. Treat the agencies as authoritative wherever
+          they differ.</li>
       <li><strong>Published case counts disagree with one another.</strong> Counts vary by
           snapshot date and by whether they describe the full 2026 season or only the iceberg
           lettuce cluster. Where sources conflict we show the range rather than pick a number.</li>
