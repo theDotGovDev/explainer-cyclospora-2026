@@ -25,10 +25,13 @@ or any company, and carries no agency branding deliberately.
 | `data/foods.json` | The per-food risk records: status, estimates, mitigations, evidence basis |
 | `data/comparisons.json` | Real-world risk anchors, each on a per-single-occasion basis |
 | `data/sources.json` | Every source, graded by tier, with a stable citation id |
+| `data/claims.json` | Figures attributed to each source, for CI to spot-check against the live page |
+| `data/history.jsonl` | Append-only log of every figure the site has published |
 | `build.py` | Renders the site from the JSON. No dependencies. |
 | `icons.py` | Inline SVG sprite and logo. All original artwork — no agency marks. |
 | `tools/validate.py` | Correctness checks — run in CI, fails the build |
-| `tools/check_links.py` | Advisory check that every cited URL still resolves |
+| `tools/check_links.py` | Advisory: fetches every source, checks it resolves, spot-checks attributed figures |
+| `tools/snapshot.py` | Appends current figures to the history log; idempotent |
 | `site/` | Generated output — commit it; it is what gets served |
 
 The JSON files are the canonical record. Don't hand-edit `site/*.html`; it gets overwritten.
@@ -74,6 +77,41 @@ something actually went wrong:
   estimates and must read as estimates;
 - all five core disclaimers, including the AI-generation notice, are on every page;
 - HTML is well-formed, external links carry `rel`, and `as_of` is present and not stale.
+
+## Source verification in CI
+
+`tools/check_links.py` fetches every cited source and, for those listed in
+`data/claims.json`, looks for the figures this site attributes to it. A source being
+edited, a number drifting, or a citation that never supported its claim will show up.
+
+Two limits, both stated in the tool's own output:
+
+- **It checks a figure *appears* in a source, not that we represented it fairly.** A
+  number can be on the page and still be quoted out of context. Only a human reading the
+  source settles that.
+- **cdc.gov and fda.gov cannot be checked at all.** CDC returns 403 to automation, FDA
+  returns 404 on every URL including its homepage. That is 14 of 35 sources, and they are
+  the ones carrying the outbreak case counts — so the coverage is real but not the
+  coverage that matters most.
+
+The job runs `continue-on-error`, so a dead link or an unverifiable figure is reported
+without blocking a correction from shipping.
+
+## The figure history log
+
+The site shows one snapshot, which means every earlier figure is otherwise overwritten
+and lost — and these counts have already been revised more than once.
+`data/history.jsonl` keeps an append-only record: one JSON object per line, appended and
+never rewritten, so diffs stay readable and a corrupt line cannot take the file with it.
+
+```sh
+python3 tools/snapshot.py      # append current figures, if they changed
+```
+
+Revising a figure for an as-of date that is already logged is legitimate and is kept as a
+*revision* rather than overwriting — the site marks those rows. The validator fails the
+build if the newest logged figures disagree with what the site is publishing, so the log
+cannot silently drift out of sync with the page.
 
 ## The two labelling systems
 
@@ -133,5 +171,6 @@ this by probing the host root before calling a link dead.
 2. If a new commodity is named, add or update its record in `data/foods.json`, and move it
    from `extrapolated` to a referenced evidence basis with the citation.
 3. Bump `as_of` and `data_current_through`.
-4. Run `python3 build.py && python3 tools/validate.py`, then commit the data *and* the
+4. Run `python3 tools/snapshot.py` to log the new figures.
+5. Run `python3 build.py && python3 tools/validate.py`, then commit the data *and* the
    regenerated `site/`.

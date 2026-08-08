@@ -74,6 +74,16 @@ def load(name):
         return json.load(fh)
 
 
+def load_history():
+    """Append-only figure log, oldest first. One JSON object per line."""
+    path = DATA / "history.jsonl"
+    if not path.exists():
+        return []
+    out = [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines()
+           if ln.strip()]
+    return sorted(out, key=lambda r: (r["series"], r["observed"], r["recorded"]))
+
+
 TIERS = [
     ("primary", "Primary &mdash; government and public health agencies",
      "Authoritative. Where these differ from anything on this site, these are correct."),
@@ -747,6 +757,80 @@ def comparison_ladder(comparisons, foods, smap):
 </figure>"""
 
 
+SERIES_LABEL = {
+    "national_season": "All U.S. cases since May 1, 2026",
+    "iceberg_cluster": "The iceberg lettuce cluster only",
+}
+
+METRIC_LABEL = {
+    "lab_confirmed": "Lab-confirmed", "probable": "Probable", "cases": "Cases",
+    "hospitalizations": "Hospitalised", "deaths": "Deaths", "states": "States",
+}
+
+
+def history_table(history, smap):
+    """Show how the published figures have moved, rather than only the latest.
+
+    The site otherwise displays one snapshot and silently discards every earlier
+    one, which on a set of numbers that has already been revised more than once
+    hides exactly the thing a careful reader wants to see.
+    """
+    if not history:
+        return ""
+    blocks = []
+    for series in ("national_season", "iceberg_cluster"):
+        rows = [r for r in history if r["series"] == series]
+        if not rows:
+            continue
+        cols = []
+        for r in rows:
+            for k in r["metrics"]:
+                if k not in cols:
+                    cols.append(k)
+        head = "".join(f"<th scope=\"col\">{e(METRIC_LABEL.get(c, c))}</th>" for c in cols)
+        body = []
+        for r in rows:
+            cells = "".join(
+                f'<td>{r["metrics"][c]:,}</td>' if isinstance(r["metrics"].get(c), int)
+                else "<td class=\"nodata\">&mdash;</td>" for c in cols)
+            seen_before = sum(1 for x in rows if x["observed"] == r["observed"])
+            rev = ('<span class="hist-rev">revised</span>'
+                   if seen_before > 1 and r is not next(
+                       x for x in rows if x["observed"] == r["observed"]) else "")
+            body.append(
+                f'        <tr><th scope="row"><time datetime="{e(r["observed"])}">'
+                f'{e(r["observed"])}</time>{rev}</th>{cells}'
+                f'<td class="hist-src">{cite(r.get("sources"), smap)}</td></tr>')
+        note = next((r.get("note") for r in reversed(rows) if r.get("note")), "")
+        blocks.append(f"""    <h3>{e(SERIES_LABEL[series])}</h3>
+    <div class="table-scroll">
+    <table class="risk-table hist-table">
+      <thead><tr><th scope="col">As of</th>{head}<th scope="col">Sources</th></tr></thead>
+      <tbody>
+{chr(10).join(body)}
+      </tbody>
+    </table>
+    </div>
+    {'<p class="hist-note">' + e(note) + '</p>' if note else ''}""")
+
+    return f"""
+<section id="history" class="band-section alt" aria-labelledby="history-h">
+  <div class="wrap">
+    <h2 id="history-h">How these figures have changed</h2>
+    <p class="section-intro">Outbreak counts get revised, and a page that only ever
+       shows the newest number hides that. Every figure this site has published is kept
+       in an append-only log, so you can see what moved and when.</p>
+{chr(10).join(blocks)}
+    <p class="hist-foot">{icon('info')} The log is
+       <code>data/history.jsonl</code> in the repository &mdash; one JSON record per line,
+       appended and never rewritten. It starts when the log was created, so earlier
+       figures appear only where a defensible date could be attached to them. The counts
+       are not directly comparable across the two tables: one covers all U.S. cases this
+       season, the other only the iceberg lettuce cluster.</p>
+  </div>
+</section>"""
+
+
 # --------------------------------------------------------------------------
 # index
 # --------------------------------------------------------------------------
@@ -786,7 +870,7 @@ def food_cards(foods, smap):
     return "\n".join(cards)
 
 
-def build_index(outbreak, foods, comparisons, smap):
+def build_index(outbreak, foods, comparisons, history, smap):
     ns = outbreak["national_season"]
     io = outbreak["implicated_outbreak"]
     rc = outbreak["recall"]
@@ -891,6 +975,8 @@ def build_index(outbreak, foods, comparisons, smap):
 {comparison_ladder(comparisons, flist, smap)}
   </div>
 </section>
+
+{history_table(history, smap)}
 
 <section id="works" class="band-section" aria-labelledby="works-h">
   <div class="wrap">
@@ -1077,7 +1163,7 @@ def build_index(outbreak, foods, comparisons, smap):
 </section>
 """
     subnav = [("check", "Check a food"), ("scale", "Risk scale"),
-              ("sense", "What the odds mean"),
+              ("sense", "What the odds mean"), ("history", "How figures changed"),
               ("works", "What works"), ("status", "Outbreak"),
               ("evidence", "Evidence"), ("care", "Seek care")]
     js = '<script src="assets/app.js" defer></script>'
@@ -1407,6 +1493,7 @@ def main():
     foods = load("foods.json")
     sources_doc = load("sources.json")
     comparisons = load("comparisons.json")
+    history = load_history()
     smap = source_map(sources_doc)
 
     SITE.mkdir(exist_ok=True)
@@ -1414,7 +1501,7 @@ def main():
     (SITE / "assets" / "favicon.svg").write_text(FAVICON, encoding="utf-8")
 
     pages = {
-        "index.html": build_index(outbreak, foods, comparisons, smap),
+        "index.html": build_index(outbreak, foods, comparisons, history, smap),
         "methodology.html": build_methodology(outbreak, smap),
         "sources.html": build_sources(outbreak, sources_doc, smap),
     }

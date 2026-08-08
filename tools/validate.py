@@ -163,6 +163,73 @@ def check_comparisons(comparisons, sources):
                 fail(f"comparison anchor {who!r} cites unknown source {sid!r}")
 
 
+def check_history(outbreak, sources):
+    """The append-only figure log must stay parseable and must not diverge.
+
+    A history that quietly disagrees with the live page is worse than no
+    history: it looks like a record and is not one.
+    """
+    path = DATA / "history.jsonl"
+    if not path.exists():
+        fail("data/history.jsonl is missing")
+        return
+    ids = {s["id"] for s in sources["sources"]}
+    known_series = {"national_season", "iceberg_cluster"}
+    records, seen = [], set()
+
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            r = json.loads(line)
+        except json.JSONDecodeError as ex:
+            fail(f"history.jsonl line {n}: not valid JSON ({ex})")
+            continue
+        records.append(r)
+        for field in ("observed", "recorded", "series", "metrics", "sources"):
+            if not r.get(field):
+                fail(f"history.jsonl line {n}: missing {field}")
+        if r.get("series") not in known_series:
+            fail(f"history.jsonl line {n}: unknown series {r.get('series')!r}")
+        for field in ("observed", "recorded"):
+            try:
+                datetime.date.fromisoformat(r.get(field, ""))
+            except ValueError:
+                fail(f"history.jsonl line {n}: {field} is not an ISO date")
+        # (series, observed) may repeat: a revision of the same
+        # observation date is legitimate and worth keeping. The
+        # recorded date is what must make each line unique.
+        key = (r.get("series"), r.get("observed"), r.get("recorded"))
+        if key in seen:
+            fail(f"history.jsonl line {n}: duplicate {key[0]} record for "
+                 f"{key[1]} recorded {key[2]}")
+        seen.add(key)
+        for sid in r.get("sources", []):
+            if sid not in ids:
+                fail(f"history.jsonl line {n}: cites unknown source {sid!r}")
+        if not isinstance(r.get("metrics"), dict) or not r["metrics"]:
+            fail(f"history.jsonl line {n}: metrics must be a non-empty object")
+
+    # The newest national_season entry must match what the site currently shows.
+    ns = outbreak["national_season"]
+    latest = [r for r in records if r.get("series") == "national_season"]
+    if not latest:
+        fail("history.jsonl has no national_season record")
+        return
+    newest = max(latest, key=lambda r: (r["observed"], r["recorded"]))
+    if newest["observed"] != ns["as_of"]:
+        fail(f"history.jsonl newest observation is {newest['observed']} but "
+             f"outbreak.json reports as_of {ns['as_of']}; run tools/snapshot.py")
+    for hk, ok_ in (("lab_confirmed", "lab_confirmed"),
+                    ("probable", "probable_under_investigation"),
+                    ("hospitalizations", "hospitalizations"),
+                    ("deaths", "deaths")):
+        if newest["metrics"].get(hk) != ns.get(ok_):
+            fail(f"history.jsonl {hk}={newest['metrics'].get(hk)} disagrees with "
+                 f"outbreak.json {ok_}={ns.get(ok_)}; run tools/snapshot.py")
+
+
 def check_icons(foods):
     """Every icon name must exist in the sprite.
 
@@ -332,6 +399,7 @@ def main():
     check_data(outbreak, foods, sources)
     check_icons(foods)
     check_comparisons(comparisons, sources)
+    check_history(outbreak, sources)
     check_dates(outbreak)
     check_html(outbreak)
     check_citations()

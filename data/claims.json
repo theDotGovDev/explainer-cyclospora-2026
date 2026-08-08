@@ -1,0 +1,74 @@
+{
+  "what_this_is": "Figures this site attributes to a source, written as strings that should appear in that source's own page text. A checker fetches each source and looks for them. This catches a source being edited, a number drifting, or a citation that never supported its claim in the first place.",
+  "what_this_is_not": "This is a spot-check that a figure APPEARS in a source, not that we have represented the source fairly. A number can be present on a page and still be quoted out of context. Only a human reading the source can confirm that, and the site says so.",
+  "coverage_limit": "cdc.gov and fda.gov refuse automated requests - CDC with 403, FDA with 404 on every URL including its homepage. Neither can be checked from CI, and they are exactly the sources carrying the outbreak case counts. The claims below therefore cover the comparison anchors and secondary reporting, which is real coverage but not the coverage that matters most.",
+  "claims": [
+    {
+      "source": "cdc-burden-1in6",
+      "expect": ["48 million", "1 in 6"],
+      "supports": "The per-meal food poisoning anchor: 48 million foodborne illnesses a year, roughly 1 in 6 Americans."
+    },
+    {
+      "source": "nws-lightning",
+      "expect": ["1,222,000"],
+      "supports": "The lightning anchor: about 1 in 1,222,000 odds of being struck in a given year."
+    },
+    {
+      "source": "powerball-odds",
+      "expect": ["292,201,338"],
+      "supports": "The Powerball anchor. We round the published 1 in 292,201,338 to 292,200,000."
+    },
+    {
+      "source": "nhtsa-crashes",
+      "format": "pdf",
+      "expect": ["6.14", "3,247"],
+      "supports": "The car accident anchor: about 6.14 million police-reported crashes across about 3,247 billion vehicle miles in 2023."
+    },
+    {
+      "source": "nhts-2022",
+      "format": "pdf",
+      "expect": ["13"],
+      "supports": "The car accident anchor: average trip length of about 13 miles."
+    },
+    {
+      "source": "nbc-source",
+      "expect": ["Taylor Farms", "Cyclospora"],
+      "supports": "That FDA named Taylor Farms de Mexico as the traceback source."
+    },
+    {
+      "source": "cnn-safe-food",
+      "expect": ["Cyclospora"],
+      "supports": "Food-by-food guidance during the outbreak, including that spinach was not named."
+    },
+    {
+      "source": "today-map",
+      "expect": ["Cyclospora"],
+      "supports": "The national spread of the 2026 season."
+    },
+    {
+      "source": "cr-consumers",
+      "expect": ["Cyclospora"],
+      "supports": "That multiple separate 2026 investigations are open, and other commodities are under traceback."
+    },
+    {
+      "source": "cr-dont-avoid",
+      "expect": ["fruits and vegetables"],
+      "supports": "The warning against responding to the outbreak by cutting produce from the diet."
+    },
+    {
+      "source": "wadoh",
+      "expect": ["yclospor"],
+      "supports": "State-level outbreak information."
+    },
+    {
+      "source": "michigan",
+      "expect": ["utbreak"],
+      "supports": "That cooking to about 158 F inactivates Cyclospora, and Michigan outbreak information."
+    },
+    {
+      "source": "usda-lettuce",
+      "expect": ["lettuce"],
+      "supports": "Per-capita lettuce availability, the denominator in the servings calculation."
+    }
+  ]
+}

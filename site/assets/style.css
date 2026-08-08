@@ -949,3 +949,19 @@ a.band:hover, a.status:hover, a.ev:hover, a.prov:hover { filter: brightness(.94)
 }
 .ladder-work summary { cursor: pointer; font-size: .89rem; font-weight: 600; }
 .ladder-work p { margin: .6rem 0 0; font-size: .88rem; color: var(--fg-mute); }
+
+/* ---------- figure history ---------- */
+
+.hist-table { min-width: 34rem; font-size: .88rem; }
+.hist-table td { font-variant-numeric: tabular-nums; }
+.hist-table tbody th { width: auto; white-space: nowrap; }
+.hist-src { white-space: nowrap; }
+.nodata { color: var(--fg-mute); }
+.hist-note { font-size: .85rem; color: var(--fg-mute); margin-top: .5rem; }
+.hist-foot { font-size: .88rem; color: var(--fg-mute); margin-top: 1.5rem; }
+.hist-foot .icon { color: var(--accent); }
+@media (max-width: 860px) { .hist-table { min-width: 0; } }
+.hist-rev {
+  display: block; font-size: .66rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--fg-mute);
+}

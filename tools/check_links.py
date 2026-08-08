@@ -1,15 +1,32 @@
 #!/usr/bin/env python3
-"""Check that every URL in data/sources.json still resolves.
+"""Fetch every cited source: check it resolves, and spot-check what it says.
 
-Advisory only - run by CI with continue-on-error. A citation that 404s is a
-credibility problem worth surfacing, but it should never block shipping a
-correction to health information.
+Two jobs. First, confirm each URL in data/sources.json still resolves. Second,
+for sources listed in data/claims.json, fetch the page and look for the figures
+this site attributes to it - so a source being edited, or a number drifting, or
+a citation that never supported its claim, shows up rather than sitting there
+looking authoritative.
+
+Two limits worth stating plainly, both of which the report repeats:
+
+  * This checks that a figure APPEARS in a source. It cannot check that we
+    represented the source fairly - a number can be on the page and still be
+    quoted out of context. Only a human reading the source settles that.
+
+  * cdc.gov and fda.gov refuse automated requests, CDC with 403 and FDA with
+    404 on every URL including its own homepage. They cannot be checked here,
+    and they are the sources carrying the outbreak case counts.
+
+Advisory only - run by CI with continue-on-error. A dead link or an unverifiable
+figure is worth surfacing, but should never block shipping a correction to
+health information.
 
     python3 tools/check_links.py
 """
 
 import json
 import pathlib
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -32,6 +49,75 @@ def _raw(url):
 def host_root(url):
     parts = urllib.parse.urlsplit(url)
     return f"{parts.scheme}://{parts.netloc}/"
+
+
+def fetch(url, attempt=0):
+    """Return (text, note). Empty text means the body could not be read."""
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            ctype = (resp.headers.get("Content-Type") or "").lower()
+            raw = resp.read(4_000_000)
+            if "pdf" in ctype or raw[:5] == b"%PDF-":
+                # No PDF text extraction without a dependency. Report honestly
+                # rather than claiming a check that did not happen.
+                return "", "pdf, not text-checkable without a dependency"
+            return raw.decode("utf-8", "replace"), ""
+    except TimeoutError:
+        if attempt < 1:
+            return fetch(url, attempt + 1)
+        return "", "timed out"
+    except Exception as ex:  # noqa: BLE001 - advisory, never crash CI
+        return "", f"{type(ex).__name__}: {str(ex)[:60]}"
+
+
+TAGS = re.compile(r"<(script|style)[^>]*>.*?</\1>|<[^>]+>", re.S | re.I)
+WS = re.compile(r"\s+")
+
+
+def page_text(html_text):
+    """Crude tag strip. Good enough to find a figure; not a parser."""
+    txt = TAGS.sub(" ", html_text)
+    for a, b in (("&nbsp;", " "), ("&amp;", "&"), ("&#39;", "'"),
+                 ("&quot;", '"'), ("&mdash;", "-"), ("&ndash;", "-")):
+        txt = txt.replace(a, b)
+    return WS.sub(" ", txt)
+
+
+def verify_claims(smap):
+    """Look for each attributed figure in the source's own text."""
+    path = ROOT / "data" / "claims.json"
+    if not path.exists():
+        return 0, 0
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    print("\n=== verifying attributed figures ===")
+    print(doc["coverage_limit"] + "\n")
+
+    checked = unverified = 0
+    for c in doc["claims"]:
+        src = smap.get(c["source"])
+        if not src:
+            print(f"CLAIM-ERR  {c['source']:<22} not a known source id")
+            unverified += 1
+            continue
+        text, note = fetch(src["url"])
+        if not text:
+            print(f"SKIP       {c['source']:<22} {note}")
+            continue
+        body = page_text(text)
+        missing = [x for x in c["expect"] if x.lower() not in body.lower()]
+        checked += 1
+        if missing:
+            unverified += 1
+            print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text")
+            print(f"           supports: {c['supports']}")
+        else:
+            print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present")
+
+    print(f"\n{checked} source(s) text-checked, {unverified} with figures not found.")
+    print("Reminder: this only shows a figure APPEARS in the source. It cannot "
+          "show the source was represented fairly.")
+    return checked, unverified
 
 
 def probe(url, attempt=0):
@@ -92,12 +178,19 @@ def main():
             dead.append((s["id"], note, s["url"]))
 
     print()
+    smap = {s["id"]: s for s in doc["sources"]}
+    _, unverified = verify_claims(smap)
+
     if dead:
-        print(f"{len(dead)} source link(s) did not resolve:", file=sys.stderr)
+        print(f"\n{len(dead)} source link(s) did not resolve:", file=sys.stderr)
         for sid, note, url in dead:
             print(f"  {sid}: {note} - {url}", file=sys.stderr)
         return 1
-    print(f"all {len(doc['sources'])} source links resolved")
+    if unverified:
+        print(f"\n{unverified} attributed figure(s) could not be found in their "
+              f"source. Check them by hand.", file=sys.stderr)
+        return 1
+    print(f"all {len(doc['sources'])} source links resolved, attributed figures found")
     return 0
 
 

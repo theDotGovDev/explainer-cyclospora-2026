@@ -35,7 +35,7 @@
         <a href="sources.html">Sources</a>
     </nav>
   </div>
-  <nav class="jump" aria-label="Sections on this page"><div class="wrap jump-inner"><span class="jump-label">On this page</span><a href="#check">Check a food</a><a href="#scale">Risk scale</a><a href="#sense">What the odds mean</a><a href="#works">What works</a><a href="#status">Outbreak</a><a href="#evidence">Evidence</a><a href="#care">Seek care</a></div></nav>
+  <nav class="jump" aria-label="Sections on this page"><div class="wrap jump-inner"><span class="jump-label">On this page</span><a href="#check">Check a food</a><a href="#scale">Risk scale</a><a href="#sense">What the odds mean</a><a href="#history">How figures changed</a><a href="#works">What works</a><a href="#status">Outbreak</a><a href="#evidence">Evidence</a><a href="#care">Seek care</a></div></nav>
 </header>
 
 <div class="ai-note" role="note">
@@ -1035,6 +1035,42 @@
     <p>Exact arithmetic: one half to the tenth power.</p>
   </details>
 </figure>
+  </div>
+</section>
+
+
+<section id="history" class="band-section alt" aria-labelledby="history-h">
+  <div class="wrap">
+    <h2 id="history-h">How these figures have changed</h2>
+    <p class="section-intro">Outbreak counts get revised, and a page that only ever
+       shows the newest number hides that. Every figure this site has published is kept
+       in an append-only log, so you can see what moved and when.</p>
+    <h3>All U.S. cases since May 1, 2026</h3>
+    <div class="table-scroll">
+    <table class="risk-table hist-table">
+      <thead><tr><th scope="col">As of</th><th scope="col">Lab-confirmed</th><th scope="col">Probable</th><th scope="col">Hospitalised</th><th scope="col">Deaths</th><th scope="col">States</th><th scope="col">Sources</th></tr></thead>
+      <tbody>
+        <tr><th scope="row"><time datetime="2026-08-05">2026-08-05</time></th><td>10,468</td><td>12,255</td><td>517</td><td>2</td><td>46</td><td class="hist-src"><sup class="cite">[<a href="sources.html#cdc-surveillance" title="Surveillance of Cyclosporiasis (CDC)">4</a>][<a href="sources.html#cdc-han" title="HAN 531: Domestically Acquired Cyclosporiasis Cases in Multiple U.S. States, 2026 (CDC Health Alert Network)">3</a>][<a href="sources.html#wadoh" title="2026 Cyclosporiasis Outbreak (Washington State Department of Health)">11</a>][<a href="sources.html#today-map" title="Cyclospora Outbreak 2026: Map, Foods to Avoid, States Most Impacted (TODAY)">32</a>][<a href="sources.html#cnn-deaths" title="First deaths reported in cyclosporiasis outbreak (CNN)">26</a>][<a href="sources.html#axios-deaths" title="Cyclospora outbreak causes first two deaths (Axios)">27</a>]</sup> <a class="prov prov-agency-news" href="methodology.html#prov-agency-news" title="This claim rests on a mix of agency sources and news reporting. Click for the full definition."><span class="vh">Sourcing: </span>agency + news</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="hist-note">All domestically acquired cyclosporiasis with onset on or after May 1, 2026, not the iceberg cluster alone. States is approximate: reporting describes roughly 45 to 47.</p>
+    <h3>The iceberg lettuce cluster only</h3>
+    <div class="table-scroll">
+    <table class="risk-table hist-table">
+      <thead><tr><th scope="col">As of</th><th scope="col">Cases</th><th scope="col">Hospitalised</th><th scope="col">Deaths</th><th scope="col">States</th><th scope="col">Sources</th></tr></thead>
+      <tbody>
+        <tr><th scope="row"><time datetime="2026-07-20">2026-07-20</time></th><td>1,947</td><td>98</td><td>0</td><td>9</td><td class="hist-src"><sup class="cite">[<a href="sources.html#nbc-source" title="Taylor Farms recalls iceberg lettuce amid cyclosporiasis outbreak (FDA names source) (NBC News)">28</a>][<a href="sources.html#cdc-outbreak" title="Cyclospora Outbreak Linked to Iceberg Lettuce (CDC)">1</a>]</sup> <a class="prov prov-agency-news" href="methodology.html#prov-agency-news" title="This claim rests on a mix of agency sources and news reporting. Click for the full definition."><span class="vh">Sourcing: </span>agency + news</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="hist-note">Cluster linked to Taylor Farms de Mexico iceberg lettuce. Illness onsets reported May 13 to July 20. Back-filled when the log was created.</p>
+    <p class="hist-foot"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg> The log is
+       <code>data/history.jsonl</code> in the repository &mdash; one JSON record per line,
+       appended and never rewritten. It starts when the log was created, so earlier
+       figures appear only where a defensible date could be attached to them. The counts
+       are not directly comparable across the two tables: one covers all U.S. cases this
+       season, the other only the iceberg lettuce cluster.</p>
   </div>
 </section>
 
