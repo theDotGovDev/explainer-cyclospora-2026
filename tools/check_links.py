@@ -123,6 +123,12 @@ def verify_claims(smap):
             unverified += 1
             print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text{how}")
             print(f"           supports: {c['supports']}")
+            if note.startswith("pdf"):
+                sample = body.strip()[:220].replace("\n", " ")
+                print(f"           extracted {len(body.strip()):,} chars, starts: {sample!r}")
+                print("           If that looks like mojibake the fallback could not "
+                      "decode the fonts; install pypdf. If it reads fine, the claim "
+                      "string does not match the document's wording.")
         else:
             print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present{how}")
 

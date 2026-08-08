@@ -45,28 +45,28 @@
       "source": "nbc-source",
       "expect": [
         "Taylor Farms",
-        "Cyclospora"
+        "cyclospor"
       ],
       "supports": "That FDA named Taylor Farms de Mexico as the traceback source."
     },
     {
       "source": "cnn-safe-food",
       "expect": [
-        "Cyclospora"
+        "cyclospor"
       ],
       "supports": "Food-by-food guidance during the outbreak, including that spinach was not named."
     },
     {
       "source": "today-map",
       "expect": [
-        "Cyclospora"
+        "cyclospor"
       ],
       "supports": "The national spread of the 2026 season."
     },
     {
       "source": "cr-consumers",
       "expect": [
-        "Cyclospora"
+        "cyclospor"
       ],
       "supports": "That multiple separate 2026 investigations are open, and other commodities are under traceback."
     },

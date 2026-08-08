@@ -60,13 +60,19 @@ def section(title):
 
 def probe_openfda():
     section("openFDA food enforcement (api.fda.gov) - official recall records")
+    # Sorted newest-first. The first version took the default order and came
+    # back with 2013-2020 records, which said nothing about whether the recall
+    # this site is actually about had reached the database.
+    base = 'https://api.fda.gov/food/enforcement.json?search='
+    tail = '&sort=recall_initiation_date:desc&limit=5'
     queries = [
-        ('recalls naming Taylor Farms',
-         'https://api.fda.gov/food/enforcement.json?search='
-         + urllib.parse.quote('recalling_firm:"Taylor Farms"') + '&limit=5'),
-        ('recalls mentioning Cyclospora',
-         'https://api.fda.gov/food/enforcement.json?search='
-         + urllib.parse.quote('reason_for_recall:"Cyclospora"') + '&limit=5'),
+        ('most recent Taylor Farms recalls',
+         base + urllib.parse.quote('recalling_firm:"Taylor Farms"') + tail),
+        ('most recent Cyclospora recalls',
+         base + urllib.parse.quote('reason_for_recall:cyclospor*') + tail),
+        ('ANY food recall initiated in 2026 - does the database reach this year?',
+         base + urllib.parse.quote(
+             'recall_initiation_date:[20260101+TO+20261231]') + tail),
     ]
     reachable = False
     for label, url in queries:
@@ -121,9 +127,10 @@ def main():
 
     section("what this means")
     if fda_ok:
-        print("  api.fda.gov IS reachable. The recall details on this site can be")
-        print("  checked against, or replaced by, the official FDA recall record")
-        print("  instead of prose transcribed from a page we cannot open.")
+        print("  api.fda.gov IS reachable. Whether it is USEFUL depends on the")
+        print("  dates above: FDA's recall database is populated when a recall is")
+        print("  classified, which lags the announcement, so a recall from this")
+        print("  summer may simply not be in it yet. Check the 2026 query.")
     else:
         print("  api.fda.gov did not answer. FDA recall data stays hand-entered.")
     if cdc_ok:
