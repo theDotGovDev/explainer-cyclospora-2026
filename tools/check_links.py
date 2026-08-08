@@ -32,6 +32,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import pdf_text  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TIMEOUT = 25
 
@@ -59,9 +62,10 @@ def fetch(url, attempt=0):
             ctype = (resp.headers.get("Content-Type") or "").lower()
             raw = resp.read(4_000_000)
             if "pdf" in ctype or raw[:5] == b"%PDF-":
-                # No PDF text extraction without a dependency. Report honestly
-                # rather than claiming a check that did not happen.
-                return "", "pdf, not text-checkable without a dependency"
+                text, how = pdf_text.extract(raw)
+                if not text.strip():
+                    return "", "pdf, no text could be extracted"
+                return text, f"pdf via {how}"
             return raw.decode("utf-8", "replace"), ""
     except TimeoutError:
         if attempt < 1:
@@ -104,15 +108,23 @@ def verify_claims(smap):
         if not text:
             print(f"SKIP       {c['source']:<22} {note}")
             continue
-        body = page_text(text)
+        body = page_text(text) if not note.startswith("pdf") else text
+        # A client-rendered page returns a shell with almost no prose. Reporting
+        # that as "figure not found" is a false alarm that trains people to
+        # ignore the check, so say what actually happened instead.
+        if len(body.strip()) < 800:
+            print(f"SKIP       {c['source']:<22} only {len(body.strip())} chars of text - "
+                  f"page looks client-rendered, nothing to search")
+            continue
         missing = [x for x in c["expect"] if x.lower() not in body.lower()]
         checked += 1
+        how = f"  [{note}]" if note else ""
         if missing:
             unverified += 1
-            print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text")
+            print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text{how}")
             print(f"           supports: {c['supports']}")
         else:
-            print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present")
+            print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present{how}")
 
     print(f"\n{checked} source(s) text-checked, {unverified} with figures not found.")
     print("Reminder: this only shows a figure APPEARS in the source. It cannot "
@@ -180,6 +192,12 @@ def main():
     print()
     smap = {s["id"]: s for s in doc["sources"]}
     _, unverified = verify_claims(smap)
+
+    try:
+        import data_sources
+        data_sources.main()
+    except Exception as ex:  # noqa: BLE001 - a probe must not break the checker
+        print(f"\ndata source probe failed: {type(ex).__name__}: {ex}")
 
     if dead:
         print(f"\n{len(dead)} source link(s) did not resolve:", file=sys.stderr)

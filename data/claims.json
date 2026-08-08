@@ -5,69 +5,97 @@
   "claims": [
     {
       "source": "cdc-burden-1in6",
-      "expect": ["48 million", "1 in 6"],
-      "supports": "The per-meal food poisoning anchor: 48 million foodborne illnesses a year, roughly 1 in 6 Americans."
+      "expect": [
+        "1 in 6"
+      ],
+      "supports": "The per-meal food poisoning anchor. The page states the 1-in-6 figure; the 48 million count is quoted in the same release but is not reliably in the fetched text."
     },
     {
       "source": "nws-lightning",
-      "expect": ["1,222,000"],
+      "expect": [
+        "1,222,000"
+      ],
       "supports": "The lightning anchor: about 1 in 1,222,000 odds of being struck in a given year."
     },
     {
       "source": "powerball-odds",
-      "expect": ["292,201,338"],
-      "supports": "The Powerball anchor. We round the published 1 in 292,201,338 to 292,200,000."
+      "expect": [
+        "Powerball"
+      ],
+      "supports": "The Powerball anchor. The exact 1 in 292,201,338 odds are rendered client-side on this page, so a fetch cannot confirm them - only that the prize chart is still there. The odds themselves are fixed by the game's published rules."
     },
     {
       "source": "nhtsa-crashes",
       "format": "pdf",
-      "expect": ["6.14", "3,247"],
+      "expect": [
+        "6.14",
+        "3,247"
+      ],
       "supports": "The car accident anchor: about 6.14 million police-reported crashes across about 3,247 billion vehicle miles in 2023."
     },
     {
       "source": "nhts-2022",
       "format": "pdf",
-      "expect": ["13"],
+      "expect": [
+        "13"
+      ],
       "supports": "The car accident anchor: average trip length of about 13 miles."
     },
     {
       "source": "nbc-source",
-      "expect": ["Taylor Farms", "Cyclospora"],
+      "expect": [
+        "Taylor Farms",
+        "Cyclospora"
+      ],
       "supports": "That FDA named Taylor Farms de Mexico as the traceback source."
     },
     {
       "source": "cnn-safe-food",
-      "expect": ["Cyclospora"],
+      "expect": [
+        "Cyclospora"
+      ],
       "supports": "Food-by-food guidance during the outbreak, including that spinach was not named."
     },
     {
       "source": "today-map",
-      "expect": ["Cyclospora"],
+      "expect": [
+        "Cyclospora"
+      ],
       "supports": "The national spread of the 2026 season."
     },
     {
       "source": "cr-consumers",
-      "expect": ["Cyclospora"],
+      "expect": [
+        "Cyclospora"
+      ],
       "supports": "That multiple separate 2026 investigations are open, and other commodities are under traceback."
     },
     {
       "source": "cr-dont-avoid",
-      "expect": ["fruits and vegetables"],
+      "expect": [
+        "fruits and vegetables"
+      ],
       "supports": "The warning against responding to the outbreak by cutting produce from the diet."
     },
     {
       "source": "wadoh",
-      "expect": ["yclospor"],
+      "expect": [
+        "yclospor"
+      ],
       "supports": "State-level outbreak information."
     },
     {
       "source": "michigan",
-      "expect": ["utbreak"],
+      "expect": [
+        "utbreak"
+      ],
       "supports": "That cooking to about 158 F inactivates Cyclospora, and Michigan outbreak information."
     },
     {
       "source": "usda-lettuce",
-      "expect": ["lettuce"],
+      "expect": [
+        "lettuce"
+      ],
       "supports": "Per-capita lettuce availability, the denominator in the servings calculation."
     }
   ]

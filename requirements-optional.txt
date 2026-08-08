@@ -1,0 +1,12 @@
+# Optional. Nothing in this project requires a dependency to build, validate or
+# deploy - `python3 build.py && python3 tools/validate.py` runs on a bare
+# interpreter, and that is deliberate for a page that has to stay easy to
+# rebuild years from now.
+#
+# pypdf only improves the advisory source check: tools/pdf_text.py falls back to
+# a small built-in reader when pypdf is absent, which handles the PDFs cited
+# here but cannot decode custom font encodings. Install it if a cited PDF starts
+# coming back as mojibake.
+#
+#   pip install -r requirements-optional.txt
+pypdf>=4.0
