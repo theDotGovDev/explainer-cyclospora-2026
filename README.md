@@ -31,6 +31,8 @@ or any company, and carries no agency branding deliberately.
 | `icons.py` | Inline SVG sprite and logo. All original artwork — no agency marks. |
 | `tools/validate.py` | Correctness checks — run in CI, fails the build |
 | `tools/check_links.py` | Advisory: fetches every source, checks it resolves, spot-checks attributed figures |
+| `tools/pdf_text.py` | Reads text out of cited PDFs, and says when it could not |
+| `tools/data_sources.py` | Probes openFDA and data.cdc.gov for machine-readable figures |
 | `tools/snapshot.py` | Appends current figures to the history log; idempotent |
 | `site/` | Generated output — commit it; it is what gets served |
 
@@ -76,7 +78,10 @@ something actually went wrong:
 - risk values are hedged — an unhedged `1 in 50,000` fails the build, because these are
   estimates and must read as estimates;
 - all five core disclaimers, including the AI-generation notice, are on every page;
-- HTML is well-formed, external links carry `rel`, and `as_of` is present and not stale.
+- HTML is well-formed, external links carry `rel`, and `as_of` is present and not stale;
+- the PDF reader still works, tested offline against documents whose answer is known —
+  including that it reports an undecodable document as unreadable rather than as a source
+  that omits the figure.
 
 ## Source verification in CI
 
@@ -96,6 +101,15 @@ Two limits, both stated in the tool's own output:
 
 The job runs `continue-on-error`, so a dead link or an unverifiable figure is reported
 without blocking a correction from shipping.
+
+Two of the cited sources are PDFs — the NHTSA crash summary and the NHTS travel survey —
+and they carry the inputs to the car-accident comparison. `tools/pdf_text.py` reads them
+with `pypdf` when it is installed and with a small built-in reader when it is not. The
+built-in reader does not resolve font encodings, so a document that subsets its fonts
+comes back as character codes rather than words. When that happens the check reports
+`UNREADABLE` rather than `NOT FOUND`: *we could not read this document* and *this document
+does not say that* are different findings, and only one of them is evidence about the
+source. `pip install -r requirements-optional.txt` turns the first into the second.
 
 ## The figure history log
 

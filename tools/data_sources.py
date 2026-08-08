@@ -70,13 +70,28 @@ def probe_openfda():
          base + urllib.parse.quote('recalling_firm:"Taylor Farms"') + tail),
         ('most recent Cyclospora recalls',
          base + urllib.parse.quote('reason_for_recall:cyclospor*') + tail),
-        ('ANY food recall initiated in 2026 - does the database reach this year?',
-         base + urllib.parse.quote(
-             'recall_initiation_date:[20260101+TO+20261231]') + tail),
+        # The plainest possible answer to "how current is this database?": the
+        # newest record in it, whatever that record is about. No search term, so
+        # no query syntax to get wrong - if the newest recall in the whole file
+        # predates this outbreak, the outbreak cannot be in here.
+        ('newest record in the whole database - how current is it?',
+         'https://api.fda.gov/food/enforcement.json?' + tail.lstrip('&')),
+        # A date range needs Lucene syntax. openFDA documents it with a literal
+        # '+' standing for the space in '[20260101 TO 20261231]'. Percent-encoding
+        # that '+' as %2B - which is what quote() does by default - sends a plus
+        # character into the parser and earns an HTTP 500. Try the documented
+        # form first, then the space-encoded form, rather than guessing once.
+        ('food recalls initiated in 2026',
+         base + 'recall_initiation_date:[20260101+TO+20261231]' + tail,
+         base + urllib.parse.quote('recall_initiation_date:[20260101 TO 20261231]') + tail),
     ]
     reachable = False
-    for label, url in queries:
-        data, err = get_json(url)
+    for label, *urls in queries:
+        data = err = None
+        for url in urls:
+            data, err = get_json(url)
+            if not err:
+                break
         if err:
             print(f"  [{label}] FAILED: {err}")
             continue
@@ -130,7 +145,9 @@ def main():
         print("  api.fda.gov IS reachable. Whether it is USEFUL depends on the")
         print("  dates above: FDA's recall database is populated when a recall is")
         print("  classified, which lags the announcement, so a recall from this")
-        print("  summer may simply not be in it yet. Check the 2026 query.")
+        print("  summer may simply not be in it yet. The 'newest record in the")
+        print("  whole database' line is the one to read - it dates the data,")
+        print("  and no absence of 2026 records means anything until it does.")
     else:
         print("  api.fda.gov did not answer. FDA recall data stays hand-entered.")
     if cdc_ok:

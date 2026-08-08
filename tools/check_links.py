@@ -62,10 +62,12 @@ def fetch(url, attempt=0):
             ctype = (resp.headers.get("Content-Type") or "").lower()
             raw = resp.read(4_000_000)
             if "pdf" in ctype or raw[:5] == b"%PDF-":
-                text, how = pdf_text.extract(raw)
-                if not text.strip():
+                got = pdf_text.extract(raw)
+                if not got.text.strip():
                     return "", "pdf, no text could be extracted"
-                return text, f"pdf via {how}"
+                if not got.readable:
+                    return got.text, f"pdf via {got.how}, TEXT NOT DECODED"
+                return got.text, f"pdf via {got.how}"
             return raw.decode("utf-8", "replace"), ""
     except TimeoutError:
         if attempt < 1:
@@ -97,7 +99,7 @@ def verify_claims(smap):
     print("\n=== verifying attributed figures ===")
     print(doc["coverage_limit"] + "\n")
 
-    checked = unverified = 0
+    checked = unverified = unreadable = 0
     for c in doc["claims"]:
         src = smap.get(c["source"])
         if not src:
@@ -117,8 +119,19 @@ def verify_claims(smap):
                   f"page looks client-rendered, nothing to search")
             continue
         missing = [x for x in c["expect"] if x.lower() not in body.lower()]
-        checked += 1
         how = f"  [{note}]" if note else ""
+        # "I could not read this document" is not the same finding as "this
+        # document does not contain that figure", and reporting the first as
+        # the second would put a false negative into a verification log.
+        if missing and note.endswith("TEXT NOT DECODED"):
+            unreadable += 1
+            print(f"UNREADABLE {c['source']:<22} PDF text did not decode into words, "
+                  f"so the figures {c['expect']} could not be looked for")
+            print("           This is a limit of the built-in reader, not a finding "
+                  "about the source. Install pypdf "
+                  "(pip install -r requirements-optional.txt) to check it.")
+            continue
+        checked += 1
         if missing:
             unverified += 1
             print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text{how}")
@@ -126,13 +139,13 @@ def verify_claims(smap):
             if note.startswith("pdf"):
                 sample = body.strip()[:220].replace("\n", " ")
                 print(f"           extracted {len(body.strip()):,} chars, starts: {sample!r}")
-                print("           If that looks like mojibake the fallback could not "
-                      "decode the fonts; install pypdf. If it reads fine, the claim "
-                      "string does not match the document's wording.")
+                print("           The text decoded into words, so the claim string "
+                      "does not match the document's wording.")
         else:
             print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present{how}")
 
-    print(f"\n{checked} source(s) text-checked, {unverified} with figures not found.")
+    print(f"\n{checked} source(s) text-checked, {unverified} with figures not found, "
+          f"{unreadable} unreadable.")
     print("Reminder: this only shows a figure APPEARS in the source. It cannot "
           "show the source was represented fairly.")
     return checked, unverified

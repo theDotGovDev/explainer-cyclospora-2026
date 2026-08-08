@@ -4,9 +4,14 @@
 # rebuild years from now.
 #
 # pypdf only improves the advisory source check: tools/pdf_text.py falls back to
-# a small built-in reader when pypdf is absent, which handles the PDFs cited
-# here but cannot decode custom font encodings. Install it if a cited PDF starts
-# coming back as mojibake.
+# a small built-in reader when pypdf is absent, which cannot decode custom font
+# encodings.
+#
+# One cited PDF needs it. The NHTSA crash summary (crashstats.nhtsa.dot.gov
+# publication 813762) subsets its fonts, so the built-in reader returns character
+# codes rather than words and the two figures it supports - 6.14 million crashes
+# and 3,247 billion vehicle miles - cannot be looked for. Without pypdf that
+# check reports UNREADABLE instead of verifying the car-accident anchor.
 #
 #   pip install -r requirements-optional.txt
 pypdf>=4.0
