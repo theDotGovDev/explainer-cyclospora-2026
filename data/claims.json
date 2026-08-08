@@ -31,7 +31,8 @@
         "6.14",
         "3,247"
       ],
-      "supports": "The car accident anchor: about 6.14 million police-reported crashes across about 3,247 billion vehicle miles in 2023."
+      "supports": "The car accident anchor: about 6.14 million police-reported crashes across about 3,247 billion vehicle miles in 2023.",
+      "note": "This PDF subsets its fonts, so the built-in reader cannot decode it and reports UNREADABLE. Install pypdf (requirements-optional.txt) to actually check these two figures."
     },
     {
       "source": "nhts-2022",

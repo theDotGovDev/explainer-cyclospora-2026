@@ -17,6 +17,8 @@ import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import pdf_text  # noqa: E402
 from build import EVIDENCE, PROVENANCE, STATUS_LABEL, numeric_band  # noqa: E402
 from icons import SPRITE_SYMBOLS  # noqa: E402
 
@@ -395,6 +397,16 @@ def check_provenance():
             fail(f"{name}: {cites} citations but only {marks} sourcing markers")
 
 
+def check_pdf_reader():
+    """The PDF reader decides whether two cited figures can be checked at all.
+
+    It runs offline against documents whose right answer is known, so it belongs
+    with the other blocking checks rather than in the advisory link job.
+    """
+    for msg in pdf_text.selftest():
+        fail(msg)
+
+
 def main():
     outbreak = load("outbreak.json")
     foods = load("foods.json")
@@ -411,6 +423,7 @@ def main():
     check_provenance()
     check_label_links()
     check_evidence_labels(foods)
+    check_pdf_reader()
 
     for w in warnings:
         print(f"warning: {w}")
