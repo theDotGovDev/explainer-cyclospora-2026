@@ -129,6 +129,40 @@ def check_data(outbreak, foods, sources):
         warn(f"source {sid!r} is listed but never cited on any page")
 
 
+def check_comparisons(comparisons, sources):
+    """The comparison anchors were previously unvalidated entirely.
+
+    They carry derived arithmetic and citations like everything else, so they
+    need the same guarantees: real source ids, and a written-out derivation
+    wherever we converted a published figure ourselves.
+    """
+    ids = {s["id"] for s in sources["sources"]}
+    for key in ("basis_note", "caution"):
+        if not comparisons.get(key):
+            fail(f"comparisons.json is missing {key!r}")
+    if not comparisons.get("anchors"):
+        fail("comparisons.json has no anchors")
+    for a in comparisons.get("anchors", []):
+        who = a.get("label", "?")
+        for field in ("odds", "label", "basis"):
+            if not a.get(field):
+                fail(f"comparison anchor {who!r} missing {field}")
+        odds = a.get("odds")
+        if isinstance(odds, (int, float)) and odds <= 1:
+            fail(f"comparison anchor {who!r} has odds {odds}, which is not '1 in N'")
+        # Anything we converted ourselves must show its working.
+        if a.get("derived") and not a.get("derivation"):
+            fail(f"comparison anchor {who!r} is marked derived but shows no "
+                 f"arithmetic; add a 'derivation' or drop the flag")
+        # Every anchor is either cited or self-evident arithmetic that says so.
+        if not a.get("sources") and not a.get("note"):
+            fail(f"comparison anchor {who!r} has neither a source nor a note "
+                 f"explaining where the number comes from")
+        for sid in a.get("sources", []):
+            if sid not in ids:
+                fail(f"comparison anchor {who!r} cites unknown source {sid!r}")
+
+
 def check_icons(foods):
     """Every icon name must exist in the sprite.
 
@@ -293,9 +327,11 @@ def main():
     outbreak = load("outbreak.json")
     foods = load("foods.json")
     sources = load("sources.json")
+    comparisons = load("comparisons.json")
 
     check_data(outbreak, foods, sources)
     check_icons(foods)
+    check_comparisons(comparisons, sources)
     check_dates(outbreak)
     check_html(outbreak)
     check_citations()

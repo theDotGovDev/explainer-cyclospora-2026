@@ -59,7 +59,11 @@ bug.
 These checks exist because the site makes health claims, and each one is here because
 something actually went wrong:
 
-- every citation resolves, and inline `[n]` markers match the sources-page numbering;
+- every citation resolves — in `foods.json`, `outbreak.json` **and** `comparisons.json`;
+  an unknown source id aborts the build rather than silently dropping the citation;
+- inline `[n]` markers match the sources-page numbering;
+- comparison anchors marked as derived must show their arithmetic, and every anchor
+  must have either a source or a note saying where the number came from;
 - every claim carries a sourcing marker, and every food carries an evidence-basis label;
 - anything claiming a reference actually cites one, or must be marked `extrapolated`;
 - every badge links to a definition that exists on the methodology page;

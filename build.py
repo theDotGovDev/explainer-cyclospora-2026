@@ -194,7 +194,10 @@ def cite(ids, smap, dated=None):
     for sid in ids:
         src = smap.get(sid)
         if not src:
-            continue
+            # Fail loudly. Skipping silently makes a broken reference disappear
+            # from the page rather than announce itself, which on a site whose
+            # value is its citations is the worst possible failure mode.
+            raise SystemExit(f"cite(): unknown source id {sid!r}")
         links.append(
             '<a href="sources.html#{sid}" title="{title} ({pub})">{num}</a>'.format(
                 sid=e(sid), title=e(src["title"]), pub=e(src["publisher"]),
