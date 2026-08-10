@@ -31,12 +31,9 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Build
-        run: python3 build.py
-
-      - name: Validate before publishing
-        # Never publish a page that fails its own disclaimer and citation checks.
-        run: python3 tools/validate.py
+      # Rebuilds and validates. Never publishes a page that fails its own
+      # disclaimer and citation checks.
+      - run: bash tools/ci/publish.sh
 
       - uses: actions/configure-pages@v5
 
