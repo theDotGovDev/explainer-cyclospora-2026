@@ -17,6 +17,9 @@ Two limits worth stating plainly, both of which the report repeats:
     404 on every URL including its own homepage. They cannot be checked here,
     and they are the sources carrying the outbreak case counts.
 
+Reading the cited PDFs needs pypdf (`pip install -r requirements.txt`). Without
+it those claims are SKIPped rather than guessed at.
+
 Advisory only - run by CI with continue-on-error. A dead link or an unverifiable
 figure is worth surfacing, but should never block shipping a correction to
 health information.
@@ -62,12 +65,17 @@ def fetch(url, attempt=0):
             ctype = (resp.headers.get("Content-Type") or "").lower()
             raw = resp.read(4_000_000)
             if "pdf" in ctype or raw[:5] == b"%PDF-":
+                # Returning no text puts this on the SKIP path, which is the
+                # honest place for it: "we did not read this" is not the same
+                # finding as "this source does not say that", and only the
+                # second is evidence about a source.
                 got = pdf_text.extract(raw)
                 if not got.text.strip():
-                    return "", "pdf, no text could be extracted"
+                    return "", f"pdf not read - {got.how}"
                 if not got.readable:
-                    return got.text, f"pdf via {got.how}, TEXT NOT DECODED"
-                return got.text, f"pdf via {got.how}"
+                    return "", ("pdf parsed but yielded no words - probably a "
+                                "scan with no text layer, nothing to search")
+                return got.text, "pdf via pypdf"
             return raw.decode("utf-8", "replace"), ""
     except TimeoutError:
         if attempt < 1:
@@ -99,7 +107,7 @@ def verify_claims(smap):
     print("\n=== verifying attributed figures ===")
     print(doc["coverage_limit"] + "\n")
 
-    checked = unverified = unreadable = 0
+    checked = unverified = skipped = 0
     for c in doc["claims"]:
         src = smap.get(c["source"])
         if not src:
@@ -108,6 +116,7 @@ def verify_claims(smap):
             continue
         text, note = fetch(src["url"])
         if not text:
+            skipped += 1
             print(f"SKIP       {c['source']:<22} {note}")
             continue
         body = page_text(text) if not note.startswith("pdf") else text
@@ -115,37 +124,22 @@ def verify_claims(smap):
         # that as "figure not found" is a false alarm that trains people to
         # ignore the check, so say what actually happened instead.
         if len(body.strip()) < 800:
+            skipped += 1
             print(f"SKIP       {c['source']:<22} only {len(body.strip())} chars of text - "
                   f"page looks client-rendered, nothing to search")
             continue
         missing = [x for x in c["expect"] if x.lower() not in body.lower()]
         how = f"  [{note}]" if note else ""
-        # "I could not read this document" is not the same finding as "this
-        # document does not contain that figure", and reporting the first as
-        # the second would put a false negative into a verification log.
-        if missing and note.endswith("TEXT NOT DECODED"):
-            unreadable += 1
-            print(f"UNREADABLE {c['source']:<22} PDF text did not decode into words, "
-                  f"so the figures {c['expect']} could not be looked for")
-            print("           This is a limit of the built-in reader, not a finding "
-                  "about the source. Install pypdf "
-                  "(pip install -r requirements-optional.txt) to check it.")
-            continue
         checked += 1
         if missing:
             unverified += 1
             print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text{how}")
             print(f"           supports: {c['supports']}")
-            if note.startswith("pdf"):
-                sample = body.strip()[:220].replace("\n", " ")
-                print(f"           extracted {len(body.strip()):,} chars, starts: {sample!r}")
-                print("           The text decoded into words, so the claim string "
-                      "does not match the document's wording.")
         else:
             print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present{how}")
 
-    print(f"\n{checked} source(s) text-checked, {unverified} with figures not found, "
-          f"{unreadable} unreadable.")
+    print(f"\n{checked} source(s) text-checked, {unverified} with figures not "
+          f"found, {skipped} skipped because the page could not be read.")
     print("Reminder: this only shows a figure APPEARS in the source. It cannot "
           "show the source was represented fairly.")
     return checked, unverified

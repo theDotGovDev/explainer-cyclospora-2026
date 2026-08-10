@@ -1,0 +1,14 @@
+# For tools/check_links.py only.
+#
+# build.py, tools/validate.py and the Pages deploy need nothing at all - they
+# run on a bare interpreter, and that is deliberate for a page that has to stay
+# easy to rebuild years from now. This file exists because the advisory source
+# check reads two cited PDFs, and reading PDFs properly is not something worth
+# hand-rolling: an earlier version of tools/pdf_text.py did exactly that and
+# reported the NHTSA crash summary as a source that omitted its own figures.
+#
+# Without pypdf installed, those two claims are reported as skipped rather than
+# checked. Nothing else changes.
+#
+#   pip install -r requirements.txt
+pypdf>=4.0

@@ -2,110 +2,47 @@
 """Extract text from a PDF well enough to find a figure in it.
 
 Two of this project's citations are PDFs - the NHTSA crash summary and the NHTS
-travel survey - and they carry the inputs to the car-accident derivation. They
-were being reported as "not text-checkable", which made the least-verifiable
-anchor on the site the one whose arithmetic is most load-bearing.
+travel survey - and they carry the inputs to the car-accident derivation, which
+is the arithmetic most load-bearing on the comparisons page.
 
-Uses pypdf when it is installed, and falls back to a small pure-Python reader so
-the check still runs where no dependency is available. The fallback inflates
-FlateDecode streams with zlib from the standard library and pulls the operands
-of the text-showing operators. That is not a PDF parser: it does not resolve
-font encodings, so a document that subsets its fonts with a custom encoding
-comes out as mojibake.
+This uses pypdf, and does not attempt a fallback. An earlier version shipped a
+small hand-rolled reader for the case where pypdf was absent: it inflated the
+document's streams and harvested anything that looked like a string. It could
+not resolve font encodings, so on the NHTSA PDF - which subsets its fonts - it
+returned 1.6 MB of font names and character codes, and the checker reported that
+as "the figure is not in this source". Homemade parsing of a format this
+gnarly does not fail by refusing to work; it fails by producing something that
+looks like an answer.
 
-The important part is that it SAYS SO. `extract` returns a `readable` flag, and
-a caller that cannot read a document must report "could not read this" rather
-than "the figure is not in here" - those are different findings, and only one of
-them is evidence about the source.
+So: when pypdf is installed the PDF is read properly, and when it is absent the
+check says it cannot run. `extract` reports which happened via `readable`, and a
+caller that cannot read a document must report "could not read this" rather than
+"the source does not say that" - those are different findings, and only one of
+them is evidence about a source.
 
+Nothing in build.py or the validator imports this, so the site still builds,
+validates and deploys on a bare interpreter.
+
+    pip install -r requirements.txt
     python3 tools/pdf_text.py file.pdf
 """
 
 import collections
-import re
 import sys
-import zlib
 
 Extracted = collections.namedtuple("Extracted", "text how readable")
 
-# Text-showing operators: (string) Tj | (string) ' | (string) " | [array] TJ
-_TJ = re.compile(rb"\((?:\\.|[^\\()])*\)|<[0-9A-Fa-f\s]+>")
-_STREAM = re.compile(rb"stream\r?\n(.*?)endstream", re.S)
+MISSING = ("pypdf is not installed - cannot read PDFs "
+           "(pip install -r requirements.txt)")
 
-_ESCAPES = {
-    b"\\n": b"\n", b"\\r": b"\r", b"\\t": b"\t", b"\\b": b"\b",
-    b"\\f": b"\f", b"\\(": b"(", b"\\)": b")", b"\\\\": b"\\",
-}
-
-# Streams that are not page content but do contain parenthesised strings, so a
-# naive harvest scoops them up and buries the actual text. A ToUnicode CMap is
-# the worst of these: it is a table of font names and character codes, which is
-# exactly what "Identity Adobe Symbol Identity Adobe Wingdings Arial" is.
-_NOT_CONTENT = (b"begincmap", b"/CIDInit", b"<?xpacket", b"endcmap")
-_FONT_MAGIC = (b"\x00\x01\x00\x00", b"OTTO", b"true", b"ttcf", b"\x80\x01",
-               b"%!PS")
-
-# Words common enough that prose in English is dense with them. Their absence
-# from a large body of extracted text means the bytes were never decoded into
-# words, whatever they look like.
+# Words common enough that English prose is dense with them. pypdf returns text
+# rather than character codes, so this is a backstop rather than the main event:
+# it catches a scanned document whose pages carry images and no text layer.
 _COMMON = ("the", "and", "of", "to", "in", "for", "is", "were", "was")
 
 
-def _unescape(raw):
-    for a, b in _ESCAPES.items():
-        raw = raw.replace(a, b)
-    # \ddd octal escapes
-    return re.sub(rb"\\([0-7]{1,3})",
-                  lambda m: bytes([int(m.group(1), 8) & 0xFF]), raw)
-
-
-def _from_literal(tok):
-    if tok.startswith(b"<"):
-        hexed = re.sub(rb"[^0-9A-Fa-f]", b"", tok)
-        if len(hexed) % 2:
-            hexed += b"0"
-        try:
-            return bytes.fromhex(hexed.decode("ascii"))
-        except ValueError:
-            return b""
-    return _unescape(tok[1:-1])
-
-
-def _is_content(chunk):
-    """Is this stream page content, rather than a font, CMap or metadata blob?"""
-    if chunk.startswith(_FONT_MAGIC):
-        return False
-    head = chunk[:4000]
-    if any(marker in head for marker in _NOT_CONTENT):
-        return False
-    # Text can only be shown inside a BT/ET block, so a content stream that has
-    # any text in it has a BT. This is a positive test, which fails safe: an
-    # unrecognised stream is skipped rather than harvested as noise.
-    return b"BT" in chunk
-
-
-def _pure_python(data):
-    """Inflate page-content streams and harvest text-operator operands."""
-    out = []
-    for m in _STREAM.finditer(data):
-        chunk = m.group(1)
-        for candidate in (chunk, chunk.strip(b"\r\n")):
-            try:
-                chunk = zlib.decompress(candidate)
-                break
-            except zlib.error:
-                continue
-        if not _is_content(chunk):
-            continue
-        for tok in _TJ.findall(chunk):
-            piece = _from_literal(tok)
-            if piece:
-                out.append(piece.decode("latin-1", "replace"))
-    return " ".join(out)
-
-
 def readable(text):
-    """Did the bytes come out as words, or as undecoded character codes?
+    """Did the document yield words, or just marks on a page?
 
     Deliberately conservative. Callers use this to downgrade a "figure not
     found" into "could not read the document", so a false negative costs a
@@ -125,72 +62,81 @@ def readable(text):
     return hits >= 0.5 * (len(text) / 1000)
 
 
-def extract(data):
-    """Return Extracted(text, how, readable). `how` names the path taken."""
-    try:
-        import io
+def _reader():
+    """Import pypdf, or return None. Never raises.
 
+    Not just ImportError: an optional dependency that is installed but broken
+    must degrade to "cannot check this" rather than take down the caller. The
+    sandbox this was written in has exactly that - pypdf present, its crypto
+    backend unloadable, and the import dying inside pypdf's Rust extension.
+
+    Hence BaseException. A pyo3 panic surfaces as PanicException, which inherits
+    from BaseException, so `except Exception` walks straight past it and the
+    validator dies on an import of something it does not even need. Keyboard
+    interrupts and SystemExit are re-raised; nothing else here is worth crashing
+    a health-data checker over.
+    """
+    try:
         import pypdf  # noqa: PLC0415 - optional, probed at runtime
+        return pypdf
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except BaseException:  # noqa: BLE001
+        return None
+
+
+def available():
+    """Is the reader usable at all? Callers skip rather than guess."""
+    return _reader() is not None
+
+
+def extract(data):
+    """Return Extracted(text, how, readable). `how` names what happened."""
+    import io
+
+    pypdf = _reader()
+    if pypdf is None:
+        return Extracted("", MISSING, False)
+    try:
         reader = pypdf.PdfReader(io.BytesIO(data))
         text = " ".join((page.extract_text() or "") for page in reader.pages)
-        if text.strip():
-            return Extracted(text, "pypdf", readable(text))
-    except ImportError:
-        pass
-    except Exception:  # noqa: BLE001 - a broken PDF should fall through, not crash
-        pass
-    text = _pure_python(data)
-    return Extracted(text, "built-in fallback (no font decoding)", readable(text))
-
-
-def _pdf(streams):
-    """Assemble a minimal PDF around the given raw streams, for the self-test."""
-    out = [b"%PDF-1.4\n"]
-    for s in streams:
-        out.append(b"1 0 obj\n<< /Length %d >>\nstream\n" % len(s)
-                   + s + b"\nendstream\nendobj\n")
-    return b"".join(out)
+    except Exception as ex:  # noqa: BLE001 - a broken PDF is a finding, not a crash
+        return Extracted("", f"pypdf could not parse it: {type(ex).__name__}", False)
+    return Extracted(text, "pypdf", readable(text))
 
 
 def selftest():
-    """Check the fallback on documents whose right answer is known.
+    """Check the parts of this that are ours. Returns a list of failures.
 
-    Returns a list of failure strings. The two cases that matter are the two
-    the real citations exercise: a document whose text decodes, which must be
-    searchable, and a document whose fonts do not decode, which must be
-    reported as unreadable rather than as a source that omits the figure.
+    Not a test of pypdf. Whether pypdf can read a given document is pypdf's
+    business and its own test suite's; the real exercise of that is CI fetching
+    the two cited PDFs. What is ours, and what decides whether a verification
+    log tells the truth, is the readable/unreadable judgement and the refusal to
+    crash on a missing or broken dependency. That is what is tested here, and it
+    needs no PDF at all.
     """
-    import zlib as _zlib
+    prose = ("In 2023 there were 6.14 million police-reported crashes in the "
+             "United States, and the vehicles on the road travelled a total of "
+             "3,247 billion miles, which is the denominator for the crash rate "
+             "per mile driven that this comparison is built on. ") * 4
+    cases = [
+        ("prose", prose, True),
+        # What a subset-font document looked like through the hand-rolled reader
+        # this file used to carry: character codes, no words.
+        ("character codes", "\x01\x02\x03\x04\x05\x06\x07\x08" * 200, False),
+        # Printable but wordless - the case a control-character check misses.
+        ("printable but wordless", "qz xkq zvq wjx pqz " * 200, False),
+        ("empty", "", False),
+        ("too short to judge", "6.14 million crashes", False),
+    ]
+    bad = [f"pdf_text: readable({label}) = {readable(text)}, expected {want}"
+           for label, text, want in cases if readable(text) != want]
 
-    prose = (b"BT (In 2023 there were 6.14 million police-reported crashes, and "
-             b"the vehicles on the road travelled 3,247 billion miles in total, "
-             b"which is the denominator for the crash rate. ) Tj ET ") * 6
-    cmap = (b"/CIDInit /ProcSet findresource begin begincmap /CMapName "
-            b"/Identity-H def /Registry (Adobe) /Ordering (Symbol) "
-            b"(Wingdings) (Arial) (Times New Roman) endcmap ") * 40
-    codes = b"BT <0102030405060708090A0B0C0D0E0F1011121314> Tj ET " * 60
-    font = b"\x00\x01\x00\x00 BT (glyf loca cmap head) Tj ET"
-
-    bad = []
-    for label, doc, want_readable, want_in, want_out in (
-        ("uncompressed text", _pdf([prose]), True, ["6.14", "3,247"], []),
-        ("deflated text", _pdf([_zlib.compress(prose)]), True, ["6.14"], []),
-        ("undecodable fonts", _pdf([cmap, codes]), False, [], ["Adobe", "Arial"]),
-        ("font programme beside text", _pdf([font, prose]), True, ["6.14"], ["glyf"]),
-    ):
-        got = extract(doc)
-        if got.readable != want_readable:
-            bad.append(f"pdf_text: {label}: readable={got.readable}, "
-                       f"expected {want_readable}")
-        for s in want_in:
-            if s not in got.text:
-                bad.append(f"pdf_text: {label}: {s!r} missing from extracted text")
-        for s in want_out:
-            # A font table or CMap harvested as if it were page text is how the
-            # NHTSA citation came back as 1.6 MB of font names.
-            if s in got.text:
-                bad.append(f"pdf_text: {label}: {s!r} leaked out of a non-content "
-                           f"stream into the extracted text")
+    # A missing or broken dependency is a skip, never an exception and never a
+    # claim about a source.
+    got = extract(b"%PDF-1.4 not really a pdf")
+    if got.readable or got.text:
+        bad.append(f"pdf_text: unparseable input returned {got}")
     return bad
 
 
@@ -199,13 +145,14 @@ def main():
         bad = selftest()
         for b in bad:
             print(b, file=sys.stderr)
-        print("pdf_text self-test: " + ("FAILED" if bad else "passed"))
+        where = "with pypdf" if available() else f"no pypdf ({MISSING})"
+        print(f"pdf_text self-test: {'FAILED' if bad else 'passed'} [{where}]")
         return 1 if bad else 0
     if len(sys.argv) != 2:
         print(__doc__)
         return 2
     got = extract(open(sys.argv[1], "rb").read())
-    verdict = "reads as text" if got.readable else "NOT DECODABLE - install pypdf"
+    verdict = "reads as text" if got.readable else "NOT READABLE"
     print(f"[{got.how}] {len(got.text):,} characters - {verdict}")
     print(got.text[:2000])
     return 0
