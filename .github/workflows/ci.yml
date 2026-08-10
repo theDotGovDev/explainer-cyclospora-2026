@@ -15,26 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Build the site
-        run: python3 build.py
-
-      - name: Fail if the committed site/ is stale
-        # site/ is generated output and is committed so it can be served
-        # directly. If a data/ change lands without a rebuild, the published
-        # page silently disagrees with the data that is supposed to back it.
-        run: |
-          if ! git diff --exit-code -- site/; then
-            echo "::error::site/ is out of date with data/. Run 'python3 build.py' and commit the result."
-            exit 1
-          fi
-
-      - name: Validate data, citations, disclaimers and HTML
-        run: python3 tools/validate.py
+      - run: bash tools/ci/build.sh
 
   links:
     name: Check source links resolve
@@ -44,10 +28,7 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Resolve every URL in data/sources.json
-        run: python3 tools/check_links.py
+      - run: bash tools/ci/links.sh
