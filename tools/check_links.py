@@ -65,6 +65,53 @@ def host_root(url):
     return f"{parts.scheme}://{parts.netloc}/"
 
 
+def read_body(resp, cap, head=b""):
+    """Read the response to end of stream, or to `cap`. Returns (bytes, hit_cap).
+
+    Loops, because a single read(n) is only documented to return *up to* n
+    bytes. Asking for four megabytes and treating whatever comes back as the
+    whole file is how the NHTSA crash summary arrived with no trailer on it and
+    was reported as a document with no Root object - twice, and the second time
+    with our own diagnostic cheerfully calling it complete.
+    """
+    parts = [head]
+    total = len(head)
+    while total < cap:
+        chunk = resp.read(min(1 << 20, cap - total))
+        if not chunk:
+            return b"".join(parts), False
+        parts.append(chunk)
+        total += len(chunk)
+    return b"".join(parts), True
+
+
+def describe(resp, raw, hit_cap):
+    """Say what actually arrived, when a document would not parse.
+
+    Every round of this investigation has been lost to a diagnosis inferred
+    from too little: mojibake blamed on font subsetting, a parse failure blamed
+    on truncation, a short read assumed rather than measured. The three facts
+    that distinguish those - how many bytes the server said it was sending, how
+    many arrived, and whether what arrived is a PDF at all - are cheap to print
+    and settle it without another guess.
+    """
+    declared = resp.headers.get("Content-Length")
+    encoding = resp.headers.get("Content-Encoding") or "none"
+    bits = [f"{len(raw):,} bytes received"]
+    if declared and declared.isdigit():
+        want = int(declared)
+        bits.append(f"Content-Length said {want:,}"
+                    + ("" if want == len(raw) else " - SHORT, we lost some"))
+    else:
+        bits.append("no Content-Length declared")
+    bits.append(f"Content-Encoding {encoding}")
+    bits.append("starts %PDF-" if raw[:5] == b"%PDF-"
+                else f"does NOT start %PDF- (starts {raw[:12]!r})")
+    if hit_cap:
+        bits.append("HIT OUR READ CAP, so this truncation is ours")
+    return ", ".join(bits)
+
+
 def fetch(url, attempt=0):
     """Return (text, note). Empty text means the body could not be read."""
     req = urllib.request.Request(url, headers={"User-Agent": UA})
@@ -77,7 +124,7 @@ def fetch(url, attempt=0):
             head = resp.read(5)
             is_pdf = "pdf" in ctype or head == b"%PDF-"
             cap = PDF_BYTES if is_pdf else HTML_BYTES
-            raw = head + resp.read(cap - len(head))
+            raw, hit_cap = read_body(resp, cap, head)
             if is_pdf:
                 # Returning no text puts this on the SKIP path, which is the
                 # honest place for it: "we did not read this" is not the same
@@ -85,14 +132,7 @@ def fetch(url, attempt=0):
                 # second is evidence about a source.
                 got = pdf_text.extract(raw)
                 if not got.text.strip():
-                    # Say whether we even got the whole file. Without this, a
-                    # parse failure caused by our own truncation is indis-
-                    # tinguishable from a genuinely broken document.
-                    size = (f"{len(raw):,} bytes"
-                            + (" - HIT OUR READ CAP, so the file is truncated "
-                               "and this parse failure may be ours"
-                               if len(raw) >= cap else ", read in full"))
-                    return "", f"pdf not read - {got.how} [{size}]"
+                    return "", f"pdf not read - {got.how} [{describe(resp, raw, hit_cap)}]"
                 if not got.readable:
                     return "", ("pdf parsed but yielded no words - probably a "
                                 "scan with no text layer, nothing to search")
