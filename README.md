@@ -31,7 +31,8 @@ or any company, and carries no agency branding deliberately.
 | `icons.py` | Inline SVG sprite and logo. All original artwork — no agency marks. |
 | `tools/validate.py` | Correctness checks — run in CI, fails the build |
 | `tools/check_links.py` | Advisory: fetches every source, checks it resolves, spot-checks attributed figures |
-| `tools/pdf_text.py` | Reads text out of cited PDFs, and says when it could not |
+| `tools/pdf_text.py` | Reads text out of cited PDFs via pypdf, and says when it could not |
+| `tools/ci/` | What CI actually runs. The workflows are thin shims that call these. |
 | `tools/data_sources.py` | Probes openFDA and data.cdc.gov for machine-readable figures |
 | `tools/snapshot.py` | Appends current figures to the history log; idempotent |
 | `site/` | Generated output — commit it; it is what gets served |
@@ -59,6 +60,15 @@ Note that `tools/validate.py` **fails** on data older than 21 days, so a stale `
 stops the site redeploying until the data is refreshed. That is the guard working, not a
 bug.
 
+The workflow files are deliberately thin: checkout, pick a Python, run a script in
+`tools/ci/`. Everything that changes over time lives in those scripts, which are ordinary
+files. GitHub gates `.github/workflows/**` behind a separate permission, and round-tripping
+each CI change through it was costing more than it protected here — CI already runs
+`build.py` and `tools/validate.py`, so the step list was the only thing still behind the
+gate. What stays in the YAML is what the gate is actually for: which actions run, what
+`permissions:` each job gets, and which secrets it can see. A script in `tools/ci/` cannot
+widen any of those.
+
 ## What the validator enforces
 
 These checks exist because the site makes health claims, and each one is here because
@@ -79,9 +89,9 @@ something actually went wrong:
   estimates and must read as estimates;
 - all five core disclaimers, including the AI-generation notice, are on every page;
 - HTML is well-formed, external links carry `rel`, and `as_of` is present and not stale;
-- the PDF reader still works, tested offline against documents whose answer is known —
-  including that it reports an undecodable document as unreadable rather than as a source
-  that omits the figure.
+- the PDF reader's own judgement still works — that it calls wordless text unreadable
+  rather than treating it as a source that omits the figure, and that a missing or broken
+  `pypdf` degrades to a skip instead of taking the validator down with it.
 
 ## Source verification in CI
 
@@ -104,12 +114,21 @@ without blocking a correction from shipping.
 
 Two of the cited sources are PDFs — the NHTSA crash summary and the NHTS travel survey —
 and they carry the inputs to the car-accident comparison. `tools/pdf_text.py` reads them
-with `pypdf` when it is installed and with a small built-in reader when it is not. The
-built-in reader does not resolve font encodings, so a document that subsets its fonts
-comes back as character codes rather than words. When that happens the check reports
-`UNREADABLE` rather than `NOT FOUND`: *we could not read this document* and *this document
-does not say that* are different findings, and only one of them is evidence about the
-source. `pip install -r requirements-optional.txt` turns the first into the second.
+with `pypdf`, and does not attempt a fallback.
+
+It used to. An earlier version carried a small hand-rolled reader for the case where
+pypdf was absent, which inflated the document's streams and harvested anything
+string-shaped. It could not resolve font encodings, so on the NHTSA PDF — which subsets
+its fonts — it returned 1.6 MB of font names and the checker reported that as *this
+source does not contain its own figure*. Homemade parsing of a format that gnarly does
+not fail by refusing to work; it fails by producing something that looks like an answer.
+
+So the rule is: read it with the library, or say you did not read it. Without pypdf those
+two claims are `SKIP`ped with the reason given. *We could not read this* and *this source
+does not say that* are different findings, and only the second is evidence about a source.
+
+Only the source check needs the dependency — `build.py`, the validator and the Pages
+deploy still run on a bare interpreter.
 
 ## The figure history log
 
