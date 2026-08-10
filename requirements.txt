@@ -10,5 +10,10 @@
 # Without pypdf installed, those two claims are reported as skipped rather than
 # checked. Nothing else changes.
 #
+# The [crypto] extra pulls in cryptography, which pypdf needs to open an
+# AES-encrypted document. Publications are often shipped permission-restricted
+# that way - readable by any viewer, unopenable by a library without it.
+# Version floor is the one the behaviour here was verified against.
+#
 #   pip install -r requirements.txt
-pypdf>=4.0
+pypdf[crypto]>=6.0
