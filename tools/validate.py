@@ -397,6 +397,30 @@ def check_provenance():
             fail(f"{name}: {cites} citations but only {marks} sourcing markers")
 
 
+# A Python call or name left in the output, e.g. "{glossary()}" or "{ns['deaths']}".
+# Not a match for CSS or ordinary prose braces, which do not look like this.
+STRAY_PLACEHOLDER = re.compile(r"\{[a-z_]+[a-z_0-9]*(\(\)|\[|\.)[^{}]*\}", re.I)
+
+
+def check_placeholders():
+    '''Catch an f-string that stopped being an f-string.
+
+    Closing a page template's quotes to concatenate a call, then reopening
+    them, silently ends the f-string: every placeholder after that point
+    renders as literal text and the content it stood for disappears. That
+    happened here. The whole label glossary dropped out of the methodology
+    page, a literal {glossary()} took its place, and every existing check
+    passed - the HTML was still well-formed, every citation still resolved,
+    and no data file had changed.
+    '''
+    for name in PAGES:
+        text = (SITE / name).read_text(encoding="utf-8")
+        for m in STRAY_PLACEHOLDER.finditer(text):
+            fail(f"{name}: uninterpolated template placeholder {m.group(0)!r} "
+                 f"- an f-string was probably broken, and whatever it stood for "
+                 f"is missing from the page")
+
+
 def check_pdf_reader():
     """The PDF reader decides whether two cited figures can be checked at all.
 
@@ -423,6 +447,7 @@ def main():
     check_provenance()
     check_label_links()
     check_evidence_labels(foods)
+    check_placeholders()
     check_pdf_reader()
 
     for w in warnings:

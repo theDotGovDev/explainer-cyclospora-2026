@@ -27,6 +27,7 @@ health information.
     python3 tools/check_links.py
 """
 
+import email
 import json
 import pathlib
 import re
@@ -40,6 +41,14 @@ import pdf_text  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TIMEOUT = 25
+
+# How much of a response body to read. HTML only needs enough to find a figure
+# in the prose. A PDF needs the WHOLE FILE: its cross-reference table and EOF
+# marker live at the end, so a truncated PDF is not a partial PDF, it is an
+# unreadable one. Reading PDFs under the HTML-sized cap is what made the NHTSA
+# crash summary look like a document nobody could parse.
+HTML_BYTES = 4_000_000
+PDF_BYTES = 64_000_000
 
 # Agency and news sites routinely reject non-browser agents with 403.
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
@@ -57,25 +66,126 @@ def host_root(url):
     return f"{parts.scheme}://{parts.netloc}/"
 
 
+def read_body(resp, cap, head=b""):
+    """Read the response to end of stream, or to `cap`. Returns (bytes, hit_cap).
+
+    Loops, because a single read(n) is only documented to return *up to* n
+    bytes. Asking for four megabytes and treating whatever comes back as the
+    whole file is how the NHTSA crash summary arrived with no trailer on it and
+    was reported as a document with no Root object - twice, and the second time
+    with our own diagnostic cheerfully calling it complete.
+    """
+    parts = [head]
+    total = len(head)
+    while total < cap:
+        chunk = resp.read(min(1 << 20, cap - total))
+        if not chunk:
+            return b"".join(parts), False
+        parts.append(chunk)
+        total += len(chunk)
+    return b"".join(parts), True
+
+
+def unwrap_multipart(ctype, raw):
+    """Pull a PDF out of a multipart response body, or return None.
+
+    NHTSA's crashstats ViewPublication endpoint does this: it answers with a
+    multipart body - WebKit form boundaries and all - carrying the PDF as a
+    part, while labelling the whole response as a PDF. Handed straight to a
+    parser, that is a MIME envelope wearing a PDF's content type, and the
+    parser rightly says it cannot find a Root object.
+
+    Parsed with email from the standard library rather than by hunting for
+    boundaries, because a MIME body is exactly what that module is for.
+    """
+    if raw[:5] == b"%PDF-" or b"%PDF-" not in raw[:65536]:
+        return None
+    header = ctype
+    if "boundary=" not in ctype.lower():
+        # The response labels itself a PDF and does not declare a boundary, so
+        # recover it from the body: a multipart body opens with "--<boundary>"
+        # (RFC 2046). Reconstructing the header is what lets email do the rest.
+        first = raw.split(b"\r\n", 1)[0].strip()
+        if not first.startswith(b"--"):
+            return None
+        header = ('multipart/form-data; boundary="'
+                  + first[2:].decode("latin-1", "replace") + '"')
+    try:
+        msg = email.message_from_bytes(
+            b"Content-Type: " + header.encode("latin-1", "replace")
+            + b"\r\n\r\n" + raw)
+        if not msg.is_multipart():
+            return None
+        for part in msg.walk():
+            payload = part.get_payload(decode=True)
+            if payload and payload[:5] == b"%PDF-":
+                return payload
+    except Exception:  # noqa: BLE001 - a malformed envelope is a finding, not a crash
+        return None
+    return None
+
+
+def describe(resp, raw, hit_cap):
+    """Say what actually arrived, when a document would not parse.
+
+    Every round of this investigation was lost to a diagnosis inferred from too
+    little: mojibake blamed on font subsetting, a parse failure blamed on
+    truncation, a short read assumed rather than measured. All three were
+    wrong, and the answer - a MIME envelope wearing a PDF's content type - was
+    sitting in the first twelve bytes of the body the whole time.
+
+    So this prints what arrived rather than what it ought to have been: bytes
+    promised against bytes received, the declared type and encoding, and how
+    the body actually opens. Keep it even now that the case is solved; the next
+    unreadable document will be unreadable for some other reason.
+    """
+    declared = resp.headers.get("Content-Length")
+    encoding = resp.headers.get("Content-Encoding") or "none"
+    bits = [f"{len(raw):,} bytes received"]
+    if declared and declared.isdigit():
+        want = int(declared)
+        bits.append(f"Content-Length said {want:,}"
+                    + ("" if want == len(raw) else " - SHORT, we lost some"))
+    else:
+        bits.append("no Content-Length declared")
+    bits.append(f"Content-Type {resp.headers.get('Content-Type') or 'absent'}")
+    bits.append(f"Content-Encoding {encoding}")
+    bits.append("starts %PDF-" if raw[:5] == b"%PDF-"
+                else f"does NOT start %PDF- (starts {raw[:12]!r})")
+    if hit_cap:
+        bits.append("HIT OUR READ CAP, so this truncation is ours")
+    return ", ".join(bits)
+
+
 def fetch(url, attempt=0):
     """Return (text, note). Empty text means the body could not be read."""
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             ctype = (resp.headers.get("Content-Type") or "").lower()
-            raw = resp.read(4_000_000)
-            if "pdf" in ctype or raw[:5] == b"%PDF-":
+            # Peek at the magic bytes before choosing a cap, because a server
+            # that mislabels its Content-Type should not decide how much of its
+            # own PDF we are willing to read.
+            head = resp.read(5)
+            is_pdf = "pdf" in ctype or head == b"%PDF-"
+            cap = PDF_BYTES if is_pdf else HTML_BYTES
+            raw, hit_cap = read_body(resp, cap, head)
+            if is_pdf:
+                inner = unwrap_multipart(ctype, raw)
+                wrapped = ""
+                if inner:
+                    raw, wrapped = inner, ", unwrapped from a multipart body"
                 # Returning no text puts this on the SKIP path, which is the
                 # honest place for it: "we did not read this" is not the same
                 # finding as "this source does not say that", and only the
                 # second is evidence about a source.
                 got = pdf_text.extract(raw)
                 if not got.text.strip():
-                    return "", f"pdf not read - {got.how}"
+                    return "", f"pdf not read - {got.how} [{describe(resp, raw, hit_cap)}]"
                 if not got.readable:
                     return "", ("pdf parsed but yielded no words - probably a "
                                 "scan with no text layer, nothing to search")
-                return got.text, "pdf via pypdf"
+                return got.text, f"pdf via pypdf{wrapped}"
             return raw.decode("utf-8", "replace"), ""
     except TimeoutError:
         if attempt < 1:
@@ -96,6 +206,37 @@ def page_text(html_text):
                  ("&quot;", '"'), ("&mdash;", "-"), ("&ndash;", "-")):
         txt = txt.replace(a, b)
     return WS.sub(" ", txt)
+
+
+def show_context(body, phrases, width=90, limit=3):
+    """Quote how the source words the neighbourhood of a figure we could not find.
+
+    A missing figure has two very different causes: the source no longer says
+    it, or it says it differently from how we wrote it down - 6,141,000 rather
+    than 6.14 million. Guessing between those from a bare NOT FOUND is how the
+    last four rounds of this went. A claim can name a phrase to quote around,
+    and then the log shows the document's own wording.
+
+    Deliberately not a looser match. Comparing digits with the separators
+    stripped would turn 3,247 into 3247, which is a substring of 32,470,000 -
+    a check that reports success on the wrong number is worse than one that
+    reports honest failure.
+    """
+    out = []
+    low = body.lower()
+    for phrase in phrases:
+        hits = 0
+        start = 0
+        while hits < limit:
+            at = low.find(phrase.lower(), start)
+            if at < 0:
+                break
+            snippet = " ".join(body[max(0, at - width):at + width].split())
+            out.append(f"context {phrase!r}: ...{snippet}...")
+            start, hits = at + 1, hits + 1
+        if not hits:
+            out.append(f"context {phrase!r}: not present in the document either")
+    return out
 
 
 def verify_claims(smap):
@@ -135,6 +276,8 @@ def verify_claims(smap):
             unverified += 1
             print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text{how}")
             print(f"           supports: {c['supports']}")
+            for line in show_context(body, c.get("context", [])):
+                print(f"           {line}")
         else:
             print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present{how}")
 

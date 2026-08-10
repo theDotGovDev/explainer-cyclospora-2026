@@ -101,7 +101,13 @@ def extract(data):
         reader = pypdf.PdfReader(io.BytesIO(data))
         text = " ".join((page.extract_text() or "") for page in reader.pages)
     except Exception as ex:  # noqa: BLE001 - a broken PDF is a finding, not a crash
-        return Extracted("", f"pypdf could not parse it: {type(ex).__name__}", False)
+        # The message, not just the class. "PdfReadError" is not a diagnosis:
+        # it covers a damaged xref, an encrypted document, and a missing crypto
+        # backend alike, and reporting only the class sent this investigation
+        # down a wrong path once already.
+        detail = str(ex).strip().replace("\n", " ")[:160] or "no detail given"
+        return Extracted("", f"pypdf could not parse it: "
+                             f"{type(ex).__name__}: {detail}", False)
     return Extracted(text, "pypdf", readable(text))
 
 

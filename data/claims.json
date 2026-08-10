@@ -28,11 +28,17 @@
       "source": "nhtsa-crashes",
       "format": "pdf",
       "expect": [
-        "6.14",
-        "3,247"
+        "6,138,359",
+        "40,901",
+        "1.26"
       ],
-      "supports": "The car accident anchor: about 6.14 million police-reported crashes across about 3,247 billion vehicle miles in 2023.",
-      "note": "This PDF subsets its fonts. Reading it needs pypdf (pip install -r requirements.txt); without it these two figures are reported as skipped rather than checked."
+      "context": [
+        "police-reported",
+        "vehicle miles",
+        "crashes"
+      ],
+      "supports": "The car accident anchor: 6,138,359 police-reported crashes in 2023, 40,901 deaths, and a fatality rate of 1.26 per 100 million vehicle miles. The mileage total is derived from the last two, because NHTSA publishes the rate and not the total - the derivation says so.",
+      "note": "The hardest source to check. crashstats.nhtsa.dot.gov serves this publication as a multipart body carrying the PDF as a part, while labelling the response application/pdf, so a parser handed the response gets a MIME envelope rather than a document. The checker unwraps it. Reading it also needs pypdf (pip install -r requirements.txt); without that these two figures are reported as skipped rather than checked."
     },
     {
       "source": "nhts-2022",

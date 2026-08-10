@@ -1184,7 +1184,37 @@ def build_index(outbreak, foods, comparisons, history, smap):
 # methodology
 # --------------------------------------------------------------------------
 
-def build_methodology(outbreak, smap):
+# The two conversions the methodology page spells out. Named rather than taken
+# from every derived anchor, because the surrounding prose promises two.
+SPELLED_OUT = ["Being in a car accident", "Getting food poisoning from any cause"]
+
+
+def conversion_notes(comparisons):
+    """Render the worked conversions from the data that defines them.
+
+    These used to be prose typed into this template while data/comparisons.json
+    held its own copy. Both described the same arithmetic, so of course they
+    drifted: checking the NHTSA source turned up figures the source does not
+    state, the data file was corrected, and the page went on displaying the old
+    numbers to readers. One copy, rendered.
+    """
+    by_label = {a["label"]: a for a in comparisons["anchors"]}
+    out = ['<ul class="method-list">']
+    for label in SPELLED_OUT:
+        a = by_label.get(label)
+        if not a:
+            # Same reasoning as cite(): a silently missing entry would delete a
+            # worked example from a methodology page and look like a design.
+            raise SystemExit(f"conversion_notes(): no anchor labelled {label!r}")
+        body = " ".join(x for x in (a.get("derivation"), a.get("note")) if x)
+        out.append(f'    <li><strong>{e(a["label"])}, {e(a["basis"])}.</strong> '
+                   f'{e(body)} That is the <strong>1 in {a["odds"]:,}</strong> '
+                   f'shown on the chart.</li>')
+    out.append("  </ul>")
+    return "\n".join(out)
+
+
+def build_methodology(outbreak, comparisons, smap):
     ns = outbreak["national_season"]
     body = f"""
 <div class="wrap page-body">
@@ -1346,23 +1376,7 @@ def build_methodology(outbreak, smap):
      anchors are converted to a single occasion, and the food figures stay in the unit
      the rest of the site uses.</p>
   <p>Two conversions do real work and are worth stating here as well as on the chart:</p>
-  <ul class="method-list">
-    <li><strong>Being in a car accident, per trip.</strong> NHTSA recorded about
-        6.14 million police-reported crashes in 2023 across about 3,247 billion vehicle
-        miles &mdash; roughly 189 crashes per 100 million miles. At the 2022 National
-        Household Travel Survey's average trip of about 13 miles, one trip carries about
-        189 &times; 13 / 100,000,000, or roughly <strong>1 in 41,000 per trip</strong>.
-        This counts any police-reported crash, from a scraped bumper upward. It excludes
-        minor collisions never reported to police, which some estimates suggest could be
-        about as numerous again; if so the real figure is nearer 1 in 20,000. We show the
-        police-reported figure and state the uncertainty rather than picking a midpoint
-        that no source supports.</li>
-    <li><strong>Food poisoning from any cause, per meal.</strong> CDC's 48 million
-        illnesses a year, across about 342 million people eating roughly three meals a
-        day, is about 375 billion meals and therefore roughly
-        <strong>1 in 7,800 per meal</strong>. The three-meals-a-day figure is our
-        assumption, not CDC's.</li>
-  </ul>
+  {conversion_notes(comparisons)}
   <p>An earlier version of this page used the risk of <em>dying</em> in a car crash,
      which was a poor comparator: every food figure here is a risk of <em>getting ill</em>,
      and setting an illness risk beside a fatality risk invites the reader to equate
@@ -1518,7 +1532,7 @@ def main():
 
     pages = {
         "index.html": build_index(outbreak, foods, comparisons, history, smap),
-        "methodology.html": build_methodology(outbreak, smap),
+        "methodology.html": build_methodology(outbreak, comparisons, smap),
         "sources.html": build_sources(outbreak, sources_doc, smap),
     }
     for name, content in pages.items():
