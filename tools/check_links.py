@@ -27,6 +27,7 @@ health information.
     python3 tools/check_links.py
 """
 
+import email
 import json
 import pathlib
 import re
@@ -85,15 +86,58 @@ def read_body(resp, cap, head=b""):
     return b"".join(parts), True
 
 
+def unwrap_multipart(ctype, raw):
+    """Pull a PDF out of a multipart response body, or return None.
+
+    NHTSA's crashstats ViewPublication endpoint does this: it answers with a
+    multipart body - WebKit form boundaries and all - carrying the PDF as a
+    part, while labelling the whole response as a PDF. Handed straight to a
+    parser, that is a MIME envelope wearing a PDF's content type, and the
+    parser rightly says it cannot find a Root object.
+
+    Parsed with email from the standard library rather than by hunting for
+    boundaries, because a MIME body is exactly what that module is for.
+    """
+    if raw[:5] == b"%PDF-" or b"%PDF-" not in raw[:65536]:
+        return None
+    header = ctype
+    if "boundary=" not in ctype.lower():
+        # The response labels itself a PDF and does not declare a boundary, so
+        # recover it from the body: a multipart body opens with "--<boundary>"
+        # (RFC 2046). Reconstructing the header is what lets email do the rest.
+        first = raw.split(b"\r\n", 1)[0].strip()
+        if not first.startswith(b"--"):
+            return None
+        header = ('multipart/form-data; boundary="'
+                  + first[2:].decode("latin-1", "replace") + '"')
+    try:
+        msg = email.message_from_bytes(
+            b"Content-Type: " + header.encode("latin-1", "replace")
+            + b"\r\n\r\n" + raw)
+        if not msg.is_multipart():
+            return None
+        for part in msg.walk():
+            payload = part.get_payload(decode=True)
+            if payload and payload[:5] == b"%PDF-":
+                return payload
+    except Exception:  # noqa: BLE001 - a malformed envelope is a finding, not a crash
+        return None
+    return None
+
+
 def describe(resp, raw, hit_cap):
     """Say what actually arrived, when a document would not parse.
 
-    Every round of this investigation has been lost to a diagnosis inferred
-    from too little: mojibake blamed on font subsetting, a parse failure blamed
-    on truncation, a short read assumed rather than measured. The three facts
-    that distinguish those - how many bytes the server said it was sending, how
-    many arrived, and whether what arrived is a PDF at all - are cheap to print
-    and settle it without another guess.
+    Every round of this investigation was lost to a diagnosis inferred from too
+    little: mojibake blamed on font subsetting, a parse failure blamed on
+    truncation, a short read assumed rather than measured. All three were
+    wrong, and the answer - a MIME envelope wearing a PDF's content type - was
+    sitting in the first twelve bytes of the body the whole time.
+
+    So this prints what arrived rather than what it ought to have been: bytes
+    promised against bytes received, the declared type and encoding, and how
+    the body actually opens. Keep it even now that the case is solved; the next
+    unreadable document will be unreadable for some other reason.
     """
     declared = resp.headers.get("Content-Length")
     encoding = resp.headers.get("Content-Encoding") or "none"
@@ -104,6 +148,7 @@ def describe(resp, raw, hit_cap):
                     + ("" if want == len(raw) else " - SHORT, we lost some"))
     else:
         bits.append("no Content-Length declared")
+    bits.append(f"Content-Type {resp.headers.get('Content-Type') or 'absent'}")
     bits.append(f"Content-Encoding {encoding}")
     bits.append("starts %PDF-" if raw[:5] == b"%PDF-"
                 else f"does NOT start %PDF- (starts {raw[:12]!r})")
@@ -126,6 +171,10 @@ def fetch(url, attempt=0):
             cap = PDF_BYTES if is_pdf else HTML_BYTES
             raw, hit_cap = read_body(resp, cap, head)
             if is_pdf:
+                inner = unwrap_multipart(ctype, raw)
+                wrapped = ""
+                if inner:
+                    raw, wrapped = inner, ", unwrapped from a multipart body"
                 # Returning no text puts this on the SKIP path, which is the
                 # honest place for it: "we did not read this" is not the same
                 # finding as "this source does not say that", and only the
@@ -136,7 +185,7 @@ def fetch(url, attempt=0):
                 if not got.readable:
                     return "", ("pdf parsed but yielded no words - probably a "
                                 "scan with no text layer, nothing to search")
-                return got.text, "pdf via pypdf"
+                return got.text, f"pdf via pypdf{wrapped}"
             return raw.decode("utf-8", "replace"), ""
     except TimeoutError:
         if attempt < 1:
