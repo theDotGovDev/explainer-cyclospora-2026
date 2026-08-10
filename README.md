@@ -89,6 +89,8 @@ something actually went wrong:
   estimates and must read as estimates;
 - all five core disclaimers, including the AI-generation notice, are on every page;
 - HTML is well-formed, external links carry `rel`, and `as_of` is present and not stale;
+- no page contains an uninterpolated `{placeholder}` — breaking one template's f-string
+  silently deleted the entire label glossary while every other check stayed green;
 - the PDF reader's own judgement still works — that it calls wordless text unreadable
   rather than treating it as a source that omits the figure, and that a missing or broken
   `pypdf` degrades to a skip instead of taking the validator down with it.
