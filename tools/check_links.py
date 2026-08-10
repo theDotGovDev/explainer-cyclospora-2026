@@ -41,6 +41,14 @@ import pdf_text  # noqa: E402
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TIMEOUT = 25
 
+# How much of a response body to read. HTML only needs enough to find a figure
+# in the prose. A PDF needs the WHOLE FILE: its cross-reference table and EOF
+# marker live at the end, so a truncated PDF is not a partial PDF, it is an
+# unreadable one. Reading PDFs under the HTML-sized cap is what made the NHTSA
+# crash summary look like a document nobody could parse.
+HTML_BYTES = 4_000_000
+PDF_BYTES = 64_000_000
+
 # Agency and news sites routinely reject non-browser agents with 403.
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
@@ -63,15 +71,28 @@ def fetch(url, attempt=0):
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             ctype = (resp.headers.get("Content-Type") or "").lower()
-            raw = resp.read(4_000_000)
-            if "pdf" in ctype or raw[:5] == b"%PDF-":
+            # Peek at the magic bytes before choosing a cap, because a server
+            # that mislabels its Content-Type should not decide how much of its
+            # own PDF we are willing to read.
+            head = resp.read(5)
+            is_pdf = "pdf" in ctype or head == b"%PDF-"
+            cap = PDF_BYTES if is_pdf else HTML_BYTES
+            raw = head + resp.read(cap - len(head))
+            if is_pdf:
                 # Returning no text puts this on the SKIP path, which is the
                 # honest place for it: "we did not read this" is not the same
                 # finding as "this source does not say that", and only the
                 # second is evidence about a source.
                 got = pdf_text.extract(raw)
                 if not got.text.strip():
-                    return "", f"pdf not read - {got.how}"
+                    # Say whether we even got the whole file. Without this, a
+                    # parse failure caused by our own truncation is indis-
+                    # tinguishable from a genuinely broken document.
+                    size = (f"{len(raw):,} bytes"
+                            + (" - HIT OUR READ CAP, so the file is truncated "
+                               "and this parse failure may be ours"
+                               if len(raw) >= cap else ", read in full"))
+                    return "", f"pdf not read - {got.how} [{size}]"
                 if not got.readable:
                     return "", ("pdf parsed but yielded no words - probably a "
                                 "scan with no text layer, nothing to search")
