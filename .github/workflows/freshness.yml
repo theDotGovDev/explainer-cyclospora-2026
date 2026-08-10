@@ -27,16 +27,7 @@ jobs:
 
       - name: Measure data age
         id: age
-        run: |
-          python3 - <<'PY' >> "$GITHUB_OUTPUT"
-          import datetime, json, pathlib
-          d = json.loads(pathlib.Path("data/outbreak.json").read_text())
-          as_of = datetime.date.fromisoformat(d["as_of"])
-          age = (datetime.date.today() - as_of).days
-          print(f"as_of={as_of}")
-          print(f"days={age}")
-          print(f"stale={'true' if age > 21 else 'false'}")
-          PY
+        run: python3 tools/ci/data_age.py >> "$GITHUB_OUTPUT"
 
       - name: Open or update the staleness issue
         if: steps.age.outputs.stale == 'true'
