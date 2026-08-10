@@ -208,6 +208,37 @@ def page_text(html_text):
     return WS.sub(" ", txt)
 
 
+def show_context(body, phrases, width=90, limit=3):
+    """Quote how the source words the neighbourhood of a figure we could not find.
+
+    A missing figure has two very different causes: the source no longer says
+    it, or it says it differently from how we wrote it down - 6,141,000 rather
+    than 6.14 million. Guessing between those from a bare NOT FOUND is how the
+    last four rounds of this went. A claim can name a phrase to quote around,
+    and then the log shows the document's own wording.
+
+    Deliberately not a looser match. Comparing digits with the separators
+    stripped would turn 3,247 into 3247, which is a substring of 32,470,000 -
+    a check that reports success on the wrong number is worse than one that
+    reports honest failure.
+    """
+    out = []
+    low = body.lower()
+    for phrase in phrases:
+        hits = 0
+        start = 0
+        while hits < limit:
+            at = low.find(phrase.lower(), start)
+            if at < 0:
+                break
+            snippet = " ".join(body[max(0, at - width):at + width].split())
+            out.append(f"context {phrase!r}: ...{snippet}...")
+            start, hits = at + 1, hits + 1
+        if not hits:
+            out.append(f"context {phrase!r}: not present in the document either")
+    return out
+
+
 def verify_claims(smap):
     """Look for each attributed figure in the source's own text."""
     path = ROOT / "data" / "claims.json"
@@ -245,6 +276,8 @@ def verify_claims(smap):
             unverified += 1
             print(f"NOT FOUND  {c['source']:<22} expected {missing} in the page text{how}")
             print(f"           supports: {c['supports']}")
+            for line in show_context(body, c.get("context", [])):
+                print(f"           {line}")
         else:
             print(f"ok         {c['source']:<22} all {len(c['expect'])} figure(s) present{how}")
 
